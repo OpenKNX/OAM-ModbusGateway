@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns="http://knx.org/xml/project/20" xmlns:op="http://github.com/OpenKNX/OpenKNXproducer">
+  <ManufacturerData>
+    <Manufacturer RefId="M-00FA">
+      <ApplicationPrograms>
+        <ApplicationProgram Id="%AID%" ApplicationNumber="222" ApplicationVersion="17" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="ModbusGateway" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0" ReplacesVersions="15 16">
+          <Static></Static>
+          <!-- Here statrs the UI definition -->
+          <Dynamic>
+            <!-- The following block is always there -->
+            <ChannelIndependentBlock>
+              <!-- A parameter block represents a tab on the left side, showing a page full of parameters -->
+              <!-- A tab page with general settings -->
+              <ParameterBlock Id="%AID%_PB-2" Name="General" Text="Allgemeine Parameter">
+                <!-- Debug Settings -->
+                <ComObjectRefRef RefId="%AID%_O-%T%000002_R-%T%00000201" />
+                <!-- Check-Box Auswahl der Interface -->
+                <ParameterSeparator Id="%AID%_PS-100" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-1" Text="Auswahl Interface" UIHint="Headline"/>
+                <ParameterRefRef RefId="%AID%_UP-%T%000066_R-%T%00006601" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000067_R-%T%00006701" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000068_R-%T%00006801" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000101_R-%T%00010101" />
+              </ParameterBlock>
+            </ChannelIndependentBlock>  
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>
