@@ -936,7 +936,7 @@
                 <ParameterSeparator Id="%AID%_PS-100" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-4"   Text="Modbus:" UIHint="Headline"/>
                 <ParameterSeparator Id="%AID%_PS-5"   Text=" - Anzahl möglicher Slaves = 10" />
-                <ParameterSeparator Id="%AID%_PS-6"   Text=" - Anzahl Kanäle = 100" />
+                <ParameterSeparator Id="%AID%_PS-6"   Text=" - Anzahl Kanäle = %N%" />
                 <ParameterSeparator Id="%AID%_PS-7"   Text="Die einzelnen Slaves können frei belegt werden. Eine Reihenfolge muss nicht eingehalten werden" />
                 <ParameterSeparator Id="%AID%_PS-8"   Text="Die einzelnen Kanäle können frei belegt werden. Die Kanäle mussen nicht nachfolgend parametrisiert werden." />
                 <ParameterSeparator Id="%AID%_PS-9"   Text="Frei Kanäle dazwischen werden von der SW ignoriert, solange dieser auf 'inaktiv' steht" />

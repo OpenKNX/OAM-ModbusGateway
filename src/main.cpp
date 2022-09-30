@@ -15,21 +15,18 @@ void setup()
     Serial1.setTX(KNX_UART_TX_PIN);
 #endif
     SERIAL_DEBUG.begin(115200);
-    pinMode(PROG_LED_PIN, OUTPUT);
-    digitalWrite(PROG_LED_PIN, HIGH);
+    pinMode(get_PROG_LED_PIN(get_HW_ID()), OUTPUT);
+    digitalWrite(get_PROG_LED_PIN(get_HW_ID()), HIGH);
+    SERIAL_DEBUG.print("Startup delay: ");
+    SERIAL_DEBUG.println(DEBUG_DELAY);
     delay(DEBUG_DELAY);
-    digitalWrite(PROG_LED_PIN, LOW);
+    digitalWrite(get_PROG_LED_PIN(get_HW_ID()), LOW);
 #ifdef HF_POWER_PIN
     Serial2.setRX(HF_UART_RX_PIN);
     Serial2.setTX(HF_UART_TX_PIN);
     Wire1.setSDA(I2C_SDA_PIN);
     Wire1.setSCL(I2C_SCL_PIN);
     Sensor::SetWire(Wire1);
-    pinMode(PRESENCE_LED_PIN, OUTPUT);
-    pinMode(MOVE_LED_PIN, OUTPUT);
-    pinMode(HF_S1_PIN, INPUT);
-    pinMode(HF_S2_PIN, INPUT);
-    pinMode(HF_POWER_PIN, OUTPUT);
 #endif
     SERIAL_DEBUG.println("Startup called...");
     ArduinoPlatform::SerialDebug = &SERIAL_DEBUG;

@@ -4,9 +4,6 @@
 			"path": "."
 		},
 		{
-			"path": "../OAM-PresenceModule"
-		},
-		{
 			"path": "../OAM-LogicModule"
 		},
 		{
