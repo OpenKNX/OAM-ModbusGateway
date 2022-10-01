@@ -277,7 +277,7 @@
 #define MOD_KoS02_Akt2_Verbrauch 38
 #define MOD_KoS02_Res 39
 
-#define LOG_ChannelCount 80
+#define LOG_ChannelCount 60
 
 // Parameter per channel
 #define LOG_ParamBlockOffset 198
@@ -299,6 +299,12 @@
 #define LOG_fTGate                     3      // 1 Bit, Bit 4
 #define     LOG_fTGateMask 0x10
 #define     LOG_fTGateShift 4
+#define LOG_fOInternalOn               3      // 1 Bit, Bit 5
+#define     LOG_fOInternalOnMask 0x20
+#define     LOG_fOInternalOnShift 5
+#define LOG_fOInternalOff              3      // 1 Bit, Bit 6
+#define     LOG_fOInternalOffMask 0x40
+#define     LOG_fOInternalOffShift 6
 #define LOG_fTrigger                   4      // 8 Bits, Bit 7-0
 #define LOG_fTriggerE1                 4      // 1 Bit, Bit 0
 #define     LOG_fTriggerE1Mask 0x01
@@ -947,7 +953,7 @@
 #define MOD_ChannelCount 99
 
 // Parameter per channel
-#define MOD_ParamBlockOffset 7078
+#define MOD_ParamBlockOffset 5358
 #define MOD_ParamBlockSize 38
 #define MOD_CHModbusSlaveSelection     0      // 8 Bits, Bit 7-0
 #define MOD_CHModBusDptSelection       1      // 8 Bits, Bit 7-0
@@ -1009,6 +1015,6 @@
 #define MOD_KoGO_BASE_ 0
 
 #define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 33
-#define MAIN_ApplicationVersion 6
+#define MAIN_ApplicationNumber 32
+#define MAIN_ApplicationVersion 2
 #define MAIN_OrderNumber "MFKnxMod"

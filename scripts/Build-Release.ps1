@@ -30,11 +30,11 @@ $targetName=$sourceName # change this
 # Release indication, set according names for Release or Beta
 $releaseIndication = $args[0]
 if ($releaseIndication) {
-    $releaseName="$sourceName"
+    $releaseName="$sourceName-$releaseIndication"
     $appRelease=$releaseIndication
 } else {
     $releaseName="$sourceName"
-    $appRelease="Release"
+    $appRelease="Beta"
 }
 
 # check and cleanup working dir
