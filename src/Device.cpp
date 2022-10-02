@@ -326,6 +326,11 @@ void initHW(uint8_t hwID)
 
 }
 
+void logicCallback(void *iInstance)
+{
+  gLogic.loop();
+}
+
 void appSetup()
 {
   // Modbus
@@ -344,6 +349,7 @@ void appSetup()
       GroupObject::classCallback(ProcessKoCallback);
     gStartupDelay = millis();
     heartbeatDelay = 0;
+    Schedule::addCallback(logicCallback, nullptr);
     gLogic.setup(false);
   }
 }
@@ -364,5 +370,5 @@ void appLoop()
   Process_S0(1); //CH = S02
 
   ModbusRead(usedModbusChannels);
-  gLogic.loop();
+  Schedule::loop();
 }

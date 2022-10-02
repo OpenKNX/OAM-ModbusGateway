@@ -1015,6 +1015,6 @@
 #define MOD_KoGO_BASE_ 0
 
 #define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 32
-#define MAIN_ApplicationVersion 2
-#define MAIN_OrderNumber "MFKnxMod"
+#define MAIN_ApplicationNumber 33
+#define MAIN_ApplicationVersion 9
+#define MAIN_OrderNumber "MFKnxModDev"

@@ -44,6 +44,7 @@ void postTransmission()
 
 void idle()
 {
+    Schedule::loop();
     knx.loop();
 }
 
@@ -171,7 +172,7 @@ bool ModbusRead(uint8_t usedModbusChannels)
             uint8_t slaveNumber = knx.paramByte(getPar(MOD_CHModbusSlaveSelection, channel2)) - 1;
             if (slaveNumber < MaxCountSlaves)
             {
-#ifdef Serial_Debug_Modbus_Min
+#ifdef Serial_Debug_Modbus_Min 
                     SERIAL_DEBUG.print("CH");
                     SERIAL_DEBUG.print(channel2 + 1);
                     SERIAL_DEBUG.print(" S");

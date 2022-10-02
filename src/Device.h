@@ -1,5 +1,6 @@
 #pragma once
 #include "Helper.h"
+#include "Schedule.h"
 
 void ProcessHeartbeat();
 
