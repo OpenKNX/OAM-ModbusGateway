@@ -7,9 +7,6 @@
 			"path": "../OAM-LogicModule"
 		},
 		{
-			"path": "../OGM-SensorDevices"
-		},
-		{
 			"path": "../OGM-Common"
 		},
 		{

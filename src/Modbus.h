@@ -2,7 +2,6 @@
 
 #include "ModbusGateway.h"
 #include "ModbusMaster.h"
-#include "hardware.h"
 #include <knx.h>				
 
 class Modbus : public ModbusMaster

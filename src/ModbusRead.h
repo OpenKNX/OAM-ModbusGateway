@@ -4,7 +4,7 @@
 #include <knx.h>
 #include "ModbusMaster.h"
 #include "Modbus.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include "ModbusGateway.h"
 #include "Device.h"
 #include "KnxHelper.h"

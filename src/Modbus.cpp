@@ -2,7 +2,7 @@
 #include "Modbus.h"
 #include "ModbusGateway.h"
 #include "Device.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include "ModbusMaster.h"
 #include "KnxHelper.h"
 #include "LED_Statusanzeige.h"

@@ -1,7 +1,7 @@
 #include <OpenKNX.h>
 #include <Logic.h>
 #include "HardwareDevices.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include "Device.h"
 #include "Wire.h"
 

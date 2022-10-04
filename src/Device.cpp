@@ -1,7 +1,6 @@
 #include <Arduino.h>
 
 #include <knx.h>
-#include "hardware.h"
 #include "KnxHelper.h"
 #include "ModbusGateway.h"
 #include "ModbusRead.h"

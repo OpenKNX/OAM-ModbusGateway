@@ -4,7 +4,7 @@
 #include "ModbusGateway.h"
 #include "KnxHelper.h"
 #include "S0Function.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include "Device.h"
 
 //-------- Test only --------------------
