@@ -1,5 +1,8 @@
 #pragma once
 
+//Anzahl an S0 INPUTS
+#define MAX_S0_CHANNELS 2
+
 //DIAG LED
 #define Diag_LED 9
 

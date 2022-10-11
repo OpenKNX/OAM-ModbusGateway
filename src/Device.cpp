@@ -14,8 +14,8 @@
 #include "S0_Master.h"
 
 S0_Master* S0_Master::instance = NULL ;
-S0_Master S0_1 ;
-S0_Master S0_2 ;
+S0_Master S0[MAX_S0_CHANNELS] ;
+
 
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
@@ -182,20 +182,12 @@ bool setupModbus()
 
 void setupS0()
 {
-  // NEU ************
-  pinMode(S0_CH1, INPUT_PULLUP);
-  pinMode(S0_CH2, INPUT_PULLUP);
-  S0_1.initS0(S0_CH1);
-  S0_2.initS0(S0_CH2);
-
-  // ENDE NEU ******
-
 
   if (knx.paramByte(MOD_DefineS0zaehler1) > 0)
   {
     SERIAL_DEBUG.println("S01 = Aktiv");
     pinMode(S0_CH1, INPUT);
-    attachInterrupt(digitalPinToInterrupt(S0_CH1), functionS01, FALLING);
+    S0[0].initS0(S0_CH1,S01_LED);
 
     SERIAL_DEBUG.print("Impulse: ");
     SERIAL_DEBUG.println(setZaehlerImpulse(0, knx.paramWord(MOD_S01Impulse)));
@@ -228,7 +220,7 @@ void setupS0()
   {
     SERIAL_DEBUG.println("S02 = Aktiv");
     pinMode(S0_CH2, INPUT);
-    attachInterrupt(digitalPinToInterrupt(S0_CH2), functionS02, FALLING);
+    S0[1].initS0(S0_CH2,S02_LED);
 
     SERIAL_DEBUG.print("Impulse: ");
     SERIAL_DEBUG.println(setZaehlerImpulse(1, knx.paramWord(MOD_S02Impulse)));
@@ -379,8 +371,10 @@ void appLoop()
   ProcessHeartbeat();
   ProcessReadRequests();
 
-  Process_S0(0); //CH = S01
-  Process_S0(1); //CH = S02
+  //S0[0].process(0);
+  //S0[1].process(1);
+  //Process_S0(0); //CH = S01
+  //Process_S0(1); //CH = S02
 
   ModbusRead(usedModbusChannels);
   Schedule::loop();
