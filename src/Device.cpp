@@ -11,6 +11,11 @@
 #include "Device.h"
 #include "LED_Statusanzeige.h"
 #include "Logic.h"
+#include "S0_Master.h"
+
+S0_Master* S0_Master::instance = NULL ;
+S0_Master S0_1 ;
+S0_Master S0_2 ;
 
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
@@ -177,6 +182,15 @@ bool setupModbus()
 
 void setupS0()
 {
+  // NEU ************
+  pinMode(S0_CH1, INPUT_PULLUP);
+  pinMode(S0_CH2, INPUT_PULLUP);
+  S0_1.initS0(S0_CH1);
+  S0_2.initS0(S0_CH2);
+
+  // ENDE NEU ******
+
+
   if (knx.paramByte(MOD_DefineS0zaehler1) > 0)
   {
     SERIAL_DEBUG.println("S01 = Aktiv");
