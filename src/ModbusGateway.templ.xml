@@ -282,7 +282,6 @@
               <ComObjectRef Id="%AID%_O-%T%%CCC%001_R-%T%%CCC%00131" RefId="%AID%_O-%T%%CCC%001" Name="INP_CH_%C%_DPT_13"        Text="{{0:Kanal %C%}}: Input" FunctionText="Signed - 4 byte" Priority="Low" ObjectSize="4 Bytes" WriteFlag="Enabled" CommunicationFlag="Enabled" DatapointType="DPST-13-1" TextParameterRefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" />
               <ComObjectRef Id="%AID%_O-%T%%CCC%001_R-%T%%CCC%00132" RefId="%AID%_O-%T%%CCC%001" Name="OUT_CH_%C%_DPT_14"        Text="{{0:Kanal %C%}}: Output" FunctionText="Float - 4 byte" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-14-0" TextParameterRefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" />
               <ComObjectRef Id="%AID%_O-%T%%CCC%001_R-%T%%CCC%00133" RefId="%AID%_O-%T%%CCC%001" Name="INP_CH_%C%_DPT_14"        Text="{{0:Kanal %C%}}: Input" FunctionText="Float - 4 byte" Priority="Low" ObjectSize="4 Bytes" WriteFlag="Enabled" CommunicationFlag="Enabled" DatapointType="DPST-14-0" TextParameterRefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" />
-              
             </ComObjectRefs>
             <AddressTable MaxEntries="65535" />
             <AssociationTable MaxEntries="65535" />

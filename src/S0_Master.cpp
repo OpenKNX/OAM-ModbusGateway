@@ -1,16 +1,19 @@
 #include "S0_Master.h"
 #include "Arduino.h"
-#include "Helper.h"
+#include <knx.h>
 #include "LED_Statusanzeige.h"
+#include "HelperFunc.h"
+#include "Helper.h"
 
 S0_Master::S0_Master()
 {
     instance = this;
 };
 
-bool S0_Master::initS0(uint8_t pinInt, uint8_t ledPin)
+bool S0_Master::initS0(uint8_t pinInt, uint8_t ledPin, uint8_t channel)
 {
     _ledPin = ledPin;
+    _channel = channel;
 
     uint8_t irq = digitalPinToInterrupt(pinInt);
     if (irq != NOT_AN_INTERRUPT)
@@ -46,14 +49,25 @@ void S0_Master::set_ImpulseCounted(uint16_t value)
     _impulseCounted = value;
 }
 
+void S0_Master::set_impulseProKwh(uint16_t value)
+{
+    _impulseProKwh = value;
+}
+
 uint16_t S0_Master::get_ImpulseCounted()
 {
     return _impulseCounted;
 }
 
-void S0_Master::set_TimeStopp(uint32_t value)
+uint16_t S0_Master::get_impulseProKwh()
 {
-    _timeStopp = value;
+    return _impulseProKwh;
+}
+
+
+float S0_Master::getCurrentConsumption()
+{
+    return _currentConsumption;
 }
 
 void S0_Master::process(uint8_t channel)
@@ -90,11 +104,21 @@ void S0_Master::process(uint8_t channel)
         if (_impulseCounted >= _impulseProKwh)
         {
             // Zählerstand um eins erhöhen
-            _meterValue++; 
+            _meterValue++;
             // Gezählte Impulse wieder auf Null setzen
             _impulseCounted = 0;
-
         }
         //-------------------------------------- Zähler ENDE -----------------------------------------------------
+
+        //----------------- Mom Verbrauch: Mindestleistung/durchfluss - Berechnung = 0(W/l/m3) -------------------
+        // Berechnung max Pulsdauer für Mindestleistung/durchfluss
+        // Dauer = 3600sek * Impulse / Mindestleistung
+        switch (knx.paramByte(getParBIN(BIN_S0DefineZaehler, channel)))
+        {
+            case zaehlerElek:
+                _currentConsumption = 3600.0 / ((_timeStopp - _timeStart) / (_impulseProKwh * 1.0));
+                break;
+        }
+        //-------------------------------------- Mom Verbrauch ENDE -----------------------------------------------------
     }
 }

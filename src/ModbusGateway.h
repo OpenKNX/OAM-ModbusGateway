@@ -195,18 +195,6 @@
 #define MOD_BusWordOrderSelectionSlave10 105      // 8 Bits, Bit 7-0
 #define MOD_MBusBaurateSelection      106      // 8 Bits, Bit 7-0
 #define MOD_MBusParitySelection       107      // 8 Bits, Bit 7-0
-#define MOD_S01Impulse                118      // uint16_t
-#define MOD_S02Impulse                120      // uint16_t
-#define MOD_DefineS0zaehler1          122      // 8 Bits, Bit 7-0
-#define MOD_DefineS0zaehler2          123      // 8 Bits, Bit 7-0
-#define MOD_SendDelayS01              124      // int32_t
-#define MOD_SendDelayS02              128      // int32_t
-#define MOD_defineStartCounterS01     132      // 1 Bit, Bit 7
-#define     MOD_defineStartCounterS01Mask 0x80
-#define     MOD_defineStartCounterS01Shift 7
-#define MOD_defineStartCounterS02     133      // 1 Bit, Bit 7
-#define     MOD_defineStartCounterS02Mask 0x80
-#define     MOD_defineStartCounterS02Shift 7
 #define MOD_Modbus                    141      // 1 Bit, Bit 7
 #define     MOD_ModbusMask 0x80
 #define     MOD_ModbusShift 7
@@ -235,31 +223,9 @@
 #define     MOD_ModbusZaehler1selectionShift 7
 #define MOD_ModbusZaehler1Offset      152      // int32_t
 #define MOD_ModbusZaehler1DPT         156      // 8 Bits, Bit 7-0
-#define MOD_S01CalDef                 160      // 8 Bits, Bit 7-0
-#define MOD_S02CalDef                 161      // 8 Bits, Bit 7-0
-#define MOD_S01SendModeCounter        162      // 8 Bits, Bit 7-0
-#define MOD_S02SendModeCounter        163      // 8 Bits, Bit 7-0
-#define MOD_SendminValueDelayS01      164      // uint16_t
-#define MOD_SendminValueDelayS02      166      // uint16_t
-#define MOD_SendminValuechangeS01     170      // uint16_t
-#define MOD_SendminValuechangeS02     172      // uint16_t
-#define MOD_SendDelayConS01           174      // int32_t
-#define MOD_SendDelayConS02           178      // int32_t
-#define MOD_SendminValuechangeConS01  182      // uint16_t
-#define MOD_SendminValuechangeConS02  184      // uint16_t
-#define MOD_S01SendModeCon            186      // 8 Bits, Bit 7-0
-#define MOD_S02SendModeCon            187      // 8 Bits, Bit 7-0
-#define MOD_SendminValueDelayConS01   188      // uint16_t
-#define MOD_SendminValueDelayConS02   190      // uint16_t
-#define MOD_DefineUnitS01             192      // 8 Bits, Bit 7-0
-#define MOD_DefineUnitS02             193      // 8 Bits, Bit 7-0
-#define MOD_DefineMinValueS01         194      // uint16_t
-#define MOD_DefineMinValueS02         196      // uint16_t
 
 #define MOD_KoDebugModbus 20
 #define MOD_KoDebugMBus 21
-#define MOD_KoS01_ZaehlerWert 22
-#define MOD_KoS02_ZaehlerWert 23
 #define MOD_KoZaehler1_base 24
 #define MOD_KoZaehler2_base 25
 #define MOD_KoZaehler3_base 26
@@ -268,19 +234,11 @@
 #define MOD_KoPower2_base 29
 #define MOD_KoPower3_base 30
 #define MOD_KoPower4_base 31
-#define MOD_KoS01_Ges_Verbrauch 32
-#define MOD_KoS01_Akt1_Verbrauch 33
-#define MOD_KoS01_Akt2_Verbrauch 34
-#define MOD_KoS01_Res 35
-#define MOD_KoS02_Ges_Verbrauch 36
-#define MOD_KoS02_Akt1_Verbrauch 37
-#define MOD_KoS02_Akt2_Verbrauch 38
-#define MOD_KoS02_Res 39
 
 #define LOG_ChannelCount 60
 
 // Parameter per channel
-#define LOG_ParamBlockOffset 198
+#define LOG_ParamBlockOffset 157
 #define LOG_ParamBlockSize 86
 #define LOG_fChannelDelayBase          0      // 2 Bits, Bit 7-6
 #define     LOG_fChannelDelayBaseMask 0xC0
@@ -944,7 +902,7 @@
 #define LOG_fE2OtherKO                84      // uint15_t
 
 // Communication objects per channel (multiple occurrence)
-#define LOG_KoOffset 150
+#define LOG_KoOffset 170
 #define LOG_KoBlockSize 3
 #define LOG_KoKOfE1 0
 #define LOG_KoKOfE2 1
@@ -953,7 +911,7 @@
 #define MOD_ChannelCount 99
 
 // Parameter per channel
-#define MOD_ParamBlockOffset 5358
+#define MOD_ParamBlockOffset 5317
 #define MOD_ParamBlockSize 38
 #define MOD_CHModbusSlaveSelection     0      // 8 Bits, Bit 7-0
 #define MOD_CHModBusDptSelection       1      // 8 Bits, Bit 7-0
@@ -1014,7 +972,56 @@
 #define MOD_KoBlockSize 1
 #define MOD_KoGO_BASE_ 0
 
+#define BIN_ChannelCount 2
+
+// Parameter per channel
+#define BIN_ParamBlockOffset 9079
+#define BIN_ParamBlockSize 34
+#define BIN_CHSendenStart3             0      // 1 Bit, Bit 7
+#define     BIN_CHSendenStart3Mask 0x80
+#define     BIN_CHSendenStart3Shift 7
+#define BIN_CHsperr3                   0      // 1 Bit, Bit 6
+#define     BIN_CHsperr3Mask 0x40
+#define     BIN_CHsperr3Shift 6
+#define BIN_CHValueOpen3               0      // 1 Bit, Bit 5
+#define     BIN_CHValueOpen3Mask 0x20
+#define     BIN_CHValueOpen3Shift 5
+#define BIN_InputTypes                 1      // 8 Bits, Bit 7-0
+#define BIN_Sendcycletime              2      // int16_t
+#define BIN_SendFlanken                4      // 8 Bits, Bit 7-0
+#define BIN_FrequenceEqu               5      // int16_t
+#define BIN_SendenAbsolut              7      // int16_t
+#define BIN_SendenRelativ              9      // int8_t
+#define BIN_S0Impulse                 10      // uint16_t
+#define BIN_S0DefineZaehler           12      // 8 Bits, Bit 7-0
+#define BIN_S0SendDelay               13      // uint16_t
+#define BIN_S0defineStartCounter      15      // 1 Bit, Bit 7
+#define     BIN_S0defineStartCounterMask 0x80
+#define     BIN_S0defineStartCounterShift 7
+#define BIN_S0CalDef                  16      // 8 Bits, Bit 7-0
+#define BIN_S0SendModeCounter         17      // 8 Bits, Bit 7-0
+#define BIN_S0SendminValueDelay       18      // uint16_t
+#define BIN_S0SendminValuechange      20      // uint16_t
+#define BIN_SendDelayConS0            22      // uint16_t
+#define BIN_S0SendminValuechangeCon   24      // uint16_t
+#define BIN_S0SendModeCon             28      // 8 Bits, Bit 7-0
+#define BIN_S0SendminValueDelayCon    29      // uint16_t
+#define BIN_S0DefineUnit              31      // 8 Bits, Bit 7-0
+#define BIN_S0DefineMinValue          32      // uint16_t
+
+// Communication objects per channel (multiple occurrence)
+#define BIN_KoOffset 150
+#define BIN_KoBlockSize 8
+#define BIN_Ko_Status_BinarInput 0
+#define BIN_Ko_Sperr_BinarInput 1
+#define BIN_KoBIN_BASE__1 2
+#define BIN_KoS01_ZaehlerWert 3
+#define BIN_KoS0_Ges_Verbrauch 4
+#define BIN_KoS0_Akt1_Verbrauch 5
+#define BIN_KoS0_Akt2_Verbrauch 6
+#define BIN_KoS0_AnzahlImpulse 7
+
 #define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 33
-#define MAIN_ApplicationVersion 9
+#define MAIN_ApplicationNumber 48
+#define MAIN_ApplicationVersion 2
 #define MAIN_OrderNumber "MFKnxModDev"

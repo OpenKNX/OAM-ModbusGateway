@@ -7,7 +7,7 @@
 //#include "hardware.h"
 #include "Device.h"
 #include "LED_Statusanzeige.h"
-
+/*
 //-------- Test only --------------------
 //#define Serial_Debug_S0_Int
 unsigned long time_S0_LED_Blink[2] = {0};
@@ -377,6 +377,11 @@ void Process_S0(uint8_t channel)
 
     */
 
+
+
+
+
+/*
     if (delayCheck(time_S0_LED_Blink[1], 100))
     {
         setLED(S01_LED + channel, LOW);
@@ -732,3 +737,5 @@ void sendZaehlerStand_2(int i, uint16_t S0_Zaehler[], uint16_t S0_Zaehler_old[])
     SERIAL_DEBUG.println(S0_Zaehler[i]);
 #endif
 }
+
+*/
