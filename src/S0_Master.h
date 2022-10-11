@@ -27,8 +27,9 @@ class S0_Master
 
     uint8_t _ledPin;
 
-    uint16_t _impulseProKwh;
+    uint16_t _impulseProKwh;        
     uint16_t _impulseCounted = 0;
+    uint16_t _meterValue = 0;
 
     uint32_t _timeStart = 0;
     uint32_t _timeStopp = 0;

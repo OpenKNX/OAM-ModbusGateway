@@ -16,7 +16,6 @@
 S0_Master* S0_Master::instance = NULL ;
 S0_Master S0[MAX_S0_CHANNELS] ;
 
-
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
 Logic gLogic;
@@ -325,9 +324,8 @@ void initHW(uint8_t hwID)
 
   initI2cStatusLeds();
   setLED_OFF();
-  setLED(MODBUS_STATUS, HIGH);
   setLED(MBUS_STATUS, LOW);
-  setLED(MODBUS_ERROR, HIGH);
+  setLED(MODBUS_ERROR, LOW);
 
 }
 
@@ -371,8 +369,8 @@ void appLoop()
   ProcessHeartbeat();
   ProcessReadRequests();
 
-  //S0[0].process(0);
-  //S0[1].process(1);
+  S0[0].process(0);
+  S0[1].process(1);
   //Process_S0(0); //CH = S01
   //Process_S0(1); //CH = S02
 
