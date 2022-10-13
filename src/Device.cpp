@@ -13,8 +13,13 @@
 #include "wiring_private.h" // pinPeripheral() function
 #include <knx.h>
 
-S0_Master *S0_Master::instance = NULL;
+#include "testlib.h"
+
+
 S0_Master S0[MAX_S0_CHANNELS];
+
+testLib myLib[MAX_S0_CHANNELS]; // object instance
+
 
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
@@ -231,6 +236,7 @@ void setupS0()
         SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue,S0_CH2)));
         SERIAL_DEBUG.println("---");
 #endif
+
     }
 }
 

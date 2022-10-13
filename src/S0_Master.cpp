@@ -1,19 +1,25 @@
 #include "S0_Master.h"
 #include "Arduino.h"
-#include <knx.h>
-#include "LED_Statusanzeige.h"
-#include "HelperFunc.h"
 #include "Helper.h"
+#include "HelperFunc.h"
+#include "KnxHelper.h"
+#include "LED_Statusanzeige.h"
+#include <knx.h>
 
-S0_Master::S0_Master()
-{
-    instance = this;
+S0_Master *S0_Master::_instance = NULL;
+
+S0_Master::S0_Master(){
+    // instance = this;
 };
 
 bool S0_Master::initS0(uint8_t pinInt, uint8_t ledPin, uint8_t channel)
 {
+    _instance = this;
+
     _ledPin = ledPin;
     _channel = channel;
+
+    _timer_ProMin = millis();
 
     uint8_t irq = digitalPinToInterrupt(pinInt);
     if (irq != NOT_AN_INTERRUPT)
@@ -64,7 +70,6 @@ uint16_t S0_Master::get_impulseProKwh()
     return _impulseProKwh;
 }
 
-
 float S0_Master::getCurrentConsumption()
 {
     return _currentConsumption;
@@ -72,14 +77,32 @@ float S0_Master::getCurrentConsumption()
 
 void S0_Master::process(uint8_t channel)
 {
-
+    // ************************************************
     // LED Blinkfunktion
-    if (delayCheck(_time_S0_LED_Blink, 100))
+    if (delayCheck(_time_S0_LED_Blink, 100) && _statusLedOn)
     {
         setLED(_ledPin, LOW);
+        _statusLedOn = false;
 #ifdef Debug_S0_LED
         digitalWrite(Diag_LED, false);
 #endif
+        SERIAL_DEBUG.println("-");
+    }
+
+    // ************************************************
+    // Timer 1min
+    if (delayCheck(_timer_ProMin, 10000))
+    {
+        _timer_ProMin = millis();
+
+        knx.getGroupObject(getComBIN(BIN_KoS0_AnzahlImpulse, channel)).value(_impulseCounted_ProMin, getDPT(VAL_DPT_7));
+
+#ifdef Serial_Debug_S0
+        SERIAL_DEBUG.print(channel);
+        SERIAL_DEBUG.print("_Pulse Pro Min: ");
+        SERIAL_DEBUG.println(_impulseCounted_ProMin);
+#endif
+        _impulseCounted_ProMin = 0;
     }
 
     /***************************************************
@@ -89,7 +112,15 @@ void S0_Master::process(uint8_t channel)
     {
         _newImpulse = false;
 
+        // Anzahl Impulse pro Minute
+        _impulseCounted_ProMin++;
+#ifdef Serial_Debug_S0
+        SERIAL_DEBUG.print("Pulse: ");
+        SERIAL_DEBUG.println(_impulseCounted_ProMin);
+#endif
+
         setLED(_ledPin, HIGH);
+        _statusLedOn = true;
 #ifdef Debug_S0_LED
         digitalWrite(Diag_LED, true);
 #endif
@@ -110,7 +141,8 @@ void S0_Master::process(uint8_t channel)
         }
         //-------------------------------------- Zähler ENDE -----------------------------------------------------
 
-        //----------------- Mom Verbrauch: Mindestleistung/durchfluss - Berechnung = 0(W/l/m3) -------------------
+        //-------------------------------------- Mom Verbrauch: --------------------------------------------------
+
         // Berechnung max Pulsdauer für Mindestleistung/durchfluss
         // Dauer = 3600sek * Impulse / Mindestleistung
         switch (knx.paramByte(getParBIN(BIN_S0DefineZaehler, channel)))
@@ -119,6 +151,6 @@ void S0_Master::process(uint8_t channel)
                 _currentConsumption = 3600.0 / ((_timeStopp - _timeStart) / (_impulseProKwh * 1.0));
                 break;
         }
-        //-------------------------------------- Mom Verbrauch ENDE -----------------------------------------------------
+        //-------------------------------------- Mom Verbrauch ENDE -----------------------------------------------
     }
 }
