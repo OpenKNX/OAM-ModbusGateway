@@ -47,7 +47,7 @@ void S0_Master::isr()
 
 void S0_Master::interrupt_S0()
 {
-    instance->isr();
+    //instance->isr();
 }
 
 void S0_Master::set_ImpulseCounted(uint16_t value)

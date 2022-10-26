@@ -8,18 +8,14 @@
 #include "ModbusGateway.h"
 #include "ModbusMaster.h"
 #include "ModbusRead.h"
-#include "S0_Master.h"
+//#include "S0_Master.h"
 #include "HelperFunc.h"
 #include "wiring_private.h" // pinPeripheral() function
 #include <knx.h>
 
-#include "testlib.h"
+#include "S0Input.h"
 
-
-S0_Master S0[MAX_S0_CHANNELS];
-
-testLib myLib[MAX_S0_CHANNELS]; // object instance
-
+S0Input S0[MAX_S0_CHANNELS];
 
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
@@ -195,49 +191,65 @@ void setupS0()
     digitalWrite(Diag_LED, false);
 #endif
 
-    if (getParBIN(knx.paramByte(BIN_S0DefineZaehler), S0_CH1) > 0)
+    if (knx.paramByte(getParBIN(BIN_InputTypes, S0_CH1)) == typeS0)
     {
         pinMode(S0_CH1_Pin, INPUT);
         // init
-        S0[S0_CH1].initS0(S0_CH1_Pin, S0_CH1_LED, 0);
+        // S0[S0_CH1].initS0(S0_CH1_Pin, S0_CH1_LED, 0);
+        S0[S0_CH1].setup(S0_CH1_Pin, S0_CH1_LED, S0_CH1);
         // set Impulse / KWH
         S0[S0_CH1].set_impulseProKwh(knx.paramWord(getParBIN(BIN_S0Impulse, S0_CH1)));
+        S0[S0_CH1].set_maxPulsLength(knx.paramWord(getParBIN(BIN_S0DefineMinValue, S0_CH1)));
+
 // print value
 #ifdef Serial_Debug_S0
         SERIAL_DEBUG.println("---");
         SERIAL_DEBUG.println("S01 = Aktiv");
         SERIAL_DEBUG.print("Impulse(impl/KWh): ");
-        SERIAL_DEBUG.println(S0[S0_CH1].get_impulseProKwh());
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0Impulse, S0_CH1)));
         SERIAL_DEBUG.print("DefineUnit: ");
-        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0DefineUnit,S0_CH1)));
+        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0DefineUnit, S0_CH1)));
         SERIAL_DEBUG.print("min Value: ");
-        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue,S0_CH1)));
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue, S0_CH1)));
+        SERIAL_DEBUG.print("Sende Modus: ");
+        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0SendModeCounter, S0_CH1)));
+        SERIAL_DEBUG.print("Zyklisch Senden (s): ");
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0SendDelay, S0_CH1)));
         SERIAL_DEBUG.println("---");
 #endif
     }
 
-    if (getParBIN(knx.paramByte(BIN_S0DefineZaehler), S0_CH2) > 0)
+    if (knx.paramByte(getParBIN(BIN_InputTypes, S0_CH2)) == typeS0)
     {
 
         pinMode(S0_CH2_Pin, INPUT);
         // init
-        S0[S0_CH2].initS0(S0_CH2_Pin, S0_CH2_LED, S0_CH2);
+        S0[S0_CH2].setup(S0_CH2_Pin, S0_CH2_LED, S0_CH2);
         // set Impulse / KWH
         S0[S0_CH2].set_impulseProKwh(knx.paramWord(getParBIN(BIN_S0Impulse, S0_CH2)));
+        S0[S0_CH2].set_maxPulsLength(knx.paramWord(getParBIN(BIN_S0DefineMinValue, S0_CH2)));
 // print value
 #ifdef Serial_Debug_S0
         SERIAL_DEBUG.println("---");
         SERIAL_DEBUG.println("S02 = Aktiv");
         SERIAL_DEBUG.print("Impulse(impl/KWh): ");
-        SERIAL_DEBUG.println(S0[S0_CH2].get_impulseProKwh());
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0Impulse, S0_CH2)));
         SERIAL_DEBUG.print("DefineUnit: ");
-        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0DefineUnit,S0_CH2)));
+        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0DefineUnit, S0_CH2)));
         SERIAL_DEBUG.print("min Value: ");
-        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue,S0_CH2)));
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue, S0_CH2)));
+        SERIAL_DEBUG.print("Zyklisch Senden (s): ");
+        SERIAL_DEBUG.println(knx.paramInt(getParBIN(BIN_S0SendDelay, S0_CH2)));
+        SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0SendDelay, S0_CH2)));
         SERIAL_DEBUG.println("---");
-#endif
+        
 
+      
+#endif
     }
+#ifdef Serial_Debug_Modbus
+    SERIAL_DEBUG.println("S0 Setup Done");
+#endif
 }
 
 uint8_t get_PROG_LED_PIN(uint8_t hwID)
@@ -382,10 +394,14 @@ void appLoop()
     ProcessHeartbeat();
     ProcessReadRequests();
 
-    S0[0].process(0);
-    S0[1].process(1);
-    // Process_S0(0); //CH = S01
-    // Process_S0(1); //CH = S02
+    if (knx.paramByte(getParBIN(BIN_InputTypes, S0_CH1)) == typeS0)
+    {
+        S0[0].process();
+    }
+    if (knx.paramByte(getParBIN(BIN_InputTypes, S0_CH2)) == typeS0)
+    {
+        S0[1].process();
+    }
 
     ModbusRead(usedModbusChannels);
     Schedule::loop();

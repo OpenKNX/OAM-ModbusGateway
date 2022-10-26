@@ -2,11 +2,6 @@
 
 #include "Arduino.h"
 
-#define S0_CH1 0
-#define S0_CH2 1
-#define S0_CH3 2
-#define S0_Ch4 3
-
 #define zaehlerElek 1
 #define zaehlerWasser 2
 #define zaehlerGas 3
