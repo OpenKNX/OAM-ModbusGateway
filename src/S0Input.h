@@ -15,6 +15,8 @@
 #define zaehlerGas      3
 #define zaehlerSonstig  4
 
+#define unit_l   0
+#define unit_m3  1
 
 class S0Input
 {
@@ -46,8 +48,11 @@ class S0Input
     uint32_t _maxPulsLength = 0;
     uint32_t _timer_minSendDelay = 0;
     uint32_t _timer_SendDelay = 0;
+    uint32_t _timer_minSendDelay_con = 0;
+    uint32_t _timer_SendDelay_con = 0;
 
     float _currentConsumption = 0;
+    float _currentConsumption_old = 0;
 
     static void callbackDispatcher(void *iInstance);
     void pinInterruptHandler();

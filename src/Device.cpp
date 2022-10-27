@@ -238,8 +238,9 @@ void setupS0()
         SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0DefineUnit, S0_CH2)));
         SERIAL_DEBUG.print("min Value: ");
         SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0DefineMinValue, S0_CH2)));
+        SERIAL_DEBUG.print("Senden Modus Verbrauch: ");
+        SERIAL_DEBUG.println(knx.paramByte(getParBIN(BIN_S0SendModeCon, S0_CH2)));
         SERIAL_DEBUG.print("Zyklisch Senden (s): ");
-        SERIAL_DEBUG.println(knx.paramInt(getParBIN(BIN_S0SendDelay, S0_CH2)));
         SERIAL_DEBUG.println(knx.paramWord(getParBIN(BIN_S0SendDelay, S0_CH2)));
         SERIAL_DEBUG.println("---");
         
