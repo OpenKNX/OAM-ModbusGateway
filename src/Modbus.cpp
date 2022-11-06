@@ -243,13 +243,13 @@ bool Modbus::readModbus(uint8_t channel, bool readRequest)
 #ifdef Serial_Debug_Modbus_Min
         if (readRequest)
         {
-            SERIAL_DEBUG.println("KNX-Modbus ");
+            SERIAL_DEBUG.println("KNX->Modbus ");
         }
 #endif
         if (_readyToSend[channel])
         {
-            sendModbus(channel);
             _readyToSend[channel] = false;
+            sendModbus(channel);
         }
         return false;
         break;
@@ -295,6 +295,42 @@ uint8_t Modbus::sendProtocol(uint8_t channel, uint16_t registerAddr, uint16_t u1
     return ku8MBIllegalFunction;
 }
 
+void Modbus::printDebugResult(const char* dpt, uint16_t registerAddr, uint8_t result)
+{
+#ifdef Serial_Debug_Modbus
+    SERIAL_DEBUG.print(" DPT");
+    SERIAL_DEBUG.print(dpt);
+    SERIAL_DEBUG.print(" ");
+    SERIAL_DEBUG.print(registerAddr);
+    SERIAL_DEBUG.print(" ");
+#endif
+#ifdef Serial_Debug_Modbus_Min
+    switch (result)
+    {
+        case ku8MBSuccess:
+            SERIAL_DEBUG.println("DONE");
+            break;
+#ifdef Serial_Debug_Modbus
+        case ku8MBInvalidSlaveID:
+            SERIAL_DEBUG.println("ERROR: Invalid Slave ID");
+            break;
+        case ku8MBInvalidFunction:
+            SERIAL_DEBUG.println("ERROR: Invalid Function");
+            break;
+        case ku8MBResponseTimedOut:
+            SERIAL_DEBUG.println("ERROR: Response Timed Out");
+            break;
+        case ku8MBInvalidCRC:
+            SERIAL_DEBUG.println("ERROR: Invalid CRC");
+            break;
+#endif
+        default:
+            SERIAL_DEBUG.println("ERROR");
+            break;
+    }
+#endif
+}
+
 bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
 {
     uint8_t result;
@@ -313,10 +349,6 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT1.001 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             bool v = (bool)iKo.value(getDPT(VAL_DPT_1))  ^ (knx.paramByte(getPar(MOD_CHModBusInputTypInvDpt1, channel)));
 
             // Bit Register
@@ -337,19 +369,7 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
             {
                 return false;
             }
-
-            if (result == ku8MBSuccess)
-            {
-#ifdef Serial_Debug_Modbus_Min
-                SERIAL_DEBUG.println(" DONE");
-#endif
-            }
-            else
-            {
-#ifdef Serial_Debug_Modbus_Min
-                SERIAL_DEBUG.println(" ERROR");
-#endif
-            }
+            printDebugResult("1.001", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -359,14 +379,8 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT5.004 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             result = sendProtocol(channel, registerAddr, iKo.value(getDPT(VAL_DPT_5001)));
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("5.004", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -376,10 +390,6 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT5.010 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             uint16_t v = iKo.value(getDPT(VAL_DPT_5001));
 
             switch (knx.paramByte(getPar(MOD_CHModBusRegisterPosDPT5, channel)))
@@ -399,10 +409,7 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
             } // Ende Register Pos
 
             result = sendProtocol(channel, registerAddr, v);
-
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("5.001", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -412,10 +419,6 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT7 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             uint16_t v = iKo.value(getDPT(VAL_DPT_7));
 
             switch (knx.paramByte(getPar(MOD_CHModBusRegisterPosDPT7, channel)))
@@ -432,9 +435,7 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
             } // Ende Register Pos
 
             result = sendProtocol(channel, registerAddr, v);
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("5", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -444,14 +445,8 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT8 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             result = sendProtocol(channel, registerAddr, iKo.value(getDPT(VAL_DPT_8)));
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("8", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -461,10 +456,6 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT9 ");
-            SERIAL_DEBUG.print(registerAddr);
-#endif
             float raw = iKo.value(getDPT(VAL_DPT_9));
             uint16_t v;
             // adapt input value (Low Byte / High Byte / High&Low Byte / .... )
@@ -492,9 +483,7 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
                 return false;
             }
             result = sendProtocol(channel, registerAddr, v);
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("9", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -504,18 +493,11 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT12 ");
-            SERIAL_DEBUG.print(registerAddr);
-            SERIAL_DEBUG.print(" 0x10 ");
-#endif
             uint32_t v = iKo.value(getDPT(VAL_DPT_12));
             setTransmitBuffer(0, v & 0xffff);
             setTransmitBuffer(1, v >> 16);
             result = writeMultipleRegisters(registerAddr, 2);
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("12 0x10", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -525,18 +507,11 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT13 ");
-            SERIAL_DEBUG.print(registerAddr);
-            SERIAL_DEBUG.print(" 0x10 ");
-#endif
             int32_t v = iKo.value(getDPT(VAL_DPT_13));
             setTransmitBuffer(0, v);
             setTransmitBuffer(1, v >> 16);
             result = writeMultipleRegisters(registerAddr, 2);
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("13 0x10", registerAddr, result);
         }
     }
     //*****************************************************************************************************************************************
@@ -546,11 +521,6 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
     {
         if (readRequest)
         {
-#ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print(" DPT14 ");
-            SERIAL_DEBUG.print(registerAddr);
-            SERIAL_DEBUG.print(" 0x10 ");
-#endif
             float raw = iKo.value(getDPT(VAL_DPT_14));
             union floatint {
                 float floatVal;
@@ -569,9 +539,7 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
                 setTransmitBuffer(1, v >> 16);
             }
             result = writeMultipleRegisters(registerAddr, 2);
-#ifdef Serial_Debug_Modbus_Min
-            SERIAL_DEBUG.println((result == ku8MBSuccess) ? " DONE" : " ERROR");
-#endif
+            printDebugResult("14 0x10", registerAddr, result);
         }
     }
 
@@ -597,7 +565,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
 #ifdef Serial_Debug_Modbus
     if (readRequest)
     {
-        SERIAL_DEBUG.print("Modbus-KNX ");
+        SERIAL_DEBUG.print("Modbus->KNX ");
         SERIAL_DEBUG.print(registerAddr);
         SERIAL_DEBUG.print(" ");
     }
@@ -625,7 +593,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
             // clear Responsebuffer before revicing a new message
             clearResponseBuffer();
 
-            bool v;
+            bool v = false;
 
             // Bit Register
             if (knx.paramByte(getPar(MOD_CHModBusInputTypDpt1, channel)) == 0)
@@ -729,7 +697,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus
-            SERIAL_DEBUG.print("DPT5.010 |");
+            SERIAL_DEBUG.print("DPT5.001 |");
 #endif
 
             // clear Responsebuffer before revicing a new message
@@ -901,7 +869,6 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
     //*****************************************  DPT 7 ***************************************************************************************
     //*****************************************************************************************************************************************
     case 7:
-
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus
@@ -979,7 +946,6 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
     //*****************************************  DPT 8 signed 16Bit ***************************************************************************
     //*****************************************************************************************************************************************
     case 8:
-
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus
@@ -1047,7 +1013,6 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
     //*****************************************  DPT 9 ***************************************************************************************
     //*****************************************************************************************************************************************
     case 9:
-
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus
@@ -1167,12 +1132,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
             }
         }
         break;
-
     //*****************************************************************************************************************************************
     //*****************************************  DPT 12 ***************************************************************************************
     //*****************************************************************************************************************************************
     case 12:
-
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus
@@ -1336,7 +1299,6 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
     //*****************************************  DPT 13 ***************************************************************************************
     //*****************************************************************************************************************************************
     case 13:
-
         if (readRequest)
         {
 #ifdef Serial_Debug_Modbus

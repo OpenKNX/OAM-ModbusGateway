@@ -51,7 +51,7 @@ void Process_S0(uint8_t channel)
     float mom_S0[channel];
     uint32_t maxPulsLength;
 
-    uint32_t lCycle;
+    // uint32_t lCycle;
     uint8_t lsendMode;
     uint8_t lsendModeCon;
     bool det_maxPuls = false;

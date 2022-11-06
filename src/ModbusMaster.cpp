@@ -749,8 +749,24 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
   
   // loop until we run out of time or bytes, or an error occurs
   u32StartTime = millis();
+  uint8_t u8BytesLeftStore = 0;
   while (u8BytesLeft && !u8MBStatus)
   {
+#if __MODBUSMASTER_DEBUG__
+    if (u8MBFunction == ku8MBWriteSingleRegister)
+    {
+      SERIAL_DEBUG.print("Bytes left: ");
+      SERIAL_DEBUG.print(u8BytesLeft);
+      if (u8BytesLeft == u8BytesLeftStore)
+      {
+        SERIAL_DEBUG.print(" --- SAME ---");
+      }
+      u8BytesLeftStore = u8BytesLeft;
+      SERIAL_DEBUG.print(" / Time: ");
+      SERIAL_DEBUG.println(millis() - u32StartTime);
+      
+    }
+#endif
     if (_serial->available())
     {
 #if __MODBUSMASTER_DEBUG__

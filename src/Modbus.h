@@ -65,7 +65,7 @@ private:
     static float counterZ4;
     
 
-
+    void printDebugResult(const char* dpt, uint16_t registerAddr, uint8_t result);
     bool modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest);
     bool knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest);
     void debugMsgClear(uint8_t channel);
