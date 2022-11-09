@@ -277,7 +277,7 @@
 #define MOD_KoS02_Akt2_Verbrauch 38
 #define MOD_KoS02_Res 39
 
-#define LOG_ChannelCount 60
+#define LOG_ChannelCount 50
 
 // Parameter per channel
 #define LOG_ParamBlockOffset 198
@@ -953,7 +953,7 @@
 #define MOD_ChannelCount 99
 
 // Parameter per channel
-#define MOD_ParamBlockOffset 5358
+#define MOD_ParamBlockOffset 4498
 #define MOD_ParamBlockSize 38
 #define MOD_CHModbusSlaveSelection     0      // 8 Bits, Bit 7-0
 #define MOD_CHModBusDptSelection       1      // 8 Bits, Bit 7-0
@@ -1016,5 +1016,5 @@
 
 #define MAIN_OpenKnxId 0xA2
 #define MAIN_ApplicationNumber 33
-#define MAIN_ApplicationVersion 10
+#define MAIN_ApplicationVersion 12
 #define MAIN_OrderNumber "MFKnxModDev"

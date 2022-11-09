@@ -90,21 +90,21 @@ void ModbusMaster::beginTransmission(uint16_t u16Address)
   u16TransmitBufferLength = 0;
 }
 
-// eliminate this function in favor of using existing MB request functions
-uint8_t ModbusMaster::requestFrom(uint16_t address, uint16_t quantity)
-{
-  uint8_t read;
-  // clamp to buffer length
-  if (quantity > ku8MaxBufferSize)
-  {
-    quantity = ku8MaxBufferSize;
-  }
-  // set rx buffer iterator vars
-  _u8ResponseBufferIndex = 0;
-  _u8ResponseBufferLength = read;
+// // eliminate this function in favor of using existing MB request functions
+// uint8_t ModbusMaster::requestFrom(uint16_t address, uint16_t quantity)
+// {
+//   uint8_t read;
+//   // clamp to buffer length
+//   if (quantity > ku8MaxBufferSize)
+//   {
+//     quantity = ku8MaxBufferSize;
+//   }
+//   // set rx buffer iterator vars
+//   _u8ResponseBufferIndex = 0;
+//   _u8ResponseBufferLength = read;
 
-  return read;
-}
+//   return read;
+// }
 
 
 void ModbusMaster::sendBit(bool data)
@@ -749,24 +749,24 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
   
   // loop until we run out of time or bytes, or an error occurs
   u32StartTime = millis();
-  uint8_t u8BytesLeftStore = 0;
+  // uint8_t u8BytesLeftStore = 0;
   while (u8BytesLeft && !u8MBStatus)
   {
-#if __MODBUSMASTER_DEBUG__
-    if (u8MBFunction == ku8MBWriteSingleRegister)
-    {
-      SERIAL_DEBUG.print("Bytes left: ");
-      SERIAL_DEBUG.print(u8BytesLeft);
-      if (u8BytesLeft == u8BytesLeftStore)
-      {
-        SERIAL_DEBUG.print(" --- SAME ---");
-      }
-      u8BytesLeftStore = u8BytesLeft;
-      SERIAL_DEBUG.print(" / Time: ");
-      SERIAL_DEBUG.println(millis() - u32StartTime);
+// #if __MODBUSMASTER_DEBUG__
+//     if (u8MBFunction == ku8MBWriteSingleRegister)
+//     {
+//       SERIAL_DEBUG.print("Bytes left: ");
+//       SERIAL_DEBUG.print(u8BytesLeft);
+//       if (u8BytesLeft == u8BytesLeftStore)
+//       {
+//         SERIAL_DEBUG.print(" --- SAME ---");
+//       }
+//       u8BytesLeftStore = u8BytesLeft;
+//       SERIAL_DEBUG.print(" / Time: ");
+//       SERIAL_DEBUG.println(millis() - u32StartTime);
       
-    }
-#endif
+//     }
+// #endif
     if (_serial->available())
     {
 #if __MODBUSMASTER_DEBUG__
