@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "hardware.h"
+#include "hardware.h"
 #include "PCF8575.h"
 
 #define I2C_Expander_CH 16

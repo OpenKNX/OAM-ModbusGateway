@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ModbusGateway.h"
+#include "knxprod.h"
+#include "hardware.h"
 #include "ModbusMaster.h"
 #include <knx.h>				
 

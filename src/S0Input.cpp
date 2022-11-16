@@ -1,4 +1,5 @@
 #include "S0Input.h"
+#include "knxprod.h"
 #include "Helper.h"
 #include "HelperFunc.h"
 #include "KnxHelper.h"
