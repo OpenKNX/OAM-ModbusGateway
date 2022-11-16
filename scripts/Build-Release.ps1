@@ -21,88 +21,20 @@
 #     "group": "test"
 # }
 
-
+# uncomment the following, if required
+# $releaseIndication = $args[0]
 
 # set product names, allows mapping of (devel) name in Project to a more consistent name in release
-$sourceName="ModbusGateway"  # change this
-$targetName=$sourceName # change this
+# $settings = scripts/OpenKNX-Build-Settings.ps1
 
-# Release indication, set according names for Release or Beta
-$releaseIndication = $args[0]
-if ($releaseIndication) {
-    $releaseName="$sourceName-$releaseIndication"
-    $appRelease=$releaseIndication
-} else {
-    $releaseName="$sourceName"
-    $appRelease="Beta"
-}
-
-# check and cleanup working dir
-if (Test-Path -Path release) {
-    # clean working dir
-    Remove-Item -Recurse release\*
-} else {
-    New-Item -Path release -ItemType Directory | Out-Null
-}
-
-# create required directories
-Copy-Item -Recurse ../OGM-Common/setup-scripts/reusable/data release
-
-# get xml for kxnprod, always first step which also generates headerfile for release
-~/bin/OpenKNXproducer.exe create --Debug --Output="release/$targetName.knxprod" --HeaderFileName="src/$sourceName.h" "src/$releaseName.xml"
-if (!$?) {
-    Write-Host "Error in knxprod, Release was not built!"
-    exit 1
-}
-Move-Item "src/$releaseName.debug.xml" "release/data/$targetName.xml"
-
-# build firmware based on generated headerfile 
-# the following build steps are project specific and must be adopted accordingly
-# see comment in Build-Step.ps1 for argument description
-
-# Example call, the following 2 lines might be there multiple times for each firmware which should be built
-../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD firmware bin
-# if (!$?) { exit 1 }
-
-# # build firmware for PiPico-BCU-Connector
-# ../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_PiPico_BCU_Connector firmware_PiPico_BCU_Connector uf2
-# if (!$?) { exit 1 }
+# execute generic pre-build steps
+../OGM-Common/setup-scripts/reusable/Build-Release-Preprocess.ps1 $args[0]
+if (!$?) { exit 1 }
 
 # build firmware based on generated headerfile for SAMD
-# ../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD_v31 firmware-v31 bin
-# if (!$?) { exit 1 }
+../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD firmware bin
+if (!$?) { exit 1 }
 
-# ../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD_v30 firmware-v30 bin
-# if (!$?) { exit 1 }
-
-# add necessary scripts
-Copy-Item ../OGM-Common/setup-scripts/reusable/Readme-Release.txt release/
-Copy-Item ../OGM-Common/setup-scripts/reusable/Build-knxprod.ps1 release/
-Copy-Item scripts/Upload-Firmware*.ps1 release/
-
-# add optional files
-if (Test-Path -Path scripts/Readme-Hardware.html -PathType Leaf) {
-    Copy-Item scripts/Readme-Hardware.html release/
-}
-
-# cleanup
-Remove-Item "release/$targetName.knxprod"
-
-# calculate version string
-$appVersion=Select-String -Path src/$sourceName.h -Pattern MAIN_ApplicationVersion
-$appVersion=$appVersion.ToString().Split()[-1]
-$appMajor=[math]::Floor($appVersion/16)
-$appMinor=$appVersion%16
-$appRev=Select-String -Path src/main.cpp -Pattern "const uint8_t firmwareRevision"
-$appRev=$appRev.ToString().Split()[-1].Replace(";","")
-$appVersion="$appMajor.$appMinor"
-if ($appRev -gt 0) {
-    $appVersion="$appVersion.$appRev"
-}
-
-# create package 
-Compress-Archive -Path release/* -DestinationPath Release.zip
-Remove-Item -Recurse release/*
-Move-Item Release.zip "release/$targetName-$appRelease-$appVersion.zip"
-
-Write-Host "Release $targetName-$appRelease-$appVersion successfully created!"
+# execute generic post-build steps
+../OGM-Common/setup-scripts/reusable/Build-Release-Postprocess.ps1 $args[0]
+if (!$?) { exit 1 }
