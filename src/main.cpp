@@ -38,6 +38,7 @@ void setup()
 
     //I2C Init
     Wire.begin();
+    Wire.setClock(400000);
     initHW(get_HW_ID());
 
     // pin or GPIO the programming led is connected to. Default is LED_BUILDIN

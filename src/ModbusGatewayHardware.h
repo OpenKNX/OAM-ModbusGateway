@@ -1,5 +1,8 @@
 #pragma once
 
+//Anzahl an S0 INPUTS
+#define MAX_S0_CHANNELS 2
+
 //DIAG LED
 #define Diag_LED 9
 
@@ -9,8 +12,9 @@
 #define MODBUS_ERROR  4
 #define MBUS_STATUS   3
 #define MBUS_ERROR    2
-#define S01_LED       1
-#define S02_LED       0
+#define S0_CH1_LED    1
+#define S0_CH2_LED    0
+
 #define LED_ON_TIME_S0 150
 
 //Gehäuse Anzeige
@@ -31,8 +35,8 @@
 
 
 // S0
-#define S0_CH1 2
-#define S0_CH2 5
+#define S0_CH1_Pin 2
+#define S0_CH2_Pin 5
 
 // Virtuelle Zähler
 #define maxMeters 4
