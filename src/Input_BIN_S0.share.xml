@@ -21,10 +21,10 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-BINInputType" Name="BINInputType">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="inaktiv"          Value="0" Id="%AID%_PT-BINInputType_EN-0" />
-                  <Enumeration Text="Binäreingang"     Value="1" Id="%AID%_PT-BINInputType_EN-1" />
-                  <Enumeration Text="S0-Schnittstelle" Value="2" Id="%AID%_PT-BINInputType_EN-2" />
-                  <Enumeration Text="Impulszähler"     Value="3" Id="%AID%_PT-BINInputType_EN-3" />
+                  <Enumeration Text="inaktiv"                                     Value="0" Id="%AID%_PT-BINInputType_EN-0" />
+                  <Enumeration Text="Binäreingang (noch nicht implementiert)"     Value="1" Id="%AID%_PT-BINInputType_EN-1" />
+                  <Enumeration Text="S0-Schnittstelle"                            Value="2" Id="%AID%_PT-BINInputType_EN-2" />
+                  <Enumeration Text="Impulszähler (noch nicht implementiert)"     Value="3" Id="%AID%_PT-BINInputType_EN-3" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-BINValueWORD" Name="BINValueWORD">
