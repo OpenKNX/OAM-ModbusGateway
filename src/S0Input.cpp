@@ -297,7 +297,7 @@ void S0Input::process()
                 // Zähler Elektrisch
                 case zaehlerElek:
                     // calculation mom Verbrauch (W)
-                    _currentConsumption = 360000.0 / ((_time_S0_start - _time_S0_stopp) / _impulseProKwh);
+                    _currentConsumption = 3600.0 / ((float)(_time_S0_start - _time_S0_stopp) /(float) _impulseProKwh);
 #ifdef Serial_Debug_S0
                     SERIAL_DEBUG.print("Mom(W) CH");
                     SERIAL_DEBUG.print(_channel + 1);
