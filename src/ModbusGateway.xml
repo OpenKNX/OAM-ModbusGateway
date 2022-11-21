@@ -5,15 +5,15 @@
     <Manufacturer RefId="M-00FA">
       <Catalog>
         <CatalogSection Id="M-00FA_CS-OpenKNX" Name="OpenKNX" Number="OpenKNX" DefaultLanguage="de">
-          <CatalogItem Id="%CatalogItemId%" Name="OpenKNX: Modbus-RTU/S0/Binär Gateway (dev)" Number="1" ProductRefId="%ProductId%" Hardware2ProgramRefId="%Hardware2ProgramId%" DefaultLanguage="de" />
+          <CatalogItem Id="%CatalogItemId%" Name="OpenKNX: Modbus-RTU/S0/Binär Gateway" Number="1" ProductRefId="%ProductId%" Hardware2ProgramRefId="%Hardware2ProgramId%" DefaultLanguage="de" />
         </CatalogSection>
       </Catalog>
       <ApplicationPrograms>
         <!-- Each increase of AppliationVersion FORCES the Enduser to update according firmware, too -->
         <!-- If you just want to have a BUGFIX-Update of the ETS-Appliation (without firmware), increase ApplicationVersion AND ApplicationRevision simultaneously -->
         <!-- To sync ETS-Application and firmware again, increase ApplicationVersion AND set ApplicationRevision to 0 -->
-        <op:version OpenKnxId="0xA2" ApplicationNumber="48" ApplicationVersion="3" ReplacesVersions="1 2" ApplicationRevision="0" />
-        <ApplicationProgram Id="%AID%" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="ModbusGateway-Logic-Develop" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0" ApplicationNumber="0" ApplicationVersion="0" ReplacesVersions="0">
+        <op:version OpenKnxId="0xA2" ApplicationNumber="48" ApplicationVersion="16" ReplacesVersions="1 2 3" ApplicationRevision="0" />
+        <ApplicationProgram Id="%AID%" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="ModbusGateway-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0" ApplicationNumber="0" ApplicationVersion="0" ReplacesVersions="0">
           <Static>
             <Code>
               <RelativeSegment Id="%AID%_RS-04-00000" Name="Parameters" Offset="0" Size="%MemorySize%" LoadStateMachine="4" />
@@ -23,41 +23,41 @@
             <op:define prefix="BIN" header="GardenControl.h" NumChannels="2"  KoOffset="150"  ModuleType="3" />  <!-- KoOffset = 150 -> 50 + MOD (99ch*1kO) 99 --> 
             <ParameterTypes>
               <!-- generic parameter types from logicmodule -->
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ParameterTypes/ParameterType" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ParameterTypes/ParameterType" prefix="LOG" />
               <op:include href="ModbusGateway.share.xml" xpath="//ParameterTypes/ParameterType" prefix="MOD" />
               <op:include href="Input_BIN_S0.share.xml" xpath="//ParameterTypes/ParameterType" prefix="BIN" />
             </ParameterTypes>
             <Parameters>
               <!-- Standard parameter in any of our devices -->
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="parameter" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="parameter" prefix="LOG" />
               <op:include href="ModbusGateway.share.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="parameter" prefix="MOD" />
               <op:include href="Input_BIN_S0.share.xml"  xpath="//Parameters/Parameter|//Parameters/Union" type="parameter" prefix="BIN" />
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="template" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="template" prefix="LOG" />
               <op:include href="ModbusGateway.templ.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="template" prefix="MOD" />
               <op:include href="Input_BIN_S0.templ.xml" xpath="//Parameters/Parameter|//Parameters/Union" type="template" prefix="BIN" />
             </Parameters>
             <ParameterRefs>
               <!-- General -->
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ParameterRefs/ParameterRef" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ParameterRefs/ParameterRef" prefix="LOG" />
               <op:include href="ModbusGateway.share.xml" xpath="//ParameterRefs/ParameterRef" prefix="MOD" />
               <op:include href="Input_BIN_S0.share.xml" xpath="//ParameterRefs/ParameterRef" prefix="BIN" />
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ParameterRefs/ParameterRef" type="template" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ParameterRefs/ParameterRef" type="template" prefix="LOG" />
               <op:include href="ModbusGateway.templ.xml" xpath="//ParameterRefs/ParameterRef" type="template" prefix="MOD" />
               <op:include href="Input_BIN_S0.templ.xml" xpath="//ParameterRefs/ParameterRef" type="template" prefix="BIN" />
             </ParameterRefs>
             <ComObjectTable>
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ComObjectTable/ComObject" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ComObjectTable/ComObject" prefix="LOG" />
               <op:include href="ModbusGateway.share.xml" xpath="//ComObjectTable/ComObject" prefix="MOD" />
               <op:include href="Input_BIN_S0.share.xml" xpath="//ComObjectTable/ComObject" prefix="BIN" />
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ComObjectTable/ComObject" type="template" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ComObjectTable/ComObject" type="template" prefix="LOG" />
               <op:include href="ModbusGateway.templ.xml" xpath="//ComObjectTable/ComObject" type="template" prefix="MOD" />
               <op:include href="Input_BIN_S0.templ.xml" xpath="//ComObjectTable/ComObject" type="template" prefix="BIN" />
             </ComObjectTable>
             <ComObjectRefs>
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ComObjectRefs/ComObjectRef" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ComObjectRefs/ComObjectRef" prefix="LOG" />
               <op:include href="ModbusGateway.share.xml" xpath="//ComObjectRefs/ComObjectRef" prefix="MOD" />
               <op:include href="Input_BIN_S0.share.xml" xpath="//ComObjectRefs/ComObjectRef" prefix="BIN" />
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ComObjectRefs/ComObjectRef" type="template" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//ComObjectRefs/ComObjectRef" type="template" prefix="LOG" />
               <op:include href="ModbusGateway.templ.xml" xpath="//ComObjectRefs/ComObjectRef" type="template" prefix="MOD" />
               <op:include href="Input_BIN_S0.templ.xml" xpath="//ComObjectRefs/ComObjectRef" type="template" prefix="BIN" />
             </ComObjectRefs>
@@ -96,8 +96,8 @@
               </ParameterBlock>
               <!-- ChannelIndependentBlock is a composition of different parts of different modules -->
               <ParameterBlock Id="%AID%_PB-2" Name="General" Text="Allgemeine Parameter">
-                <op:include href="../../OAM-LogicModule/src/Logikmodul.parts.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='General']/*" prefix="LOG" />
-                <op:include href="../../OAM-LogicModule/src/Logikmodul.parts.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Diagnose']/*" prefix="LOG" />
+                <op:include href="../lib/OAM-LogicModule/src/Logikmodul.parts.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='General']/*" prefix="LOG" />
+                <op:include href="../lib/OAM-LogicModule/src/Logikmodul.parts.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Diagnose']/*" prefix="LOG" />
                 <op:include href="ModbusGateway.parts.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='General']/*" prefix="MOD" />
               </ParameterBlock>
             </ChannelIndependentBlock>
@@ -140,9 +140,9 @@
             </choose>
             <Channel Name="Logikkanaele" Text="Logikkanäle" Number="5" Id="%AID%_CH-5">
               <!-- compose logicmodule channel from some static blocks... -->
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.share.xml" xpath="//Dynamic/Channel/*" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//Dynamic/Channel/*" prefix="LOG" />
               <!-- followed by all logic channels -->
-              <op:include href="../../OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" />
+              <op:include href="../lib/OAM-LogicModule/src/Logikmodul.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" />
             </Channel>
           </Dynamic>
         </ApplicationProgram>
@@ -150,7 +150,7 @@
       <Hardware>
         <Hardware Id="%HardwareId%" Name="OpenKNX-ModbusGateway" SerialNumber="OpenKNXMFA220" VersionNumber="1" BusCurrent="10" HasIndividualAddress="true" HasApplicationProgram="true">
           <Products>
-            <Product Id="%ProductId%" Text="OpenKNX: Modbus-RTU / S0 / Binär Gateway (dev)" OrderNumber="MFKnxModDev" IsRailMounted="true" DefaultLanguage="de">
+            <Product Id="%ProductId%" Text="OpenKNX: Modbus-RTU / S0 / Binär Gateway" OrderNumber="MFKnxMod" IsRailMounted="true" DefaultLanguage="de">
               <RegistrationInfo RegistrationStatus="Registered" />
             </Product>
           </Products>

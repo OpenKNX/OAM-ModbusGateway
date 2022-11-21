@@ -1023,5 +1023,5 @@
 
 #define MAIN_OpenKnxId 0xA2
 #define MAIN_ApplicationNumber 48
-#define MAIN_ApplicationVersion 3
-#define MAIN_OrderNumber "MFKnxModDev"
+#define MAIN_ApplicationVersion 16
+#define MAIN_OrderNumber "MFKnxMod"

@@ -22,19 +22,19 @@
 # }
 
 # uncomment the following, if required
-# $releaseIndication = $args[0]
+$releaseIndication = $args[0]
 
 # set product names, allows mapping of (devel) name in Project to a more consistent name in release
 # $settings = scripts/OpenKNX-Build-Settings.ps1
 
 # execute generic pre-build steps
-../OGM-Common/setup-scripts/reusable/Build-Release-Preprocess.ps1 $args[0]
+lib/OGM-Common/setup-scripts/reusable/Build-Release-Preprocess.ps1 $releaseIndication
 if (!$?) { exit 1 }
 
 # build firmware based on generated headerfile for SAMD
-../OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD firmware bin
+lib/OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD firmware bin
 if (!$?) { exit 1 }
 
 # execute generic post-build steps
-../OGM-Common/setup-scripts/reusable/Build-Release-Postprocess.ps1 $args[0]
+lib/OGM-Common/setup-scripts/reusable/Build-Release-Postprocess.ps1 $releaseIndication
 if (!$?) { exit 1 }
