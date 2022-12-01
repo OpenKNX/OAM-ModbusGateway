@@ -28,13 +28,13 @@ $releaseIndication = $args[0]
 # $settings = scripts/OpenKNX-Build-Settings.ps1
 
 # execute generic pre-build steps
-lib/OGM-Common/setup-scripts/reusable/Build-Release-Preprocess.ps1 $releaseIndication
+lib/OGM-Common/scripts/setup/reusable/Build-Release-Preprocess.ps1 $releaseIndication
 if (!$?) { exit 1 }
 
 # build firmware based on generated headerfile for SAMD
-lib/OGM-Common/setup-scripts/reusable/Build-Step.ps1 release_SAMD firmware bin
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_SAMD firmware bin
 if (!$?) { exit 1 }
 
 # execute generic post-build steps
-lib/OGM-Common/setup-scripts/reusable/Build-Release-Postprocess.ps1 $releaseIndication
+lib/OGM-Common/scripts/setup/reusable/Build-Release-Postprocess.ps1 $releaseIndication
 if (!$?) { exit 1 }

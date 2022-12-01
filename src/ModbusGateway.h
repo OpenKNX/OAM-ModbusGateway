@@ -1022,6 +1022,6 @@
 #define BIN_KoS0_AnzahlImpulse 7
 
 #define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 48
+#define MAIN_ApplicationNumber 33
 #define MAIN_ApplicationVersion 16
-#define MAIN_OrderNumber "MFKnxMod"
+#define MAIN_OrderNumber "MFKnxModDev"
