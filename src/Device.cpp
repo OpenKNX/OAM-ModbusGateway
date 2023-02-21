@@ -16,6 +16,9 @@
 #include "S0Input.h"
 
 S0Input S0[MAX_S0_CHANNELS];
+#ifdef BOARD_MASIFI_MODBUS_BREAKOUT
+    SerialPIO modbusSerial = SerialPIO(MODBUS_UART_TX_PIN, MODBUS_UART_RX_PIN, 64U);
+#endif
 
 uint32_t heartbeatDelay = 0;
 uint32_t gStartupDelay = 0;
@@ -74,7 +77,7 @@ bool processDiagnoseCommand()
     bool lOutput = false;
     if (lBuffer[0] == 'v')
     {
-        // Command v: retrun fimware version, do not forward this to logic,
+        // Command v: return filmware version, do not forward this to logic,
         // because it means firmware version of the outermost module
         // sprintf(lBuffer, "VER [%d] %d.%d", cFirmwareMajor, cFirmwareMinor, cFirmwareRevision);
         lOutput = true;
@@ -163,19 +166,34 @@ uint8_t getUsedModbusChannels()
 
 bool setupModbus()
 {
+    // HardwareSerial &serial = Serial; //does not work
 #ifdef LED_YELLOW_PIN
     pinMode(MAX485_RE_NEG, OUTPUT);
 #endif
-    pinMode(MAX485_DE, OUTPUT);
+    pinMode(MAX485_DIR, OUTPUT);
 // Init in receive mode
 #ifdef LED_YELLOW_PIN
     digitalWrite(MAX485_RE_NEG, 0);
 #endif
-    digitalWrite(MAX485_DE, 0);
+    digitalWrite(MAX485_DIR, 0);
 
-    modbusInitSerial();
-
-    modbusInitSlaves();
+#ifdef ARDUINO_ARCH_RP2040
+    // serial = Serial2; // does not work!!! 
+    #ifdef BOARD_MASIFI_MODBUS_V21
+    // modbusInitSerial(Serial2);
+    // modbusInitSlaves(Serial2);
+    #endif
+    #ifdef BOARD_MASIFI_MODBUS_BREAKOUT
+    // modbusInitSerial(Serial1);
+    // modbusInitSlaves(Serial1);
+    modbusInitSerial(modbusSerial);
+    modbusInitSlaves(modbusSerial);
+    #endif
+#else
+    // serial = Serial3; // does not work!!! 
+    modbusInitSerial(Serial3);
+    modbusInitSlaves(Serial3);
+#endif
 
 #ifdef Serial_Debug_Modbus
     SERIAL_DEBUG.println("Modbus Setup Done");
@@ -253,73 +271,102 @@ void setupS0()
 #endif
 }
 
+// Mat's first version of Hardware autoconfig
+#define HW_BREAKOUT 8
+#define HW_20       7
+#define HW_21       3
+
 uint8_t get_PROG_LED_PIN(uint8_t hwID)
 {
+#ifdef ARDUINO_ARCH_RP2040
+    switch (hwID)
+    {
+        case HW_21: // HW 2.1
+            return 11;
+        case HW_20: // HW 2.0
+            return 1;
+        case HW_BREAKOUT: // Breakout-Board
+            return 22;
+        default:
+            return 255;
+    }
+#else
     switch (hwID)
     {
         case 7: // V1.x
             return 9;
-            break;
         case 6: // V2.x
             return 6;
-            break;
         default:
             return 255;
-            break;
     }
+#endif
 }
 
 uint8_t get_PROG_BUTTON_PIN(uint8_t hwID)
 {
+#ifdef ARDUINO_ARCH_RP2040
+    switch (hwID)
+    {
+        case HW_21: // HW 2.1
+            return 14;
+        case HW_20: // HW 2.0
+            return 3;
+        case HW_BREAKOUT: // Breakout-Board
+            return 28;
+        default:
+            return 255;
+    }
+#else
     switch (hwID)
     {
         case 7: // V1.x
             return A1;
-            break;
         case 6: // V2.x
             return 7;
-            break;
         default:
             return 250;
-            break;
     }
+#endif
 }
 
 uint8_t get_PROG_LED_PIN_ACTIVE_ON(uint8_t hwID)
 {
-    switch (hwID)
-    {
-        case 7: // V1.x
-            return HIGH;
-            break;
-        case 6: // V2.x
-            return HIGH;
-            break;
-        default:
-            return HIGH;
-            break;
-    }
+    return HIGH;
 }
 
 uint8_t get_SAVE_INTERRUPT_PIN(uint8_t hwID)
 {
+#ifdef ARDUINO_ARCH_RP2040
     switch (hwID)
     {
-        case 7: // V1.x
-            return 0;
-            break;
+        case HW_21: // HW 2.1
+            return 8;
+        case HW_20: // HW 2.0
+            return 20;
+        case HW_BREAKOUT: // Breakout-Board
+            return 6;
+        default:
+            return 255;
+    }
+#else
+    switch (hwID)
+    {
         case 6: // V2.x
-            return 0;
-            break;
+            return 8; //D8
+        case 7: // V1.x
         default:
             return 0;
-            break;
     }
+#endif
 }
 
 uint8_t get_HW_ID()
 {
     uint8_t hw_ID = 0;
+#ifdef BOARD_MASIFI_MODBUS_BREAKOUT
+    hw_ID = HW_BREAKOUT;
+#else
     // Set Inputs
     pinMode(ID1, INPUT_PULLUP);
     pinMode(ID2, INPUT_PULLUP);
@@ -328,12 +375,30 @@ uint8_t get_HW_ID()
     bitWrite(hw_ID, 0, digitalRead(ID1));
     bitWrite(hw_ID, 1, digitalRead(ID2));
     bitWrite(hw_ID, 2, digitalRead(ID3));
-
+#endif
     return hw_ID;
 }
 
 void initHW(uint8_t hwID)
 {
+#ifdef ARDUINO_ARCH_RP2040    
+    switch (hwID)
+    {
+        case HW_BREAKOUT:
+            SERIAL_DEBUG.println("HW_ID: BREAKOUT-BOARD");
+            break;
+        case HW_20:
+            SERIAL_DEBUG.println("HW_ID: V2.0");
+            break;
+        case HW_21:
+            SERIAL_DEBUG.println("HW_ID: V2.1");
+            break;
+        default:
+            SERIAL_DEBUG.print("HW_ID: ERROR ");
+            SERIAL_DEBUG.println(hwID);
+            break;
+    }
+#else
     switch (hwID)
     {
         case 7:
@@ -348,7 +413,7 @@ void initHW(uint8_t hwID)
             SERIAL_DEBUG.println(hwID);
             break;
     }
-
+#endif
     initI2cStatusLeds();
     setLED_OFF();
     setLED(MBUS_STATUS, LOW);
@@ -379,7 +444,18 @@ void appSetup()
         gStartupDelay = millis();
         heartbeatDelay = 0;
         Schedule::addCallback(logicCallback, nullptr);
-        gLogic.setup(false);
+        uint8_t lSaveInterruptPin = get_SAVE_INTERRUPT_PIN(get_HW_ID());
+        gLogic.setup(lSaveInterruptPin);
+        openknx.flashUserData()->readFlash();
+        // We don't have a #define SAVE_INTERRUPT_PIN, so the following is not executed in common
+        static bool sSaveInterruptAttached = false;
+        if (!sSaveInterruptAttached && lSaveInterruptPin > 0)
+        {
+            printDebug("Save interrupt pin attached...\n");
+            pinMode(lSaveInterruptPin, INPUT);
+            attachInterrupt(digitalPinToInterrupt(lSaveInterruptPin), FlashUserData::onSafePinInterruptHandler, FALLING);
+        }
+        sSaveInterruptAttached = true;
     }
 }
 

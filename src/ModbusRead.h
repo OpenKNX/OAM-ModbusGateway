@@ -21,19 +21,21 @@ uint32_t ModbusCycle = 0;
 uint32_t TestDelay = 0;
 
 // Serial Settings ModBus
+#ifndef ARDUINO_ARCH_RP2040
 Uart Serial3(&sercom2, 3, 4, SERCOM_RX_PAD_1, UART_TX_PAD_0); //+pinPeripheral
 
 void SERCOM2_Handler()
 {
     Serial3.IrqHandler();
 }
+#endif
 
 void preTransmission()
 {
 #ifdef LED_YELLOW_PIN
     digitalWrite(MAX485_RE_NEG, 1);
 #endif
-    digitalWrite(MAX485_DE, 1);
+    digitalWrite(MAX485_DIR, 1);
 }
 
 void postTransmission()
@@ -41,7 +43,7 @@ void postTransmission()
 #ifdef LED_YELLOW_PIN
     digitalWrite(MAX485_RE_NEG, 0);
 #endif
-    digitalWrite(MAX485_DE, 0);
+    digitalWrite(MAX485_DIR, 0);
 }
 
 void idle()
@@ -50,28 +52,28 @@ void idle()
     knx.loop();
 }
 
-bool modbusParitySerial(uint32_t baud)
+bool modbusParitySerial(uint32_t baud, HardwareSerial &serial)
 {
 
     switch (knx.paramByte(MOD_BusParitySelection))
     {
         case 0: // Even (1 stop bit)
-            Serial3.begin(baud, SERIAL_8E1);
+            serial.begin(baud, SERIAL_8E1);
             SERIAL_DEBUG.println("Parity: Even (1 stop bit)");
             return true;
             break;
         case 1: // Odd (1 stop bit)
-            Serial3.begin(baud, SERIAL_8O1);
+            serial.begin(baud, SERIAL_8O1);
             SERIAL_DEBUG.println("Parity: Odd (1 stop bit)");
             return true;
             break;
         case 2: // None (2 stop bits)
-            Serial3.begin(baud, SERIAL_8N2);
+            serial.begin(baud, SERIAL_8N2);
             SERIAL_DEBUG.println("Parity: None (2 stop bits)");
             return true;
             break;
         case 3: // None (1 stop bit)
-            Serial3.begin(baud, SERIAL_8N1);
+            serial.begin(baud, SERIAL_8N1);
             SERIAL_DEBUG.println("Parity: None (1 stop bit)");
             return true;
             break;
@@ -84,43 +86,43 @@ bool modbusParitySerial(uint32_t baud)
     }
 }
 
-bool modbusInitSerial()
+bool modbusInitSerial(HardwareSerial &serial)
 {
     // Set Modbus communication baudrate
     switch (knx.paramByte(MOD_BusBaudrateSelection))
     {
         case 0:
             SERIAL_DEBUG.println("Baudrate: 1200kBit/s");
-            return modbusParitySerial(1200);
+            return modbusParitySerial(1200, serial);
 
             break;
         case 1:
             SERIAL_DEBUG.println("Baudrate: 2400kBit/s");
-            return modbusParitySerial(2400);
+            return modbusParitySerial(2400, serial);
             break;
         case 2:
             SERIAL_DEBUG.println("Baudrate: 4800kBit/s");
-            return modbusParitySerial(4800);
+            return modbusParitySerial(4800, serial);
             break;
         case 3:
             SERIAL_DEBUG.println("Baudrate: 9600kBit/s");
-            return modbusParitySerial(9600);
+            return modbusParitySerial(9600, serial);
             break;
         case 4:
             SERIAL_DEBUG.println("Baudrate: 19200kBit/s");
-            return modbusParitySerial(19200);
+            return modbusParitySerial(19200, serial);
             break;
         case 5:
             SERIAL_DEBUG.println("Baudrate: 38400kBit/s");
-            return modbusParitySerial(38400);
+            return modbusParitySerial(38400, serial);
             break;
         case 6:
             SERIAL_DEBUG.println("Baudrate: 56000kBit/s");
-            return modbusParitySerial(56000);
+            return modbusParitySerial(56000, serial);
             break;
         case 7:
             SERIAL_DEBUG.println("Baudrate: 115200kBit/s");
-            return modbusParitySerial(115200);
+            return modbusParitySerial(115200, serial);
             break;
         default:
             SERIAL_DEBUG.print("Baudrate: Error: ");
@@ -130,11 +132,11 @@ bool modbusInitSerial()
     }
 }
 
-void modbusInitSlaves()
+void modbusInitSlaves(HardwareSerial &serial)
 
 {
     // Test Slave
-    TestSlave.initSlave(1, Serial3, 1, 1);
+    TestSlave.initSlave(1, serial, 1, 1);
     TestSlave.preTransmission(preTransmission);
     TestSlave.postTransmission(postTransmission);
     TestSlave.idle(idle);
@@ -149,7 +151,7 @@ void modbusInitSlaves()
         SERIAL_DEBUG.println(knx.paramInt(MOD_BusID_Slave1 + slaveOffset));
 #endif
         // Modbus slave
-        Slave[slaveIdx].initSlave(knx.paramInt(MOD_BusID_Slave1 + slaveOffset), Serial3,
+        Slave[slaveIdx].initSlave(knx.paramInt(MOD_BusID_Slave1 + slaveOffset), serial,
                                   knx.paramByte(MOD_BusByteOrderSelectionSlave1 + slaveOffset),
                                   knx.paramByte(MOD_BusWordOrderSelectionSlave1 + slaveOffset));
         Slave[slaveIdx].preTransmission(preTransmission);
@@ -163,9 +165,11 @@ void modbusInitSlaves()
         }
     }
 
+#ifndef ARDUINO_ARCH_RP2040
     // last call to set the right Serial3 pins
     pinPeripheral(3, PIO_SERCOM_ALT);
     pinPeripheral(4, PIO_SERCOM_ALT);
+#endif
 }
 
 bool ModbusRead(uint8_t usedModbusChannels)

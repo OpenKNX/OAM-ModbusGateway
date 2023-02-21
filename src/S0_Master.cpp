@@ -107,8 +107,8 @@ void S0_Master::process(uint8_t channel)
     }
 
     /***************************************************
-    / Neuer Impulse detektiert
-    /***************************************************/
+    * Neuer Impulse detektiert
+    ****************************************************/
     if (_newImpulse == true)
     {
         _newImpulse = false;
