@@ -274,7 +274,7 @@ void setupS0()
 // Mat's first version of Hardware autoconfig
 #define HW_BREAKOUT 8
 #define HW_20       7
-#define HW_21       3
+#define HW_21       6
 
 uint8_t get_PROG_LED_PIN(uint8_t hwID)
 {
