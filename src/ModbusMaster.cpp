@@ -730,13 +730,13 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
 #if __MODBUSMASTER_DEBUG__
   digitalWrite(__MODBUSMASTER_DEBUG_PIN_A__, true);
 #endif
-  while(_serial->availableForWrite() < 8) // was 64
+ /* while(_serial->availableForWrite() < 8) // was 64
   {
     if (_idle)
       {
         _idle();
       }
-  }
+  }*/
   _serial->flush(); // flush transmit buffer 
  #if __MODBUSMASTER_DEBUG__
   digitalWrite(__MODBUSMASTER_DEBUG_PIN_A__, false);

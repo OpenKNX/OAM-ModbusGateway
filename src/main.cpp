@@ -18,6 +18,8 @@ void setup()
   #ifdef BOARD_MASIFI_MODBUS_V21
     Serial1.setRX(KNX_UART_RX_PIN);
     Serial1.setTX(KNX_UART_TX_PIN);
+    Wire.setSDA(12);
+    Wire.setSCL(13);
   #endif
 #endif
     SERIAL_DEBUG.begin(115200);

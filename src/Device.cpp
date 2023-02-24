@@ -180,8 +180,8 @@ bool setupModbus()
 #ifdef ARDUINO_ARCH_RP2040
     // serial = Serial2; // does not work!!! 
     #ifdef BOARD_MASIFI_MODBUS_V21
-    // modbusInitSerial(Serial2);
-    // modbusInitSlaves(Serial2);
+     modbusInitSerial(Serial2);
+     modbusInitSlaves(Serial2);
     #endif
     #ifdef BOARD_MASIFI_MODBUS_BREAKOUT
     // modbusInitSerial(Serial1);
