@@ -8,6 +8,12 @@
             (time & 0xC000) == 0x8000 ? ((time & 0x3FFF) > 1000 ? 3600000 : \
                                          (time & 0x3FFF) * 3600000 ) : 0 )
                                              
+#define MAIN_OpenKnxId 0xA2
+#define MAIN_ApplicationNumber 48
+#define MAIN_ApplicationVersion 17
+#define MAIN_ParameterSize 8287
+#define MAIN_MaxKoNumber 319
+#define MAIN_OrderNumber "MFKnxMod"
 // Parameter with single occurrence
 
 
@@ -411,61 +417,61 @@
 // Zeit zwischen zwei Abfragezyklen
 #define ParamMOD_BusDelayCycle             (knx.paramByte(MOD_BusDelayCycle))
 //     Slave: 1
-#define ParamMOD_BusID_Slave1              ((int32_t)knx.paramLong(MOD_BusID_Slave1))
+#define ParamMOD_BusID_Slave1              ((int32_t)knx.paramInt(MOD_BusID_Slave1))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave1 (knx.paramByte(MOD_BusByteOrderSelectionSlave1))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave1 (knx.paramByte(MOD_BusWordOrderSelectionSlave1))
 //     Slave: 2
-#define ParamMOD_BusID_Slave2              ((int32_t)knx.paramLong(MOD_BusID_Slave2))
+#define ParamMOD_BusID_Slave2              ((int32_t)knx.paramInt(MOD_BusID_Slave2))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave2 (knx.paramByte(MOD_BusByteOrderSelectionSlave2))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave2 (knx.paramByte(MOD_BusWordOrderSelectionSlave2))
 //     Slave: 3
-#define ParamMOD_BusID_Slave3              ((int32_t)knx.paramLong(MOD_BusID_Slave3))
+#define ParamMOD_BusID_Slave3              ((int32_t)knx.paramInt(MOD_BusID_Slave3))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave3 (knx.paramByte(MOD_BusByteOrderSelectionSlave3))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave3 (knx.paramByte(MOD_BusWordOrderSelectionSlave3))
 //     Slave: 4
-#define ParamMOD_BusID_Slave4              ((int32_t)knx.paramLong(MOD_BusID_Slave4))
+#define ParamMOD_BusID_Slave4              ((int32_t)knx.paramInt(MOD_BusID_Slave4))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave4 (knx.paramByte(MOD_BusByteOrderSelectionSlave4))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave4 (knx.paramByte(MOD_BusWordOrderSelectionSlave4))
 //     Slave: 5
-#define ParamMOD_BusID_Slave5              ((int32_t)knx.paramLong(MOD_BusID_Slave5))
+#define ParamMOD_BusID_Slave5              ((int32_t)knx.paramInt(MOD_BusID_Slave5))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave5 (knx.paramByte(MOD_BusByteOrderSelectionSlave5))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave5 (knx.paramByte(MOD_BusWordOrderSelectionSlave5))
 //     Slave: 6
-#define ParamMOD_BusID_Slave6              ((int32_t)knx.paramLong(MOD_BusID_Slave6))
+#define ParamMOD_BusID_Slave6              ((int32_t)knx.paramInt(MOD_BusID_Slave6))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave6 (knx.paramByte(MOD_BusByteOrderSelectionSlave6))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave6 (knx.paramByte(MOD_BusWordOrderSelectionSlave6))
 //     Slave: 7
-#define ParamMOD_BusID_Slave7              ((int32_t)knx.paramLong(MOD_BusID_Slave7))
+#define ParamMOD_BusID_Slave7              ((int32_t)knx.paramInt(MOD_BusID_Slave7))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave7 (knx.paramByte(MOD_BusByteOrderSelectionSlave7))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave7 (knx.paramByte(MOD_BusWordOrderSelectionSlave7))
 //     Slave: 8
-#define ParamMOD_BusID_Slave8              ((int32_t)knx.paramLong(MOD_BusID_Slave8))
+#define ParamMOD_BusID_Slave8              ((int32_t)knx.paramInt(MOD_BusID_Slave8))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave8 (knx.paramByte(MOD_BusByteOrderSelectionSlave8))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave8 (knx.paramByte(MOD_BusWordOrderSelectionSlave8))
 //     Slave: 9
-#define ParamMOD_BusID_Slave9              ((int32_t)knx.paramLong(MOD_BusID_Slave9))
+#define ParamMOD_BusID_Slave9              ((int32_t)knx.paramInt(MOD_BusID_Slave9))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave9 (knx.paramByte(MOD_BusByteOrderSelectionSlave9))
 //        Register Start
 #define ParamMOD_BusWordOrderSelectionSlave9 (knx.paramByte(MOD_BusWordOrderSelectionSlave9))
 //     Slave: 10
-#define ParamMOD_BusID_Slave10             ((int32_t)knx.paramLong(MOD_BusID_Slave10))
+#define ParamMOD_BusID_Slave10             ((int32_t)knx.paramInt(MOD_BusID_Slave10))
 //        Register Position
 #define ParamMOD_BusByteOrderSelectionSlave10 (knx.paramByte(MOD_BusByteOrderSelectionSlave10))
 //        Register Start
@@ -483,9 +489,9 @@
 // Virtuelle Zähler
 #define ParamMOD_VCounter                  ((bool)(knx.paramByte(MOD_VCounter) & MOD_VCounterMask))
 //    zyklisch senden (0=nicht senden)
-#define ParamMOD_ModBusZaehler1SendDelay   ((int32_t)knx.paramLong(MOD_ModBusZaehler1SendDelay))
+#define ParamMOD_ModBusZaehler1SendDelay   ((int32_t)knx.paramInt(MOD_ModBusZaehler1SendDelay))
 //    abs Abweichung senden (0=nicht senden)
-#define ParamMOD_ModBusZaehler1ValueChangeWatt ((int32_t)knx.paramLong(MOD_ModBusZaehler1ValueChangeWatt))
+#define ParamMOD_ModBusZaehler1ValueChangeWatt ((int32_t)knx.paramInt(MOD_ModBusZaehler1ValueChangeWatt))
 //    Zählerstand senden bei Wertänderung
 #define ParamMOD_ModbusZaehler1SendenWertAenderung ((bool)(knx.paramByte(MOD_ModbusZaehler1SendenWertAenderung) & MOD_ModbusZaehler1SendenWertAenderungMask))
 //    Zählerstand senden zyklisch
@@ -495,7 +501,7 @@
 // Aktiv
 #define ParamMOD_ModbusZaehler1selection   ((bool)(knx.paramByte(MOD_ModbusZaehler1selection) & MOD_ModbusZaehler1selectionMask))
 // Zählerstand-Offset
-#define ParamMOD_ModbusZaehler1Offset      ((int32_t)knx.paramLong(MOD_ModbusZaehler1Offset))
+#define ParamMOD_ModbusZaehler1Offset      ((int32_t)knx.paramInt(MOD_ModbusZaehler1Offset))
 // DPT-Typ: (Zählerstand)
 #define ParamMOD_ModbusZaehler1DPT         (knx.paramByte(MOD_ModbusZaehler1DPT))
 
@@ -1394,9 +1400,9 @@
 // Zeitbezug
 #define ParamLOG_fTd8DuskDawn              (knx.paramByte(LOG_ParamCalcIndex(LOG_fTd8DuskDawn)) & LOG_fTd8DuskDawnMask)
 // Von-Wert
-#define ParamLOG_fE1LowDelta               ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDelta)))
+#define ParamLOG_fE1LowDelta               ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDelta)))
 // Bis-Wert
-#define ParamLOG_fE1HighDelta              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1HighDelta)))
+#define ParamLOG_fE1HighDelta              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1HighDelta)))
 // Von-Wert
 #define ParamLOG_fE1LowDeltaFloat          (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE1LowDeltaFloat), Float_Enc_IEEE754Single))
 // Bis-Wert
@@ -1522,17 +1528,17 @@
 // Eingang 1 ist konstant
 #define ParamLOG_fE1LowDpt9Fix             (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE1LowDpt9Fix), Float_Enc_IEEE754Single))
 // Von-Wert
-#define ParamLOG_fE1LowDpt12               (knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDpt12)))
+#define ParamLOG_fE1LowDpt12               (knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDpt12)))
 // Bis-Wert
-#define ParamLOG_fE1HighDpt12              (knx.paramLong(LOG_ParamCalcIndex(LOG_fE1HighDpt12)))
+#define ParamLOG_fE1HighDpt12              (knx.paramInt(LOG_ParamCalcIndex(LOG_fE1HighDpt12)))
 // Eingang 1 ist konstant
-#define ParamLOG_fE1LowDpt12Fix            (knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDpt12Fix)))
+#define ParamLOG_fE1LowDpt12Fix            (knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDpt12Fix)))
 // Von-Wert
-#define ParamLOG_fE1LowDpt13               ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDpt13)))
+#define ParamLOG_fE1LowDpt13               ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDpt13)))
 // Bis-Wert
-#define ParamLOG_fE1HighDpt13              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1HighDpt13)))
+#define ParamLOG_fE1HighDpt13              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1HighDpt13)))
 // Eingang 1 ist konstant
-#define ParamLOG_fE1LowDpt13Fix            ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDpt13Fix)))
+#define ParamLOG_fE1LowDpt13Fix            ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDpt13Fix)))
 // Von-Wert
 #define ParamLOG_fE1LowDpt14               (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE1LowDpt14), Float_Enc_IEEE754Single))
 // Bis-Wert
@@ -1558,15 +1564,15 @@
 // Eingang 1 ist konstant
 #define ParamLOG_fE1LowDpt17Fix            (knx.paramByte(LOG_ParamCalcIndex(LOG_fE1LowDpt17Fix)))
 // Von-Wert
-#define ParamLOG_fE1LowDptRGB              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDptRGB)))
+#define ParamLOG_fE1LowDptRGB              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDptRGB)))
 // Bis-Wert
-#define ParamLOG_fE1HighDptRGB             ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1HighDptRGB)))
+#define ParamLOG_fE1HighDptRGB             ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1HighDptRGB)))
 // Eingang 1 ist konstant
-#define ParamLOG_fE1LowDptRGBFix           ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE1LowDptRGBFix)))
+#define ParamLOG_fE1LowDptRGBFix           ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE1LowDptRGBFix)))
 // Von-Wert
-#define ParamLOG_fE2LowDelta               ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDelta)))
+#define ParamLOG_fE2LowDelta               ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDelta)))
 // Bis-Wert
-#define ParamLOG_fE2HighDelta              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2HighDelta)))
+#define ParamLOG_fE2HighDelta              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2HighDelta)))
 // Von-Wert
 #define ParamLOG_fE2LowDeltaFloat          (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE2LowDeltaFloat), Float_Enc_IEEE754Single))
 // Bis-Wert
@@ -1692,17 +1698,17 @@
 // Eingang 2 ist konstant
 #define ParamLOG_fE2LowDpt9Fix             (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE2LowDpt9Fix), Float_Enc_IEEE754Single))
 // Von-Wert
-#define ParamLOG_fE2LowDpt12               (knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDpt12)))
+#define ParamLOG_fE2LowDpt12               (knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDpt12)))
 // Bis-Wert
-#define ParamLOG_fE2HighDpt12              (knx.paramLong(LOG_ParamCalcIndex(LOG_fE2HighDpt12)))
+#define ParamLOG_fE2HighDpt12              (knx.paramInt(LOG_ParamCalcIndex(LOG_fE2HighDpt12)))
 // Eingang 2 ist konstant
-#define ParamLOG_fE2LowDpt12Fix            (knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDpt12Fix)))
+#define ParamLOG_fE2LowDpt12Fix            (knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDpt12Fix)))
 // Von-Wert
-#define ParamLOG_fE2LowDpt13               ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDpt13)))
+#define ParamLOG_fE2LowDpt13               ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDpt13)))
 // Bis-Wert
-#define ParamLOG_fE2HighDpt13              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2HighDpt13)))
+#define ParamLOG_fE2HighDpt13              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2HighDpt13)))
 // Eingang 2 ist konstant
-#define ParamLOG_fE2LowDpt13Fix            ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDpt13Fix)))
+#define ParamLOG_fE2LowDpt13Fix            ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDpt13Fix)))
 // Von-Wert
 #define ParamLOG_fE2LowDpt14               (knx.paramFloat(LOG_ParamCalcIndex(LOG_fE2LowDpt14), Float_Enc_IEEE754Single))
 // Bis-Wert
@@ -1728,11 +1734,11 @@
 // Eingang 2 ist konstant
 #define ParamLOG_fE2LowDpt17Fix            (knx.paramByte(LOG_ParamCalcIndex(LOG_fE2LowDpt17Fix)))
 // Von-Wert
-#define ParamLOG_fE2LowDptRGB              ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDptRGB)))
+#define ParamLOG_fE2LowDptRGB              ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDptRGB)))
 // Bis-Wert
-#define ParamLOG_fE2HighDptRGB             ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2HighDptRGB)))
+#define ParamLOG_fE2HighDptRGB             ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2HighDptRGB)))
 // Eingang 2 ist konstant
-#define ParamLOG_fE2LowDptRGBFix           ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fE2LowDptRGBFix)))
+#define ParamLOG_fE2LowDptRGBFix           ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fE2LowDptRGBFix)))
 // Schaltwert
 #define ParamLOG_fTd1Value                 ((bool)(knx.paramByte(LOG_ParamCalcIndex(LOG_fTd1Value)) & LOG_fTd1ValueMask))
 // Grad
@@ -2018,9 +2024,9 @@
 //     Wert für EIN senden als
 #define ParamLOG_fOOnDpt9                  (knx.paramFloat(LOG_ParamCalcIndex(LOG_fOOnDpt9), Float_Enc_IEEE754Single))
 //     Wert für EIN senden als
-#define ParamLOG_fOOnDpt12                 (knx.paramLong(LOG_ParamCalcIndex(LOG_fOOnDpt12)))
+#define ParamLOG_fOOnDpt12                 (knx.paramInt(LOG_ParamCalcIndex(LOG_fOOnDpt12)))
 //     Wert für EIN senden als
-#define ParamLOG_fOOnDpt13                 ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fOOnDpt13)))
+#define ParamLOG_fOOnDpt13                 ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fOOnDpt13)))
 //     Wert für EIN senden als
 #define ParamLOG_fOOnDpt14                 (knx.paramFloat(LOG_ParamCalcIndex(LOG_fOOnDpt14), Float_Enc_IEEE754Single))
 //     Wert für EIN senden als 
@@ -2028,7 +2034,7 @@
 //     Wert für EIN senden als 
 #define ParamLOG_fOOnDpt17                 (knx.paramByte(LOG_ParamCalcIndex(LOG_fOOnDpt17)))
 //     Wert für EIN senden als (3-Byte-RGB)
-#define ParamLOG_fOOnRGB                   ((knx.paramLong(LOG_ParamCalcIndex(LOG_fOOnRGB)) & LOG_fOOnRGBMask) >> LOG_fOOnRGBShift)
+#define ParamLOG_fOOnRGB                   ((knx.paramInt(LOG_ParamCalcIndex(LOG_fOOnRGB)) & LOG_fOOnRGBMask) >> LOG_fOOnRGBShift)
 // 
 #define ParamLOG_fOOnPAArea                ((knx.paramByte(LOG_ParamCalcIndex(LOG_fOOnPAArea)) & LOG_fOOnPAAreaMask) >> LOG_fOOnPAAreaShift)
 // 
@@ -2064,9 +2070,9 @@
 //     Wert für AUS senden als
 #define ParamLOG_fOOffDpt9                 (knx.paramFloat(LOG_ParamCalcIndex(LOG_fOOffDpt9), Float_Enc_IEEE754Single))
 //     Wert für AUS senden als
-#define ParamLOG_fOOffDpt12                (knx.paramLong(LOG_ParamCalcIndex(LOG_fOOffDpt12)))
+#define ParamLOG_fOOffDpt12                (knx.paramInt(LOG_ParamCalcIndex(LOG_fOOffDpt12)))
 //     Wert für AUS senden als
-#define ParamLOG_fOOffDpt13                ((int32_t)knx.paramLong(LOG_ParamCalcIndex(LOG_fOOffDpt13)))
+#define ParamLOG_fOOffDpt13                ((int32_t)knx.paramInt(LOG_ParamCalcIndex(LOG_fOOffDpt13)))
 //     Wert für AUS senden als
 #define ParamLOG_fOOffDpt14                (knx.paramFloat(LOG_ParamCalcIndex(LOG_fOOffDpt14), Float_Enc_IEEE754Single))
 //     Wert für AUS senden als
@@ -2074,7 +2080,7 @@
 //     Wert für AUS senden als 
 #define ParamLOG_fOOffDpt17                (knx.paramByte(LOG_ParamCalcIndex(LOG_fOOffDpt17)))
 //     Wert für AUS senden als (3-Byte-RGB)
-#define ParamLOG_fOOffRGB                  ((knx.paramLong(LOG_ParamCalcIndex(LOG_fOOffRGB)) & LOG_fOOffRGBMask) >> LOG_fOOffRGBShift)
+#define ParamLOG_fOOffRGB                  ((knx.paramInt(LOG_ParamCalcIndex(LOG_fOOffRGB)) & LOG_fOOffRGBMask) >> LOG_fOOffRGBShift)
 // 
 #define ParamLOG_fOOffPAArea               ((knx.paramByte(LOG_ParamCalcIndex(LOG_fOOffPAArea)) & LOG_fOOffPAAreaMask) >> LOG_fOOffPAAreaShift)
 // 
@@ -2181,11 +2187,11 @@
 // Richtung
 #define ParamMOD_CHModBusBusDirection      (knx.paramByte(MOD_ParamCalcIndex(MOD_CHModBusBusDirection)))
 // Register
-#define ParamMOD_CHModbusRegister          ((int32_t)knx.paramLong(MOD_ParamCalcIndex(MOD_CHModbusRegister)))
+#define ParamMOD_CHModbusRegister          ((int32_t)knx.paramInt(MOD_ParamCalcIndex(MOD_CHModbusRegister)))
 //    zyklisch senden (0=nicht senden)
-#define ParamMOD_CHModBusSendDelay         ((int32_t)knx.paramLong(MOD_ParamCalcIndex(MOD_CHModBusSendDelay)))
+#define ParamMOD_CHModBusSendDelay         ((int32_t)knx.paramInt(MOD_ParamCalcIndex(MOD_CHModBusSendDelay)))
 //    abs Abweichung senden (0=nicht senden)
-#define ParamMOD_CHModBusValueChange       ((int32_t)knx.paramLong(MOD_ParamCalcIndex(MOD_CHModBusValueChange)))
+#define ParamMOD_CHModBusValueChange       ((int32_t)knx.paramInt(MOD_ParamCalcIndex(MOD_CHModBusValueChange)))
 //    Abfrage
 #define ParamMOD_CHModBusReadCycle         (knx.paramByte(MOD_ParamCalcIndex(MOD_CHModBusReadCycle)))
 // Typ
@@ -2237,9 +2243,9 @@
 // Funktion
 #define ParamMOD_CHModBusWriteWordFunktion (knx.paramByte(MOD_ParamCalcIndex(MOD_CHModBusWriteWordFunktion)))
 // x = ModbusValue / Var1
-#define ParamMOD_CHModBuscalculationValueDiff ((int32_t)knx.paramLong(MOD_ParamCalcIndex(MOD_CHModBuscalculationValueDiff)))
+#define ParamMOD_CHModBuscalculationValueDiff ((int32_t)knx.paramInt(MOD_ParamCalcIndex(MOD_CHModBuscalculationValueDiff)))
 // KNX Output = x + Var2
-#define ParamMOD_CHModBuscalculationValueAdd ((int32_t)knx.paramLong(MOD_ParamCalcIndex(MOD_CHModBuscalculationValueAdd)))
+#define ParamMOD_CHModBuscalculationValueAdd ((int32_t)knx.paramInt(MOD_ParamCalcIndex(MOD_CHModBuscalculationValueAdd)))
 // 
 #define ParamMOD_CHModBusSelectionVirtualZaehler1 ((bool)(knx.paramByte(MOD_ParamCalcIndex(MOD_CHModBusSelectionVirtualZaehler1)) & MOD_CHModBusSelectionVirtualZaehler1Mask))
 // Vorzeichen
@@ -2402,7 +2408,3 @@
 // S0 %C%
 #define KoBIN_S0_AnzahlImpulse          (knx.getGroupObject(BIN_KoCalcNumber(BIN_KoS0_AnzahlImpulse)))
 
-#define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 48
-#define MAIN_ApplicationVersion 17
-#define MAIN_OrderNumber "MFKnxMod"
