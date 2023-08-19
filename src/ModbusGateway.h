@@ -8,6 +8,12 @@
             (time & 0xC000) == 0x8000 ? ((time & 0x3FFF) > 1000 ? 3600000 : \
                                          (time & 0x3FFF) * 3600000 ) : 0 )
                                              
+#define MAIN_OpenKnxId 0xA2
+#define MAIN_ApplicationNumber 48
+#define MAIN_ApplicationVersion 17
+#define MAIN_ParameterSize 8287
+#define MAIN_MaxKoNumber 319
+#define MAIN_OrderNumber "MFKnxMod"
 // Parameter with single occurrence
 
 
@@ -2402,7 +2408,3 @@
 // S0 %C%
 #define KoBIN_S0_AnzahlImpulse          (knx.getGroupObject(BIN_KoCalcNumber(BIN_KoS0_AnzahlImpulse)))
 
-#define MAIN_OpenKnxId 0xA2
-#define MAIN_ApplicationNumber 48
-#define MAIN_ApplicationVersion 17
-#define MAIN_OrderNumber "MFKnxMod"
