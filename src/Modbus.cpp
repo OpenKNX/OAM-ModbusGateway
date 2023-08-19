@@ -667,7 +667,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_1));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueBool = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -755,7 +755,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_5001));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueUint8_t = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -841,7 +841,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_5));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueUint8_t = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -919,7 +919,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_7));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueUint16_t = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -985,7 +985,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_8));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueInt16_t = v;
                 }
 
 // Serial Output
@@ -1278,7 +1278,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_13));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueUint32_t = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -1435,7 +1435,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_13));
                 if (lSend)
                 {
-                    lastSentValue[channel].lValue = v;
+                    lastSentValue[channel].lValueInt32_t = v;
                 }
 
 #ifdef Serial_Debug_Modbus_Min
