@@ -20,7 +20,7 @@
             </Code>
             <op:define prefix="LOG" header="ModbusGateway.h" NumChannels="50" KoOffset="170" ModuleType= "1" />  <!-- KoOffset = 170 -> 150 + BIN (2ch*10kO) 20 --> 
             <op:define prefix="MOD" header="ModbusGateway.h" NumChannels="99" KoOffset="50"  ModuleType= "2" />
-            <op:define prefix="BIN" header="GardenControl.h" NumChannels="2"  KoOffset="150"  ModuleType="3" />  <!-- KoOffset = 150 -> 50 + MOD (99ch*1kO) 99 --> 
+            <op:define prefix="BIN" header="ModbusGateway.h" NumChannels="2"  KoOffset="150"  ModuleType="3" />  <!-- KoOffset = 150 -> 50 + MOD (99ch*1kO) 99 --> 
             <ParameterTypes>
               <!-- generic parameter types from logicmodule -->
               <op:include href="../lib/OAM-LogicModule/src/Logikmodul.share.xml" xpath="//ParameterTypes/ParameterType" prefix="LOG" />
