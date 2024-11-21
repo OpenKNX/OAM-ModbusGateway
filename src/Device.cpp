@@ -457,6 +457,7 @@ void appSetup()
         }
         sSaveInterruptAttached = true;
     }
+     SERIAL_DEBUG.println("AppSetup() DONE");
 }
 
 void appLoop()

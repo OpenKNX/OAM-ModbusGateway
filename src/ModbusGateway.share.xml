@@ -315,7 +315,7 @@
                   <Enumeration Text="jeden zweiten Zyklus" Value="2" Id="%AID%_PT-ReadCycle_EN-2" />
                   <Enumeration Text="jeden vierten Zyklus" Value="4" Id="%AID%_PT-ReadCycle_EN-4" />
                   <Enumeration Text="jeden sechten Zyklus" Value="6" Id="%AID%_PT-ReadCycle_EN-6" />
-                  <Enumeration Text="jeden sechten Zyklus" Value="8" Id="%AID%_PT-ReadCycle_EN-8" />
+                  <Enumeration Text="jeden achten Zyklus"  Value="8" Id="%AID%_PT-ReadCycle_EN-8" />
                   <Enumeration Text="jeden zehnten Zyklus" Value="10" Id="%AID%_PT-ReadCycle_EN-10" />
                 </TypeRestriction>
               </ParameterType>

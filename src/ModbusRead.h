@@ -4,13 +4,12 @@
 #include "Modbus.h"
 #include "ModbusMaster.h"
 #include <knx.h>
-//#include "hardware.h"
+// #include "hardware.h"
 #include "Device.h"
 #include "KnxHelper.h"
+#include "LED_Statusanzeige.h"
 #include "ModbusGateway.h"
 #include "wiring_private.h" // pinPeripheral() function
-#include "Device.h"
-#include "LED_Statusanzeige.h"
 
 // instantiate ModbusMaster object
 Modbus Slave[MaxCountSlaves];
@@ -158,8 +157,8 @@ void modbusInitSlaves(HardwareSerial &serial)
         Slave[slaveIdx].postTransmission(postTransmission);
         Slave[slaveIdx].idle(idle);
 
-        // Aktiviert Status LED nur, wenn mindestens ein MOdbus Slave aktiviert ist. 
-        if(knx.paramInt(MOD_BusID_Slave1 + slaveOffset)>0)
+        // Aktiviert Status LED nur, wenn mindestens ein MOdbus Slave aktiviert ist.
+        if (knx.paramInt(MOD_BusID_Slave1 + slaveOffset) > 0)
         {
             setLED(MODBUS_STATUS, HIGH);
         }
@@ -183,7 +182,19 @@ bool ModbusRead(uint8_t usedModbusChannels)
         if (delayCheck(ModbusDelay, 50 + (knx.paramByte(MOD_BusDelayRequest) * 10)))
         {
             uint8_t slaveNumber = knx.paramByte(getPar(MOD_CHModbusSlaveSelection, channel2)) - 1;
-            if (slaveNumber < MaxCountSlaves)
+            if (Slave[slaveNumber].getAktiveState() == false) // prüft, ob Kanal aktiv ist
+            {
+                ModbusDelay = millis();
+#ifdef Serial_Debug_Modbus_Min
+                SERIAL_DEBUG.print("CH");
+                SERIAL_DEBUG.print(channel2 + 1);
+                SERIAL_DEBUG.print(": inaktiv -> Slave: ");
+                SERIAL_DEBUG.print(slaveNumber+1);
+                SERIAL_DEBUG.println(" ID = 0");
+                //SERIAL_DEBUG.println(Slave[slaveNumber].getAktiveState());
+#endif
+            }
+            else if (slaveNumber < MaxCountSlaves)
             {
 #ifdef Serial_Debug_Modbus_Min
                 SERIAL_DEBUG.print("CH");

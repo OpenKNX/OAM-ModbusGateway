@@ -17,7 +17,7 @@ public:
     void ReadyToSendModbus(uint8_t channel);								 
     uint8_t getRegisterstart();
     uint8_t getSlaveID();
-
+    bool getAktiveState();
     bool getErrorState1(uint8_t channel);
     bool getErrorState2(uint8_t channel);
     void setSkipCounter(uint8_t channel, uint8_t value);
@@ -31,6 +31,7 @@ private:
     uint8_t _RegisterPos;          // 0 = MSB first            -    1 = LSB first
     uint8_t _RegisterStart;        // 0 = first address '0'    -    1 = first address '1'
 
+    bool _channel_aktive; 
     static bool _readyToSend[MOD_ChannelCount];										  
     
     typedef union Values
@@ -39,6 +40,7 @@ private:
         uint16_t lValueUint16_t;
         int16_t lValueInt16_t;
         uint32_t lValueUint32_t;
+        int lValueUint;
         int32_t lValueInt32_t;
         float lValue;
         bool lValueBool;

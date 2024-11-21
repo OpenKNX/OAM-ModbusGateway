@@ -6,6 +6,7 @@
 #include "KnxHelper.h"
 #include "LED_Statusanzeige.h"
 #include "ModbusMaster.h"
+#include <math.h>
 
 uint32_t Modbus::sendDelay[MOD_ChannelCount];
 // Flag that value is valid
@@ -40,6 +41,18 @@ void Modbus::initSlave(uint8_t slaveID, Stream &serialModbus, uint8_t RegisterPo
     _RegisterStart = RegisterStart;
     _slaveID = slaveID;
 
+    if ( slaveID > 0)
+    {
+        _channel_aktive = true;
+        SERIAL_DEBUG.println("Kanal aktiv");
+    }
+    else
+    {
+        _channel_aktive = false;
+        SERIAL_DEBUG.println("Kanal inaktiv");
+
+    }
+
     // set Zäherstand Offset
     counterZ1 = knx.paramInt(MOD_ModbusZaehler1Offset);
 
@@ -56,6 +69,11 @@ uint8_t Modbus::getRegisterstart()
 uint8_t Modbus::getSlaveID()
 {
     return _slaveID;
+}
+
+bool Modbus::getAktiveState()
+{
+    return _channel_aktive;
 }
 
 inline uint16_t Modbus::adjustRegisterAddress(uint16_t u16ReadAddress)
@@ -750,8 +768,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     } // Ende Register Pos
 
                     // senden bei Wertänderung
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && (uint32_t)abs(v - lastSentValue[channel].lValueUint8_t) >= lAbsolute);
+                    uint16_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
+                    uint8_t lDiff = abs(v - lastSentValue[channel].lValueUint8_t);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_5001));
@@ -836,8 +856,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     } // Ende Register Pos
 
                     // senden bei Wertänderung
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && (uint32_t)abs(v - lastSentValue[channel].lValueUint8_t) >= lAbsolute);
+                    uint16_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
+                    uint8_t lDiff = abs(v - lastSentValue[channel].lValueUint8_t);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_5));
@@ -914,8 +936,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     } // Ende Register Pos
 
                     // senden bei Wertänderung
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && (uint32_t)abs(v - lastSentValue[channel].lValueUint16_t) >= lAbsolute);
+                    uint16_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
+                    uint16_t lDiff = abs(v - lastSentValue[channel].lValueUint16_t);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_7));
@@ -980,8 +1004,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     v = (int16_t)getResponseBuffer(0);
 
                     // senden bei Wertänderung
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && abs(v - lastSentValue[channel].lValueInt16_t) >= lAbsolute);
+                    uint16_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
+                    uint16_t lDiff = abs(v - lastSentValue[channel].lValueInt16_t);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_8));
@@ -1103,8 +1129,12 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     }
 
                     // senden bei Wertänderung
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && abs(v - lastSentValue[channel].lValue) * 10.0 >= lAbsolute);
+                    float lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel)) / 10.0;
+                    float lDiff = abs(v - lastSentValue[channel].lValue);
+                    if (lAbsolute > 0.0f && lDiff >= lAbsolute)
+                        lSend = true;
+
+                    // lSend |= (lAbsolute && abs(v - lastSentValue[channel].lValue) * 10.0 >= lAbsolute);
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_9)); //  ************************ MUSS NOCH GEPRÜFT WERDEN Float mit 2 Bytes !!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1147,7 +1177,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 // clear Responsebuffer before revicing a new message
                 clearResponseBuffer();
 
-                uint32_t v;
+                int v;
 
                 // Bestimmt ob Register-Typ: Word oder Double Word
                 switch (knx.paramByte(getPar(MOD_CHModBusWordTyp12, channel))) // Choose Word Register OR Double Word Register
@@ -1273,14 +1303,16 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 {
                     // senden bei Wertänderung
                     uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    int32_t lDiff = v - lastSentValue[channel].lValueUint32_t;
-                    lSend |= (lAbsolute && (uint32_t)abs(lDiff) >= lAbsolute);
+                    int lDiff = abs(v - lastSentValue[channel].lValueUint);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
-                    knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_13));
+                    uint32_t v_send = v;
+                    knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v_send, getDPT(VAL_DPT_13));
                     if (lSend)
                     {
-                        lastSentValue[channel].lValueUint32_t = v;
+                        lastSentValue[channel].lValueUint = v;
                     }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -1295,7 +1327,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     processMeter(channel, v);
                 }
 
-            }      // ENDE
+            } // ENDE
             break; // Ende PDT12
         //*****************************************************************************************************************************************
         //*****************************************  DPT 13 ***************************************************************************************
@@ -1431,7 +1463,9 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 {
                     // senden bei Wertänderung
                     uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && (uint32_t)abs(v - lastSentValue[channel].lValueInt32_t) >= lAbsolute);
+                    uint32_t lDiff = abs(v - lastSentValue[channel].lValueInt32_t);
+                    if (lAbsolute > 0 && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_13));
@@ -1452,7 +1486,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     processMeter(channel, v);
                 }
 
-            }      // ENDE
+            } // ENDE
             break; // Ende PDT13
 
         //*****************************************************************************************************************************************
@@ -1663,8 +1697,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 if (result == ku8MBSuccess)
                 {
                     // send on first value or value change
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    lSend |= (lAbsolute && abs(v - lastSentValue[channel].lValue) * 10.0 >= lAbsolute);
+                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel)) / 10.0;
+                    float lDiff = abs(v - lastSentValue[channel].lValue);
+                    if (lAbsolute > 0.0f && lDiff >= lAbsolute)
+                        lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
                     knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_14));
@@ -1685,7 +1721,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                     processMeter(channel, v);
                 }
 
-            }      // ENDE
+            } // ENDE
             break; // Ende PDT14
 
         default: // all other dpts
