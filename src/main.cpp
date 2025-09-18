@@ -21,6 +21,10 @@ void setup()
     Wire.setSDA(12);
     Wire.setSCL(13);
 #endif
+#ifdef BOARD_MASIFI_MODBUS_1TE
+    Serial1.setRX(KNX_UART_RX_PIN);
+    Serial1.setTX(KNX_UART_TX_PIN);
+#endif
 #endif
     SERIAL_DEBUG.begin(115200);
     pinMode(get_PROG_LED_PIN(get_HW_ID()), OUTPUT);
