@@ -416,8 +416,8 @@ void initHW(uint8_t hwID)
 #endif
     initI2cStatusLeds();
     setLED_OFF();
-    setLED(MBUS_STATUS, LOW);
-    setLED(MODBUS_ERROR, LOW);
+    //setLED_Modbus(LOW);
+    //setLED_ERROR(LOW);
 }
 
 void logicCallback(void *iInstance)

@@ -57,6 +57,13 @@ PCF8575::PCF8575(uint8_t address, uint8_t interruptPin,  void (*interruptFunctio
 };
 
 
+bool ::PCF8575::isConnected()
+{
+  _wire->beginTransmission(_address);
+  return (_wire->endTransmission() == 0);
+}
+
+
 
 /**
  * Set if fin is OUTPUT or INPUT

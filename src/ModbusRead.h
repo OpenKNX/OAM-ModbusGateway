@@ -158,9 +158,9 @@ void modbusInitSlaves(HardwareSerial &serial)
         Slave[slaveIdx].idle(idle);
 
         // Aktiviert Status LED nur, wenn mindestens ein MOdbus Slave aktiviert ist.
-        if (knx.paramInt(MOD_BusID_Slave1 + slaveOffset) > 0)
+        if (knx.paramInt(MOD_BusID_Slave1 + slaveOffset) > 0 )
         {
-            setLED(MODBUS_STATUS, HIGH);
+            setLED_Modbus(HIGH);
         }
     }
 

@@ -41,7 +41,7 @@ void Modbus::initSlave(uint8_t slaveID, Stream &serialModbus, uint8_t RegisterPo
     _RegisterStart = RegisterStart;
     _slaveID = slaveID;
 
-    if ( slaveID > 0)
+    if (slaveID > 0)
     {
         _channel_aktive = true;
         SERIAL_DEBUG.println("Kanal aktiv");
@@ -50,7 +50,6 @@ void Modbus::initSlave(uint8_t slaveID, Stream &serialModbus, uint8_t RegisterPo
     {
         _channel_aktive = false;
         SERIAL_DEBUG.println("Kanal inaktiv");
-
     }
 
     // set Zäherstand Offset
@@ -214,9 +213,9 @@ void Modbus::ErrorHandlingLED()
         }
     }
     if (error)
-        setLED(MODBUS_ERROR, HIGH);
+        setLED_ERROR(HIGH);
     else
-        setLED(MODBUS_ERROR, LOW);
+        setLED_ERROR(LOW);
 }
 
 void Modbus::ReadyToSendModbus(uint8_t channel)
@@ -253,7 +252,10 @@ bool Modbus::readModbus(uint8_t channel, bool readRequest)
         return false;
 
     // ERROR LED
-    ErrorHandlingLED();
+    if (_channel_aktive == 1 && _slaveID >= 0)
+    {
+        ErrorHandlingLED();
+    }
 
     // Richtungsauswahl: KNX - Modbus oder Modbus - KNX
     switch (knx.paramByte(getPar(MOD_CHModBusBusDirection, channel)))
@@ -513,8 +515,8 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
         if (readRequest)
         {
             uint32_t v = iKo.value(getDPT(VAL_DPT_12));
-            setTransmitBuffer(0, v & 0xffff);
-            setTransmitBuffer(1, v >> 16);
+            setTransmitBuffer(0, v >> 16);
+            setTransmitBuffer(1, v & 0xffff);
             result = writeMultipleRegisters(registerAddr, 2);
             printDebugResult("12 0x10", registerAddr, result);
         }
@@ -527,8 +529,8 @@ bool Modbus::knxToModbus(uint8_t dpt, uint8_t channel, bool readRequest)
         if (readRequest)
         {
             int32_t v = iKo.value(getDPT(VAL_DPT_13));
-            setTransmitBuffer(0, v);
-            setTransmitBuffer(1, v >> 16);
+            setTransmitBuffer(0, v >> 16);
+            setTransmitBuffer(1, v);
             result = writeMultipleRegisters(registerAddr, 2);
             printDebugResult("13 0x10", registerAddr, result);
         }
@@ -1177,7 +1179,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 // clear Responsebuffer before revicing a new message
                 clearResponseBuffer();
 
-                int v;
+                uint32_t v;
 
                 // Bestimmt ob Register-Typ: Word oder Double Word
                 switch (knx.paramByte(getPar(MOD_CHModBusWordTyp12, channel))) // Choose Word Register OR Double Word Register
@@ -1272,10 +1274,10 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                             {
                                     //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 case 0: // HI Word / LO Word
-                                    v = (int32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
+                                    v = (uint32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
                                     break;
                                 case 1: // LO Word / HI Word
-                                    v = (int32_t)(getResponseBuffer(1) << 16 | getResponseBuffer(0));
+                                    v = (uint32_t)(getResponseBuffer(0) | getResponseBuffer(1) << 16);
                                     //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                                     break;
                                 default:
@@ -1303,16 +1305,16 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 {
                     // senden bei Wertänderung
                     uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel));
-                    int lDiff = abs(v - lastSentValue[channel].lValueUint);
+                    int absVAlue = (v - lastSentValue[channel].lValueUint32_t);
+                    uint32_t lDiff = abs(absVAlue);
                     if (lAbsolute > 0 && lDiff >= lAbsolute)
                         lSend = true;
 
                     // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
-                    uint32_t v_send = v;
-                    knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v_send, getDPT(VAL_DPT_13));
+                    knx.getGroupObject(getCom(MOD_KoGO_BASE_, channel)).valueNoSend(v, getDPT(VAL_DPT_13));
                     if (lSend)
                     {
-                        lastSentValue[channel].lValueUint = v;
+                        lastSentValue[channel].lValueUint32_t = v;
                     }
 
 #ifdef Serial_Debug_Modbus_Min
@@ -1436,7 +1438,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                                     v = (int32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
                                     break;
                                 case 1: // LO Word / HI Word
-                                    v = (int32_t)(getResponseBuffer(1) << 16 | getResponseBuffer(0));
+                                    v = (int32_t)(getResponseBuffer(0) | getResponseBuffer(1) << 16);
                                     //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                                     break;
                                 default:
@@ -1697,7 +1699,7 @@ bool Modbus::modbusToKnx(uint8_t dpt, uint8_t channel, bool readRequest)
                 if (result == ku8MBSuccess)
                 {
                     // send on first value or value change
-                    uint32_t lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel)) / 10.0;
+                    float lAbsolute = knx.paramInt(getPar(MOD_CHModBusValueChange, channel)) / 10.0;
                     float lDiff = abs(v - lastSentValue[channel].lValue);
                     if (lAbsolute > 0.0f && lDiff >= lAbsolute)
                         lSend = true;

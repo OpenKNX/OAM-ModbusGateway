@@ -1,0 +1,3 @@
+ToDos:
+
+- Diagnose KO implementieren 
