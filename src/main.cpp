@@ -10,6 +10,7 @@ void appLoop();
 
 void setup()
 {
+    delay(3000);
 #ifdef ARDUINO_ARCH_RP2040
 #ifdef BOARD_MASIFI_MODBUS_BREAKOUT
     Serial2.setRX(KNX_UART_RX_PIN);
@@ -35,6 +36,10 @@ void setup()
     digitalWrite(get_PROG_LED_PIN(get_HW_ID()), LOW);
 #ifdef ARDUINO_ARCH_RP2040
 #ifdef BOARD_MASIFI_MODBUS_V21
+    Serial2.setRX(MODBUS_UART_RX_PIN);
+    Serial2.setTX(MODBUS_UART_TX_PIN);
+#endif
+#ifdef BOARD_MASIFI_MODBUS_1TE
     Serial2.setRX(MODBUS_UART_RX_PIN);
     Serial2.setTX(MODBUS_UART_TX_PIN);
 #endif

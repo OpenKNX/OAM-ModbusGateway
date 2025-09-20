@@ -2,6 +2,12 @@
 #include "Helper.h"
 #include "Schedule.h"
 
+// Mat's first version of Hardware autoconfig
+#define HW_BREAKOUT 8
+#define HW_20       7
+#define HW_21       6
+#define HW_1TE      5
+
 void ProcessHeartbeat();
 
 uint8_t get_HW_ID();

@@ -36,6 +36,7 @@
     The Data Enable and Receiver Enable pins are hooked up as follows:
   */
   #define MAX485_DIR 10
+  #define ERROR_LED_1TE 255 
   // S0
   #define S0_CH1_Pin 25  // ???
   #define S0_CH2_Pin 27  // ???
@@ -58,6 +59,7 @@
     The Data Enable and Receiver Enable pins are hooked up as follows:
   */
   #define MAX485_DIR 24
+  #define ERROR_LED_1TE 255 
   // S0
   #define S0_CH1_Pin 25  // ???
   #define S0_CH2_Pin 27  // ???
@@ -68,10 +70,38 @@
   #define MODBUS_UART_RX_PIN 5
   #define MODBUS_UART_TX_PIN 4
 #endif
+
+#ifdef BOARD_MASIFI_MODBUS_1TE
+  #define ID1 10
+  #define ID2 11
+  #define ID3 12
+
+  // #define Diag_LED 26
+
+  /*!
+    We're using a MAX485-compatible RS485 Transceiver.
+    The Data Enable and Receiver Enable pins are hooked up as follows:
+  */
+  #define MAX485_DIR 14
+  #define ERROR_LED_1TE 15
+  
+  // S0
+  #define S0_CH1_Pin 25  // ???
+  #define S0_CH2_Pin 27  // ???
+
+  // move to hardware autoconfig
+  #define KNX_UART_RX_PIN 17
+  #define KNX_UART_TX_PIN 16
+  #define MODBUS_UART_RX_PIN 5
+  #define MODBUS_UART_TX_PIN 4
+#endif
+
 #else
   #define ID1 23
   #define ID2 24
   #define ID3 22
+
+  #define ERROR_LED_1TE 255 
 
   //DIAG LED
   #define Diag_LED 9

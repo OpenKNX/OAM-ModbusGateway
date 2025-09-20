@@ -183,6 +183,10 @@ bool setupModbus()
      modbusInitSerial(Serial2);
      modbusInitSlaves(Serial2);
     #endif
+     #ifdef BOARD_MASIFI_MODBUS_1TE
+     modbusInitSerial(Serial2);
+     modbusInitSlaves(Serial2);
+    #endif
     #ifdef BOARD_MASIFI_MODBUS_BREAKOUT
     // modbusInitSerial(Serial1);
     // modbusInitSlaves(Serial1);
@@ -271,11 +275,6 @@ void setupS0()
 #endif
 }
 
-// Mat's first version of Hardware autoconfig
-#define HW_BREAKOUT 8
-#define HW_20       7
-#define HW_21       6
-
 uint8_t get_PROG_LED_PIN(uint8_t hwID)
 {
 #ifdef ARDUINO_ARCH_RP2040
@@ -285,6 +284,8 @@ uint8_t get_PROG_LED_PIN(uint8_t hwID)
             return 11;
         case HW_20: // HW 2.0
             return 1;
+        case HW_1TE: // HW 1TE
+            return 1;     
         case HW_BREAKOUT: // Breakout-Board
             return 22;
         default:
@@ -312,6 +313,8 @@ uint8_t get_PROG_BUTTON_PIN(uint8_t hwID)
             return 14;
         case HW_20: // HW 2.0
             return 3;
+        case HW_1TE: // HW 1TE
+            return 0;    
         case HW_BREAKOUT: // Breakout-Board
             return 28;
         default:
@@ -344,6 +347,8 @@ uint8_t get_SAVE_INTERRUPT_PIN(uint8_t hwID)
             return 8;
         case HW_20: // HW 2.0
             return 20;
+        case HW_1TE: // HW 1TE
+            return 13;     
         case HW_BREAKOUT: // Breakout-Board
             return 6;
         default:
@@ -393,6 +398,11 @@ void initHW(uint8_t hwID)
         case HW_21:
             SERIAL_DEBUG.println("HW_ID: V2.1");
             break;
+        case HW_1TE:
+            SERIAL_DEBUG.println("HW_ID: 1TE");
+             pinMode(ERROR_LED_1TE,OUTPUT);
+             digitalWrite(ERROR_LED_1TE,LOW);
+            break;    
         default:
             SERIAL_DEBUG.print("HW_ID: ERROR ");
             SERIAL_DEBUG.println(hwID);

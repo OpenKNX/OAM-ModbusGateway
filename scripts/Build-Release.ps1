@@ -36,10 +36,10 @@ lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_SAMD firmware-SAMD 
 if (!$?) { exit 1 }
 
 # build firmware based on generated headerfile for RP2040
-lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_Breakout firmware-RP2040-Breakout uf2 firmware-RP2040-Breakout-just-for-testers
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_2TE firmware-SMART-MF-RP2040-2TE uf2
 if (!$?) { exit 1 }
 
-lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040 firmware-RP2040 uf2
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_1TE firmware-SMART-MF-RP2040-1TE uf2
 if (!$?) { exit 1 }
 
 # execute generic post-build steps

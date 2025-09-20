@@ -1,4 +1,6 @@
 #include "LED_Statusanzeige.h"
+#include "Device.h"
+#include "hardware.h"
 
 #define PCF_8575 1
 #define TCA_9555 2
@@ -7,7 +9,6 @@
 #define PCF_Err_LED 4
 #define TCA_Mod_LED 0
 #define TCA_Err_LED 1
-
 
 PCF8575 pcf8575_LED_CH1_16(0x24, &Wire);
 TCA9555 tca9555_LED_CH1_16(0x22, &Wire);
@@ -89,7 +90,7 @@ void setLED(uint8_t pin, bool state)
             pcf8575_LED_CH1_16.pcf8575_WriteALL(state_LED_Out);
             break;
         case TCA_9555:
-            tca9555_LED_CH1_16.write1(!pin,state);
+            tca9555_LED_CH1_16.write1(!pin, state);
             break;
 
         default:
@@ -100,23 +101,36 @@ void setLED(uint8_t pin, bool state)
 
 void setLED_ERROR(bool state)
 {
-    switch (ioExp)
+#ifdef ARDUINO_ARCH_RP2040
+    switch (get_HW_ID())
     {
-        case PCF_8575:
-            if (state == true) // LED ON --> PIN = LOW
-                state_LED_Out &= ~(1 << PCF_Err_LED);
-            if (state == false) // LED OFF --> PIN = HIGH
-                state_LED_Out |= 1 << PCF_Err_LED;
-            pcf8575_LED_CH1_16.pcf8575_WriteALL(state_LED_Out);
-            break;
-        case TCA_9555:
-            tca9555_LED_CH1_16.write1(TCA_Err_LED,!state);
+        case HW_1TE:
+            digitalWrite(ERROR_LED_1TE, state);
             break;
 
-        default:
-            SERIAL_DEBUG.println("Status Anzeige. IO-Exp not defined");
+        default: // 2TE Gehäuse
+#endif
+            switch (ioExp)
+            {
+                case PCF_8575:
+                    if (state == true) // LED ON --> PIN = LOW
+                        state_LED_Out &= ~(1 << PCF_Err_LED);
+                    if (state == false) // LED OFF --> PIN = HIGH
+                        state_LED_Out |= 1 << PCF_Err_LED;
+                    pcf8575_LED_CH1_16.pcf8575_WriteALL(state_LED_Out);
+                    break;
+                case TCA_9555:
+                    tca9555_LED_CH1_16.write1(TCA_Err_LED, !state);
+                    break;
+
+                default:
+                    SERIAL_DEBUG.println("Status Anzeige. IO-Exp not defined");
+                    break;
+            }
+#ifdef ARDUINO_ARCH_RP2040
             break;
     }
+#endif
 }
 
 void setLED_Modbus(bool state)
@@ -131,7 +145,7 @@ void setLED_Modbus(bool state)
             pcf8575_LED_CH1_16.pcf8575_WriteALL(state_LED_Out);
             break;
         case TCA_9555:
-            tca9555_LED_CH1_16.write1(TCA_Mod_LED,!state);
+            tca9555_LED_CH1_16.write1(TCA_Mod_LED, !state);
             break;
 
         default:
@@ -147,4 +161,3 @@ void blink_S0_LED1(uint8_t ch)
 void blink_S0_LED12(uint8_t ch)
 {
 }
-
