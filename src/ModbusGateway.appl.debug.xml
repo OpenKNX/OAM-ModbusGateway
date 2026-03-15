@@ -104,7 +104,7 @@
               <op:include href="ModbusModule.share.xml" xpath="//ApplicationProgram/Static/Script/text()" prefix="MOD" />
               <op:include href="../lib/OFM-LogicModule/src/Logikmodul.share.xml" xpath="//ApplicationProgram/Static/Script/text()" prefix="LOG" />
             </Script>
-            <Options TextParameterEncoding="iso-8859-15" />
+            <Options TextParameterEncoding="iso-8859-15" SupportsExtendedMemoryServices="true" SupportsExtendedPropertyServices="true" />
           </Static>
           <ModuleDefs>
             <op:include href="../lib/OGM-Common/src/Common.share.xml" xpath="//ApplicationProgram/ModuleDefs/*" prefix="BASE" />

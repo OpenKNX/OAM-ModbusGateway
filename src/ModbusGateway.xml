@@ -25,12 +25,12 @@
 
   <op:define prefix="BASE" ModuleType="10"
     share="../lib/OGM-Common/src/Common.share.xml">
-    <op:verify File="../lib/OGM-Common/library.json" ModuleVersion="1.5" />
+    <op:verify File="../lib/OGM-Common/library.json" ModuleVersion="1.7" />
   </op:define>
 
   <op:define prefix="UCT" ModuleType="98"
     share="../lib/OFM-ConfigTransfer/src/ConfigTransfer.share.xml">
-    <op:verify File="../lib/OFM-ConfigTransfer/library.json" ModuleVersion="0.4" />
+    <op:verify File="../lib/OFM-ConfigTransfer/library.json" ModuleVersion="0.5" />
   </op:define>
 
   <op:define prefix="MOD" ModuleType="2"
@@ -44,7 +44,7 @@
     share="../lib/OFM-LogicModule/src/Logikmodul.share.xml"
     template="../lib/OFM-LogicModule/src/Logikmodul.templ.xml"
     NumChannels="10" KoOffset="340">
-    <op:verify File="../lib/OFM-LogicModule/library.json" ModuleVersion="3.8" />
+    <op:verify File="../lib/OFM-LogicModule/library.json" ModuleVersion="4.0" />
   </op:define>
 
   <generate />

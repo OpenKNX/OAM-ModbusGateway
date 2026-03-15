@@ -39,8 +39,8 @@ Here's a high-level description of what it does:
 # Optional Input Parameters
 param(
   # Set the Git checkout mode
-  [ValidateSet("Branch", "Hash")]
-  [string]$GitCheckoutMode= "Hash", # Branch or Hash. Default is Hash
+  [ValidateSet("None", "Branch", "Hash")]
+  [string]$GitCheckoutMode= "Hash", # None, Branch or Hash. Default is Hash
 
   # Force the script to recreate symbolic links
   [switch]$ForceRecreateSymLinks= $true, # Default is $true
@@ -690,12 +690,13 @@ $projectFilesGitInfo = CreateGitDependencyInfo $projectDir $dependedProjects
 if($DebugMsg) { $projectFilesGitInfo | ForEach-Object { Write-Output $_ } }
  # Output each project file's git information
 
-# Call the CloneRepository function with the project files' git information and the depended projects
-Write-Host -ForegroundColor Yellow "- Checking, cloning and rebranching the git repositories for each dependency."
-$CloneDir = (Resolve-Path (Join-Path $projectDir '..')).Path
-if($Verbose) { Write-Host $CloneDir }
-CloneRepository $projectFilesGitInfo $dependedProjects $CloneDir ($GitCheckoutMode -eq "Hash")
-
+if ($GitCheckoutMode -ne "None") {
+  # Call the CloneRepository function with the project files' git information and the depended projects
+  Write-Host -ForegroundColor Yellow "- Checking, cloning and rebranching the git repositories for each dependency."
+  $CloneDir = (Resolve-Path (Join-Path $projectDir '..')).Path
+  if($Verbose) { Write-Host $CloneDir }
+  CloneRepository $projectFilesGitInfo $dependedProjects $CloneDir ($GitCheckoutMode -eq "Hash")
+}
 
 if($Verbose) { Write-Host -ForegroundColor Yellow "- Checking and creating symbolic links for each project file." }
 CreateSymbolicLink $projectDir $projectFilesGitInfo

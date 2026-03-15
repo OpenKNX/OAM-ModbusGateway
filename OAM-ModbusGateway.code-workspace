@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../knx"
+		},
+		{
+			"path": "../OFM-ConfigTransfer"
+		},
+		{
+			"path": "../OFM-FileTransferModule"
+		},
+		{
+			"path": "../OFM-LogicModule"
+		},
+		{
+			"path": "../OFM-UsbExchange"
+		},
+		{
+			"path": "../OGM-Common"
+		},
+		{
+			"path": "../OGM-HardwareConfig"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.yaml": "esphome",
+			"ostream": "cpp",
+			"chrono": "cpp",
+			"functional": "cpp",
+			"optional": "cpp",
+			"format": "cpp",
+			"system_error": "cpp",
+			"regex": "cpp"
+		}
+	}
+}

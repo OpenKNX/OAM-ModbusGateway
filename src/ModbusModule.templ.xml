@@ -25,7 +25,7 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%010" Name="CH%C%ModBusRegisterPosDPT5" Offset="2" BitOffset="5" ParameterType="%AID%_PT-RegisterPosDPT56" Text="Register Position" Value="1" /> <!-- 3bit -->
                 <Parameter Id="%AID%_UP-%T%%CCC%003" Name="CH%C%ModbusRegister" Offset="3" BitOffset="0" ParameterType="%AID%_PT-RegisterAddress" Text="Register(Dezimal)" SuffixText="" Value="0" /> <!-- 4Byte -->
               </Union>
-              <Union SizeInBit="45">
+              <Union SizeInBit="72">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="7" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%005" Name="CH%C%ModBusSendDelay" Offset="0" BitOffset="0" ParameterType="%AID%_PT-DelaySeconds" Text="   zyklisch senden (0=nicht senden)" SuffixText="Sekunden" Value="0" /><!-- 4Byte -->
                 <Parameter Id="%AID%_UP-%T%%CCC%006" Name="CH%C%ModBusValueChange" Offset="4" BitOffset="0" ParameterType="%AID%_PT-ValueChange" Text="   abs Abweichung senden (0=nicht senden)" SuffixText="*0.1" Value="0" /><!-- 4Byte -->
