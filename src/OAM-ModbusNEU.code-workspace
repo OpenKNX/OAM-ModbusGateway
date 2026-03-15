@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../OFM-LogicModule"
+		},
+		{
+			"path": "../../OGM-Common"
+		},
+		{
+			"path": "../../OFM-FileTransferModule"
+		},
+		{
+			"path": "../../OFM-ConfigTransfer"
+		},
+		{
+			"path": "../../OGM-HardwareConfig"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.yaml": "esphome",
+			"ostream": "cpp",
+			"chrono": "cpp",
+			"functional": "cpp",
+			"optional": "cpp",
+			"format": "cpp",
+			"system_error": "cpp",
+			"regex": "cpp"
+		}
+	}
+}

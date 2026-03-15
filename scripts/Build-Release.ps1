@@ -21,27 +21,25 @@
 #     "group": "test"
 # }
 
-# uncomment the following, if required
-$releaseIndication = $args[0]
-
 # set product names, allows mapping of (devel) name in Project to a more consistent name in release
 # $settings = scripts/OpenKNX-Build-Settings.ps1
 
 # execute generic pre-build steps
-lib/OGM-Common/scripts/setup/reusable/Build-Release-Preprocess.ps1 $releaseIndication
+../OGM-Common/scripts/setup/reusable/Build-Release-Preprocess.ps1 $args[0]
 if (!$?) { exit 1 }
 
-# build firmware based on generated headerfile for SAMD
-lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_SAMD firmware-SAMD bin
+# build firmware for DEVICE_SMARTMF_MODBUS_RTU_3BE
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_TP_DEVICE_SMARTMF_MODBUS_RTU_3BE firmware-SMART-MF_Modbus_RTU_2TE uf2
 if (!$?) { exit 1 }
 
-# build firmware based on generated headerfile for RP2040
-lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_Breakout firmware-RP2040-Breakout uf2 firmware-RP2040-Breakout-just-for-testers
+# build firmware for DEVICE_SMARTMF_1TE_MODBUS
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_TP_DEVICE_SMARTMF_1TE_MODBUS firmware-SMART-MF_Modbus_RTU_1TE uf2
 if (!$?) { exit 1 }
 
-lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040 firmware-RP2040 uf2
+# build firmware for DEVICE_SMARTMF_1TE_MODBUS
+lib/OGM-Common/scripts/setup/reusable/Build-Step.ps1 release_RP2040_TP_DEVICE_SMARTMF_MODBUS_AUSSEN firmware-SMART-MF_Modbus_RTU_AUSSEN uf2
 if (!$?) { exit 1 }
 
 # execute generic post-build steps
-lib/OGM-Common/scripts/setup/reusable/Build-Release-Postprocess.ps1 $releaseIndication
+../OGM-Common/scripts/setup/reusable/Build-Release-Postprocess.ps1 $args[0]
 if (!$?) { exit 1 }

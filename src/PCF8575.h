@@ -119,6 +119,7 @@ public:
 	//Matthias
 	uint8_t pcf8575_Read_NEU(uint8_t pin);
 	void readGPIO();
+	bool isConnected();
 
 	void readBuffer(uint8_t address, bool force = true);
 	uint8_t pcf8575_Read(uint8_t pin);

@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20"
+  CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <op:config name="%MOD_NumChannelsDefault%" value="%N%" />
+  <ManufacturerData>
+    <Manufacturer RefId="M-00FA">
+      <ApplicationPrograms>
+        <ApplicationProgram Id="%AID%" ApplicationNumber="200" ApplicationVersion="1"
+          ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="MOD"
+          LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de"
+          DynamicTableManagement="false" Linkable="false" MinEtsVersion="4.0">
+          <Static>
+            <ParameterTypes>
+              <!-- the following ParameterTypes are from a productive example -->
+              <ParameterType Id="%AID%_PT-DelaySeconds" Name="DelaySeconds">
+                <TypeNumber SizeInBit="32" Type="unsignedInt" minInclusive="0" maxInclusive="86400" />
+              </ParameterType>
+              <!-- simple integer type -->
+              <ParameterType Id="%AID%_PT-calculationValue" Name="calculationValue">
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1" maxInclusive="65000" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-calculationValue2" Name="calculationValue2">
+                <TypeNumber SizeInBit="16" Type="signedInt" minInclusive="-32000" maxInclusive="32000" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-ZaehlerOffset" Name="ZaehlerOffset">
+                <TypeNumber SizeInBit="32" Type="unsignedInt" minInclusive="0" maxInclusive="99999999" />
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-BaudrateSelection" Name="BaudrateSelection">
+                <TypeRestriction Base="Value" SizeInBit="3">
+                  <Enumeration Text="1200 bits/s" Value="0" Id="%ENID%" />
+                  <Enumeration Text="2400 bits/s" Value="1" Id="%ENID%" />
+                  <Enumeration Text="4800 bits/s" Value="2" Id="%ENID%" />
+                  <Enumeration Text="9600 bits/s" Value="3" Id="%ENID%" />
+                  <Enumeration Text="19200 bits/s" Value="4" Id="%ENID%" />
+                  <Enumeration Text="38400 bits/s" Value="5" Id="%ENID%" />
+                  <Enumeration Text="56000 bits/s" Value="6" Id="%ENID%" />
+                  <Enumeration Text="115200 bits/s" Value="7" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-ParitySelection" Name="ParitySelection">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="Even (1 stop bit)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Odd (1 stop bit)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="None (2 stop bits)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="None (1 stop bit)" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-ByteOrderSelection" Name="ByteOrderSelection">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="MSB first" Value="0" Id="%ENID%" />
+                  <Enumeration Text="LSB first" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-WordOrderSelection" Name="WordOrderSelection">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="Erste Adresse '0'" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Erste Adresse '1'" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-DelayRequest" Name="DelayRequest">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Minimal" Value="0" Id="%ENID%" />
+                  <Enumeration Text="10 ms" Value="1" Id="%ENID%" />
+                  <Enumeration Text="20 ms" Value="2" Id="%ENID%" />
+                  <Enumeration Text="50 ms" Value="5" Id="%ENID%" />
+                  <Enumeration Text="100 ms" Value="10" Id="%ENID%" />
+                  <Enumeration Text="200 ms" Value="20" Id="%ENID%" />
+                  <Enumeration Text="300 ms" Value="30" Id="%ENID%" />
+                  <Enumeration Text="500 ms" Value="50" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-DelayCycle" Name="DelayCycle">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Minimal" Value="0" Id="%ENID%" />
+                  <Enumeration Text="  1 s" Value="1" Id="%ENID%" />
+                  <Enumeration Text="  2 s" Value="2" Id="%ENID%" />
+                  <Enumeration Text="  4 s" Value="4" Id="%ENID%" />
+                  <Enumeration Text="  6 s" Value="6" Id="%ENID%" />
+                  <Enumeration Text="  8 s" Value="8" Id="%ENID%" />
+                  <Enumeration Text="10 s" Value="10" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- enumeration with 8-bit (word) values -->
+              <ParameterType Id="%AID%_PT-Sendcondition" Name="Sendcondition">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Bei Wertänderung und Zyklisch" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Bei Wertänderung" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Zyklisch" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Nur bei Bus-Request " Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Demo ParameterTypes to show available possibilities  -->
+              <!-- Parameter type for 1 bit parameter, presented as radio button -->
+              <ParameterType Id="%AID%_PT-YesNo" Name="YesNo">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Ja" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Parameter type for an 8 bit percent parameter -->
+              <ParameterType Id="%AID%_PT-Percentage" Name="Percentage">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
+              </ParameterType>
+              <!-- Parameter type for an 8 bit enumeration -->
+              <ParameterType Id="%AID%_PT-DptSelect" Name="DptSelect">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="DPT 5.001 (1 Byte, Prozentwert)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="DPT 9.007 (2 Byte, Fließkommawert)" Value="9" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- *************  -->
+              <!-- ModBus Chanel  -->
+              <!-- *************  -->
+              <!-- ModBus ID  -->
+              <ParameterType Id="%AID%_PT-BusID" Name="BusID">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="247" />
+              </ParameterType>
+              <!-- ModBus DPT  -->
+              <ParameterType Id="%AID%_PT-DptSelection" Name="DptSelection">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="wähle" Value="0" Id="%ENID%" />
+                  <Enumeration Text="DPT 01 - binary (B1) - 1 bit" Value="1" Id="%ENID%" />
+                  <Enumeration Text="DPT 05 - percent (U8) - 1 byte" Value="4" Id="%ENID%" />
+                  <Enumeration Text="DPT 05 - unsigned (U8) - 1 byte" Value="5" Id="%ENID%" />
+                  <Enumeration Text="DPT 07 - unsigned (U16) - 2 bytes" Value="7" Id="%ENID%" />
+                  <Enumeration Text="DPT 08 - signed (V16) - 2 bytes" Value="8" Id="%ENID%" />
+                  <Enumeration Text="DPT 09 - float (F16) - 2 bytes" Value="9" Id="%ENID%" />
+                  <Enumeration Text="DPT 12 - unsigned (U32) - 4 bytes" Value="12" Id="%ENID%" />
+                  <Enumeration Text="DPT 13 - signed (V32) - 4 bytes" Value="13" Id="%ENID%" />
+                  <Enumeration Text="DPT 14 - float (F32) - 4 bytes" Value="14" Id="%ENID%" />
+                  <Enumeration Text="DPT 29 - signed (V64) - 8 bytes" Value="29" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- ModBus Slaves  -->
+              <ParameterType Id="%AID%_PT-SlaveIdSelection" Name="SlaveIdSelection">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Inaktiv" Value="0" Id="%ENID%" />
+                  <Enumeration Text="1" Value="1" Id="%ENID%" />
+                  <Enumeration Text="2" Value="2" Id="%ENID%" />
+                  <Enumeration Text="3" Value="3" Id="%ENID%" />
+                  <Enumeration Text="4" Value="4" Id="%ENID%" />
+                  <Enumeration Text="5" Value="5" Id="%ENID%" />
+                  <Enumeration Text="6" Value="6" Id="%ENID%" />
+                  <Enumeration Text="7" Value="7" Id="%ENID%" />
+                  <Enumeration Text="8" Value="8" Id="%ENID%" />
+                  <Enumeration Text="9" Value="9" Id="%ENID%" />
+                  <Enumeration Text="10" Value="10" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Set Modbus direction to/from KNX -->
+              <ParameterType Id="%AID%_PT-ModbusDirection" Name="ModbusDirection">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="KNX -> modbus" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Modbus -> KNX" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Set Modbus protocol functions -->
+              <ParameterType Id="%AID%_PT-ReadBitFunction" Name="ReadBitFunction">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="0x01 - Lese Coils" Value="1" Id="%ENID%" />
+                  <Enumeration Text="0x02 - Lese Discrete Inputs" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-ReadWordFunction" Name="ReadWordFunction">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="0x03 - Lese holding registers" Value="3" Id="%ENID%" />
+                  <Enumeration Text="0x04 - Lese input registers" Value="4" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-WriteWordFunction" Name="WriteWordFunction">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="0x06 - Schreibe Single Register" Value="6" Id="%ENID%" />
+                  <Enumeration Text="0x10 - Schreibe Multi Register" Value="16" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Set Modbus Register Address KNX -->
+              <ParameterType Id="%AID%_PT-RegisterAddress" Name="RegisterAddress">
+                <TypeNumber SizeInBit="32" Type="unsignedInt" minInclusive="0" maxInclusive="65535" />
+              </ParameterType>
+              <!-- senden bei Wertänderung -->
+              <ParameterType Id="%AID%_PT-ValueChange" Name="ValueChange">
+                <TypeNumber SizeInBit="32" Type="signedInt" minInclusive="0" maxInclusive="10000" />
+              </ParameterType>
+              <!-- DPT1 Typ -->
+              <ParameterType Id="%AID%_PT-InputTypDpt1" Name="InputTypDpt1">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="16Bit Register" Value="0" Id="%ENID%" />
+                  <Enumeration Text="32Bit Register" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-InputTypInvDpt1" Name="InputTypInvDpt1">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Ja" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-BitPosDpt1" Name="BitPosDpt1">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Bit 00" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Bit 01" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Bit 02" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Bit 03" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Bit 04" Value="4" Id="%ENID%" />
+                  <Enumeration Text="Bit 05" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Bit 06" Value="6" Id="%ENID%" />
+                  <Enumeration Text="Bit 07" Value="7" Id="%ENID%" />
+                  <Enumeration Text="Bit 08" Value="8" Id="%ENID%" />
+                  <Enumeration Text="Bit 09" Value="9" Id="%ENID%" />
+                  <Enumeration Text="Bit 10" Value="10" Id="%ENID%" />
+                  <Enumeration Text="Bit 11" Value="11" Id="%ENID%" />
+                  <Enumeration Text="Bit 12" Value="12" Id="%ENID%" />
+                  <Enumeration Text="Bit 13" Value="13" Id="%ENID%" />
+                  <Enumeration Text="Bit 14" Value="14" Id="%ENID%" />
+                  <Enumeration Text="Bit 15" Value="15" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- DPT5 & 6 Typ -->
+              <ParameterType Id="%AID%_PT-RegisterPosDPT56" Name="RegisterPosDPT56">
+                <TypeRestriction Base="Value" SizeInBit="3">
+                  <Enumeration Text="High Byte" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Low Byte" Value="2" Id="%ENID%" />
+                  <Enumeration Text="frei wählbar" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-CountBitsDPT56" Name="CountBitsDPT56">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Bit 01" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Bit 02" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Bit 03" Value="7" Id="%ENID%" />
+                  <Enumeration Text="Bit 04" Value="15" Id="%ENID%" />
+                  <Enumeration Text="Bit 05" Value="31" Id="%ENID%" />
+                  <Enumeration Text="Bit 06" Value="63" Id="%ENID%" />
+                  <Enumeration Text="Bit 07" Value="127" Id="%ENID%" />
+                  <Enumeration Text="Bit 08" Value="255" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- DPT7 Typ -->
+              <ParameterType Id="%AID%_PT-RegisterPosDPT7" Name="RegisterPosDPT7">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="High/Low Byte" Value="1" Id="%ENID%" />
+                  <Enumeration Text="frei wählbar" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-CountBitsDPT7" Name="CountBitsDPT7">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="01 Bit" Value="1" Id="%ENID%" />
+                  <Enumeration Text="02 Bit" Value="2" Id="%ENID%" />
+                  <Enumeration Text="03 Bit" Value="3" Id="%ENID%" />
+                  <Enumeration Text="04 Bit" Value="4" Id="%ENID%" />
+                  <Enumeration Text="05 Bit" Value="5" Id="%ENID%" />
+                  <Enumeration Text="06 Bit" Value="6" Id="%ENID%" />
+                  <Enumeration Text="07 Bit" Value="7" Id="%ENID%" />
+                  <Enumeration Text="08 Bit" Value="8" Id="%ENID%" />
+                  <Enumeration Text="09 Bit" Value="9" Id="%ENID%" />
+                  <Enumeration Text="10 Bit" Value="10" Id="%ENID%" />
+                  <Enumeration Text="11 Bit" Value="11" Id="%ENID%" />
+                  <Enumeration Text="12 Bit" Value="12" Id="%ENID%" />
+                  <Enumeration Text="13 Bit" Value="13" Id="%ENID%" />
+                  <Enumeration Text="14 Bit" Value="14" Id="%ENID%" />
+                  <Enumeration Text="15 Bit" Value="15" Id="%ENID%" />
+                  <Enumeration Text="16 Bit" Value="16" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- DPT14 Typ -->
+              <!-- Typ Word / double Word -->
+              <ParameterType Id="%AID%_PT-WordTyp" Name="WordTyp">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="16Bit Register (2Byte)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="32Bit Register (4Byte)" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- DPT29 Typ -->
+              <!-- Typ Word / double Word -->
+              <ParameterType Id="%AID%_PT-WordTypDPT29" Name="WordTypDPT29">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="16Bit Register (2Byte)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="32Bit Register (4Byte)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="64Bit Register (8Byte)" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Position Register -->
+              <ParameterType Id="%AID%_PT-RegisterPos" Name="RegisterPos">
+                <TypeRestriction Base="Value" SizeInBit="3">
+                  <Enumeration Text="Low byte - unsigned" Value="1" Id="%ENID%" />
+                  <Enumeration Text="High Byte - unsigned" Value="2" Id="%ENID%" />
+                  <Enumeration Text="High/Low byte - unsigned" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Low byte - signed" Value="4" Id="%ENID%" />
+                  <Enumeration Text="High Byte - signed" Value="5" Id="%ENID%" />
+                  <Enumeration Text="High/Low byte - signed" Value="6" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-RegisterPos13" Name="RegisterPos13">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="Low byte - signed" Value="1" Id="%ENID%" />
+                  <Enumeration Text="High Byte - signed" Value="2" Id="%ENID%" />
+                  <Enumeration Text="High/Low byte - signed" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-RegisterPos12" Name="RegisterPos12">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="Low byte - unsigned" Value="1" Id="%ENID%" />
+                  <Enumeration Text="High Byte - unsigned" Value="2" Id="%ENID%" />
+                  <Enumeration Text="High/Low byte - unsigned" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-RegisterValueTypDpt14" Name="RegisterValueTypDpt14">
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="unsigned" Value="1" Id="%ENID%" />
+                  <Enumeration Text="signed" Value="2" Id="%ENID%" />
+                  <Enumeration Text="float" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-WordPosDpt14" Name="WordPosDpt14">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="MSB / LSB" Value="0" Id="%ENID%" />
+                  <Enumeration Text="LSB / MSB" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Abfrage Zyklus ModBus-->
+              <ParameterType Id="%AID%_PT-ReadCycle" Name="ReadCycle">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="jeden Zyklus" Value="1" Id="%ENID%" />
+                  <Enumeration Text="jeden zweiten Zyklus" Value="2" Id="%ENID%" />
+                  <Enumeration Text="jeden vierten Zyklus" Value="4" Id="%ENID%" />
+                  <Enumeration Text="jeden sechten Zyklus" Value="6" Id="%ENID%" />
+                  <Enumeration Text="jeden achten Zyklus" Value="8" Id="%ENID%" />
+                  <Enumeration Text="jeden zehnten Zyklus" Value="10" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-MODNumChannels" Name="MODNumChannels">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
+              </ParameterType>
+              <!-- *************  -->
+              <!-- virtuelle Zähler  -->
+              <!-- *************  -->
+              <ParameterType Id="%AID%_PT-SelectionVirtualZaehler" Name="SelectionVirtualZaehler">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="nicht belegt" Value="0"
+                    Id="%ENID%" />
+                  <Enumeration Text="Zähler 1" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Zähler 2" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Zähler 3" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Zähler 4" Value="4" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-MathOperationVirtualZaehler"
+                Name="MathOperationVirtualZaehler">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="+" Value="0" Id="%ENID%" />
+                  <Enumeration Text="-" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-TypeVirtualZaehler" Name="TypeVirtualZaehler">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="Leistung (W)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Zählerstand (KWH)" Value="1"
+                    Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-DPTVirtualZaehler" Name="DPTVirtualZaehler">
+                <TypeRestriction Base="Value" SizeInBit="8">
+                  <Enumeration Text="wähle DPT" Value="0" Id="%ENID%" />
+                  <Enumeration Text="DPT12 Unsigned (U32)" Value="1"
+                    Id="%ENID%" />
+                  <Enumeration Text="DPT13 Unsigned (V32)" Value="2"
+                    Id="%ENID%" />
+                  <Enumeration Text="DPT13 Float (F32)" Value="3"
+                    Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+            </ParameterTypes>
+            <Parameters>
+              <Union SizeInBit="32">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%T%000001" Name="VisibleChannels" Offset="0" BitOffset="0" ParameterType="%AID%_PT-MODNumChannels" Text="Verfügbare Kanäle" Value="%MOD_NumChannelsDefault%" SuffixText=" von %N%" />
+                <Parameter Id="%AID%_UP-%T%000040" Name="BusWordOrderSelectionSlave9" Offset="1" BitOffset="0" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" /> <!-- 1 Bit -->
+                <Parameter Id="%AID%_UP-%T%000043" Name="BusWordOrderSelectionSlave10" Offset="1" BitOffset="1" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" /> <!-- 1 Bit -->
+                <!-- 6 Bit frei -->
+                <Parameter Id="%AID%_UP-%T%000012" Name="BusDelayRequest" Offset="2" BitOffset="0" ParameterType="%AID%_PT-DelayRequest" Text="Zeit zwischen zwei Modbus Register Abfragen" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000013" Name="BusDelayCycle" Offset="3" BitOffset="0" ParameterType="%AID%_PT-DelayCycle" Text="Zeit zwischen zwei Abfragezyklen" SuffixText="" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="4" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%T%000016" Name="BusWordOrderSelectionSlave1" Offset="0" BitOffset="0" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" /> <!-- 1 Bit -->
+                <Parameter Id="%AID%_UP-%T%000019" Name="BusWordOrderSelectionSlave2" Offset="0" BitOffset="1" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" /> <!-- 1 Bit -->
+                <Parameter Id="%AID%_UP-%T%000022" Name="BusWordOrderSelectionSlave3" Offset="0" BitOffset="2" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000025" Name="BusWordOrderSelectionSlave4" Offset="0" BitOffset="3" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000028" Name="BusWordOrderSelectionSlave5" Offset="0" BitOffset="4" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000031" Name="BusWordOrderSelectionSlave6" Offset="0" BitOffset="5" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000034" Name="BusWordOrderSelectionSlave7" Offset="0" BitOffset="6" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000037" Name="BusWordOrderSelectionSlave8" Offset="0" BitOffset="7" ParameterType="%AID%_PT-WordOrderSelection" Text="Register Start" SuffixText="" Value="0" />
+              </Union>
+              <Union SizeInBit="80">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="5" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%T%000014" Name="BusID_Slave1" Offset="0" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 1" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 1 -->
+                <Parameter Id="%AID%_UP-%T%000017" Name="BusID_Slave2" Offset="1" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 2" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 2 -->
+                <Parameter Id="%AID%_UP-%T%000020" Name="BusID_Slave3" Offset="2" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 3" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 3 -->
+                <Parameter Id="%AID%_UP-%T%000023" Name="BusID_Slave4" Offset="3" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 4" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 4 -->
+                <Parameter Id="%AID%_UP-%T%000026" Name="BusID_Slave5" Offset="4" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 5" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 5 -->
+                <Parameter Id="%AID%_UP-%T%000029" Name="BusID_Slave6" Offset="5" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 6" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 6 -->
+                <Parameter Id="%AID%_UP-%T%000032" Name="BusID_Slave7" Offset="6" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 7" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 7 -->
+                <Parameter Id="%AID%_UP-%T%000035" Name="BusID_Slave8" Offset="7" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 8" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 8 -->
+                <Parameter Id="%AID%_UP-%T%000038" Name="BusID_Slave9" Offset="8" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 9" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 9 -->
+                <Parameter Id="%AID%_UP-%T%000041" Name="BusID_Slave10" Offset="9" BitOffset="0" ParameterType="%AID%_PT-BusID" Text="    Slave: 10" SuffixText="" Value="0" /> <!-- Set Modbus Slaves ID 10 -->
+              </Union>
+              <Union SizeInBit="56">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="15" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%T%000010" Name="BusBaudrateSelection_Slave1" Offset="0" BitOffset="0" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000081" Name="BusBaudrateSelection_Slave2" Offset="0" BitOffset="3" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000011" Name="BusParitySelection_Slave1" Offset="0" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000082" Name="BusBaudrateSelection_Slave3" Offset="1" BitOffset="0" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000083" Name="BusBaudrateSelection_Slave4" Offset="1" BitOffset="3" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000091" Name="BusParitySelection_Slave2" Offset="1" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000084" Name="BusBaudrateSelection_Slave5" Offset="2" BitOffset="0" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000085" Name="BusBaudrateSelection_Slave6" Offset="2" BitOffset="3" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000092" Name="BusParitySelection_Slave3" Offset="2" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000086" Name="BusBaudrateSelection_Slave7" Offset="3" BitOffset="0" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000087" Name="BusBaudrateSelection_Slave8" Offset="3" BitOffset="3" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000093" Name="BusParitySelection_Slave4" Offset="3" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000088" Name="BusBaudrateSelection_Slave9" Offset="4" BitOffset="0" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000089" Name="BusBaudrateSelection_Slave10" Offset="4" BitOffset="3" ParameterType="%AID%_PT-BaudrateSelection" Text="Baudrate" SuffixText="" Value="3" /> <!-- 3 Bit -->
+                <Parameter Id="%AID%_UP-%T%000094" Name="BusParitySelection_Slave5" Offset="4" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000095" Name="BusParitySelection_Slave6" Offset="5" BitOffset="0" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000096" Name="BusParitySelection_Slave7" Offset="5" BitOffset="2" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000097" Name="BusParitySelection_Slave8" Offset="5" BitOffset="4" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000098" Name="BusParitySelection_Slave9" Offset="5" BitOffset="6" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <Parameter Id="%AID%_UP-%T%000099" Name="BusParitySelection_Slave10" Offset="6" BitOffset="0" ParameterType="%AID%_PT-ParitySelection" Text="Parity" SuffixText="" Value="0" /> <!-- 2 Bit -->
+                <!-- 6 Bit frei -->
+              </Union>
+              <!-- Set Modbus Slaves ID 10 -->
+              <!--
+              <Parameter Id="%AID%_P-%T%000073" Name="ModBusZaehler1SendDelay"
+                ParameterType="%AID%_PT-DelaySeconds" Text="   zyklisch senden (0=nicht senden)"
+                SuffixText="Sekunden" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="118" BitOffset="0" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000074" Name="ModBusZaehler1ValueChangeWatt"
+                ParameterType="%AID%_PT-ValueChange"
+                Text="   abs Abweichung senden (0=nicht senden)" SuffixText="W" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="121" BitOffset="0" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000075" Name="ModbusZaehler1SendenWertAenderung"
+                ParameterType="%AID%_PT-CheckBox" Text="   Zählerstand senden bei Wertänderung"
+                Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="125" BitOffset="1" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000076" Name="ModbusZaehler1SendenWertCyclisch"
+                ParameterType="%AID%_PT-CheckBox" Text="   Zählerstand senden zyklisch" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="125" BitOffset="2" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000077" Name="ModbusZaehle1rUeberschuss"
+                ParameterType="%AID%_PT-CheckBox" Text="KO Überschuss-Erkennung" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="125" BitOffset="3" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000078" Name="ModbusZaehler1selection"
+                ParameterType="%AID%_PT-CheckBox" Text="Aktiv" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="125" BitOffset="0" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000079" Name="ModbusZaehler1Offset"
+                ParameterType="%AID%_PT-ZaehlerOffset" Text="Zählerstand-Offset" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="126" BitOffset="0" />
+              </Parameter>
+              <Parameter Id="%AID%_P-%T%000080" Name="ModbusZaehler1DPT"
+                ParameterType="%AID%_PT-DPTVirtualZaehler" Text="DPT-Typ: (Zählerstand)" Value="0">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="130" BitOffset="0" />
+              </Parameter>
+            -->
+              <Parameter Id="%AID%_P-%T%000102" Name="Slave%C%Name1" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000103" Name="Slave%C%Name2" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000104" Name="Slave%C%Name3" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000105" Name="Slave%C%Name4" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000106" Name="Slave%C%Name5" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000107" Name="Slave%C%Name6" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000108" Name="Slave%C%Name7" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000109" Name="Slave%C%Name8" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000110" Name="Slave%C%Name9" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <Parameter Id="%AID%_P-%T%000111" Name="Slave%C%Name10" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+
+
+            </Parameters>
+            <ParameterRefs>
+              <ParameterRef Id="%AID%_UP-%T%000001_R-%T%00000101" RefId="%AID%_UP-%T%000001" />
+              <ParameterRef Id="%AID%_UP-%T%000010_R-%T%00001001" RefId="%AID%_UP-%T%000010" />
+              <ParameterRef Id="%AID%_UP-%T%000011_R-%T%00001101" RefId="%AID%_UP-%T%000011" />
+              <ParameterRef Id="%AID%_UP-%T%000012_R-%T%00001201" RefId="%AID%_UP-%T%000012" />
+              <ParameterRef Id="%AID%_UP-%T%000013_R-%T%00001301" RefId="%AID%_UP-%T%000013" />
+              <ParameterRef Id="%AID%_UP-%T%000014_R-%T%00001401" RefId="%AID%_UP-%T%000014" />
+              <!--<ParameterRef Id="%AID%_UP-%T%000015_R-%T%00001501" RefId="%AID%_UP-%T%000015" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000016_R-%T%00001601" RefId="%AID%_UP-%T%000016" />
+              <ParameterRef Id="%AID%_UP-%T%000017_R-%T%00001701" RefId="%AID%_UP-%T%000017" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000018_R-%T%00001801" RefId="%AID%_UP-%T%000018" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000019_R-%T%00001901" RefId="%AID%_UP-%T%000019" />
+              <ParameterRef Id="%AID%_UP-%T%000020_R-%T%00002001" RefId="%AID%_UP-%T%000020" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000021_R-%T%00002101" RefId="%AID%_UP-%T%000021" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000022_R-%T%00002201" RefId="%AID%_UP-%T%000022" />
+              <ParameterRef Id="%AID%_UP-%T%000023_R-%T%00002301" RefId="%AID%_UP-%T%000023" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000024_R-%T%00002401" RefId="%AID%_UP-%T%000024" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000025_R-%T%00002501" RefId="%AID%_UP-%T%000025" />
+              <ParameterRef Id="%AID%_UP-%T%000026_R-%T%00002601" RefId="%AID%_UP-%T%000026" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000027_R-%T%00002701" RefId="%AID%_UP-%T%000027" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000028_R-%T%00002801" RefId="%AID%_UP-%T%000028" />
+              <ParameterRef Id="%AID%_UP-%T%000029_R-%T%00002901" RefId="%AID%_UP-%T%000029" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000030_R-%T%00003001" RefId="%AID%_UP-%T%000030" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000031_R-%T%00003101" RefId="%AID%_UP-%T%000031" />
+              <ParameterRef Id="%AID%_UP-%T%000032_R-%T%00003201" RefId="%AID%_UP-%T%000032" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000033_R-%T%00003301" RefId="%AID%_UP-%T%000033" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000034_R-%T%00003401" RefId="%AID%_UP-%T%000034" />
+              <ParameterRef Id="%AID%_UP-%T%000035_R-%T%00003501" RefId="%AID%_UP-%T%000035" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000036_R-%T%00003601" RefId="%AID%_UP-%T%000036" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000037_R-%T%00003701" RefId="%AID%_UP-%T%000037" />
+              <ParameterRef Id="%AID%_UP-%T%000038_R-%T%00003801" RefId="%AID%_UP-%T%000038" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000039_R-%T%00003901" RefId="%AID%_UP-%T%000039" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000040_R-%T%00004001" RefId="%AID%_UP-%T%000040" />
+              <ParameterRef Id="%AID%_UP-%T%000041_R-%T%00004101" RefId="%AID%_UP-%T%000041" /><!-- Ende Slave 10 -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000042_R-%T%00004201" RefId="%AID%_UP-%T%000042" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000043_R-%T%00004301" RefId="%AID%_UP-%T%000043" />
+              <!-- <ParameterRef Id="%AID%_UP-%T%000044_R-%T%00004401" RefId="%AID%_UP-%T%000044" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000045_R-%T%00004501" RefId="%AID%_UP-%T%000045" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000046_R-%T%00004601" RefId="%AID%_P-%T%000046" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000047_R-%T%00004701" RefId="%AID%_P-%T%000047" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000048_R-%T%00004801" RefId="%AID%_P-%T%000048" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000049_R-%T%00004901" RefId="%AID%_P-%T%000049" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000050_R-%T%00005001" RefId="%AID%_P-%T%000050" />  -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000051_R-%T%00005101" RefId="%AID%_P-%T%000051" />  -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000052_R-%T%00005201" RefId="%AID%_P-%T%000052" />  -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000053_R-%T%00005301" RefId="%AID%_P-%T%000053" />  -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000054_R-%T%00005401" RefId="%AID%_P-%T%000054" />  -->
+              <!-- <ParameterRef Id="%AID%_P-%T%000055_R-%T%00005501" RefId="%AID%_P-%T%000055" />  -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000064_R-%T%00006401" RefId="%AID%_UP-%T%000064" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000065_R-%T%00006501" RefId="%AID%_UP-%T%000065" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000066_R-%T%00006601" RefId="%AID%_UP-%T%000066" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000067_R-%T%00006701" RefId="%AID%_UP-%T%000067" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000068_R-%T%00006801" RefId="%AID%_UP-%T%000068" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%T%000069_R-%T%00006901" RefId="%AID%_UP-%T%000069" />
+              <ParameterRef Id="%AID%_UP-%T%000070_R-%T%00007001" RefId="%AID%_UP-%T%000070" />
+              <ParameterRef Id="%AID%_UP-%T%000071_R-%T%00007101" RefId="%AID%_UP-%T%000071" />
+              <ParameterRef Id="%AID%_UP-%T%000072_R-%T%00007201" RefId="%AID%_UP-%T%000072" />
+              <ParameterRef Id="%AID%_UP-%T%000073_R-%T%00007301" RefId="%AID%_UP-%T%000073" />
+              <ParameterRef Id="%AID%_UP-%T%000074_R-%T%00007401" RefId="%AID%_UP-%T%000074" />
+              <ParameterRef Id="%AID%_UP-%T%000075_R-%T%00007501" RefId="%AID%_UP-%T%000075" />
+              <ParameterRef Id="%AID%_UP-%T%000076_R-%T%00007601" RefId="%AID%_UP-%T%000076" />
+              <ParameterRef Id="%AID%_UP-%T%000077_R-%T%00007701" RefId="%AID%_UP-%T%000077" />
+              <ParameterRef Id="%AID%_UP-%T%000078_R-%T%00007801" RefId="%AID%_UP-%T%000078" />
+              <ParameterRef Id="%AID%_UP-%T%000079_R-%T%00007901" RefId="%AID%_UP-%T%000079" />
+              <ParameterRef Id="%AID%_UP-%T%000080_R-%T%00008001" RefId="%AID%_UP-%T%000080" /> -->
+              <ParameterRef Id="%AID%_UP-%T%000081_R-%T%00008101" RefId="%AID%_UP-%T%000081" />
+              <ParameterRef Id="%AID%_UP-%T%000082_R-%T%00008201" RefId="%AID%_UP-%T%000082" />
+              <ParameterRef Id="%AID%_UP-%T%000083_R-%T%00008301" RefId="%AID%_UP-%T%000083" />
+              <ParameterRef Id="%AID%_UP-%T%000084_R-%T%00008401" RefId="%AID%_UP-%T%000084" />
+              <ParameterRef Id="%AID%_UP-%T%000085_R-%T%00008501" RefId="%AID%_UP-%T%000085" />
+              <ParameterRef Id="%AID%_UP-%T%000086_R-%T%00008601" RefId="%AID%_UP-%T%000086" />
+              <ParameterRef Id="%AID%_UP-%T%000087_R-%T%00008701" RefId="%AID%_UP-%T%000087" />
+              <ParameterRef Id="%AID%_UP-%T%000088_R-%T%00008801" RefId="%AID%_UP-%T%000088" />
+              <ParameterRef Id="%AID%_UP-%T%000089_R-%T%00008901" RefId="%AID%_UP-%T%000089" />
+              <!--  90 noch frei -->
+              <ParameterRef Id="%AID%_UP-%T%000091_R-%T%00009101" RefId="%AID%_UP-%T%000091" />
+              <ParameterRef Id="%AID%_UP-%T%000092_R-%T%00009201" RefId="%AID%_UP-%T%000092" />
+              <ParameterRef Id="%AID%_UP-%T%000093_R-%T%00009301" RefId="%AID%_UP-%T%000093" />
+              <ParameterRef Id="%AID%_UP-%T%000094_R-%T%00009401" RefId="%AID%_UP-%T%000094" />
+              <ParameterRef Id="%AID%_UP-%T%000095_R-%T%00009501" RefId="%AID%_UP-%T%000095" />
+              <ParameterRef Id="%AID%_UP-%T%000096_R-%T%00009601" RefId="%AID%_UP-%T%000096" />
+              <ParameterRef Id="%AID%_UP-%T%000097_R-%T%00009701" RefId="%AID%_UP-%T%000097" />
+              <ParameterRef Id="%AID%_UP-%T%000098_R-%T%00009801" RefId="%AID%_UP-%T%000098" />
+              <ParameterRef Id="%AID%_UP-%T%000099_R-%T%00009901" RefId="%AID%_UP-%T%000099" />
+              <!--  100 noch frei -->
+              <!--  <ParameterRef Id="%AID%_UP-%T%000101_R-%T%00010101" RefId="%AID%_UP-%T%000101" />  --> <!-- CheckBox Vcounter -->
+              <ParameterRef Id="%AID%_P-%T%000102_R-%T%00010201" RefId="%AID%_P-%T%000102" />
+              <ParameterRef Id="%AID%_P-%T%000103_R-%T%00010301" RefId="%AID%_P-%T%000103" />
+              <ParameterRef Id="%AID%_P-%T%000104_R-%T%00010401" RefId="%AID%_P-%T%000104" />
+              <ParameterRef Id="%AID%_P-%T%000105_R-%T%00010501" RefId="%AID%_P-%T%000105" />
+              <ParameterRef Id="%AID%_P-%T%000106_R-%T%00010601" RefId="%AID%_P-%T%000106" />
+              <ParameterRef Id="%AID%_P-%T%000107_R-%T%00010701" RefId="%AID%_P-%T%000107" />
+              <ParameterRef Id="%AID%_P-%T%000108_R-%T%00010801" RefId="%AID%_P-%T%000108" />
+              <ParameterRef Id="%AID%_P-%T%000109_R-%T%00010901" RefId="%AID%_P-%T%000109" />
+              <ParameterRef Id="%AID%_P-%T%000110_R-%T%00011001" RefId="%AID%_P-%T%000110" />
+              <ParameterRef Id="%AID%_P-%T%000111_R-%T%00011101" RefId="%AID%_P-%T%000111" />
+            </ParameterRefs>
+            <ComObjectTable>
+              <!-- ComOject Debug Modbus-->
+              <ComObject Id="%AID%_O-%T%000002" Name="DebugModbus" Text="Fehler ModBus Kommunikation" Number="20" FunctionText="Diag-Ausgang" ObjectSize="2 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-7-1" />
+            </ComObjectTable>
+            <ComObjectRefs>
+              <!-- Debug -->
+              <ComObjectRef Id="%AID%_O-%T%000002_R-%T%00000201" RefId="%AID%_O-%T%000002" />
+              <!--<ComObjectRef Id="%AID%_O-%T%000003_R-%T%00000301" RefId="%AID%_O-%T%000003" />
+              <ComObjectRef Id="%AID%_O-%T%000006_R-%T%00000601" RefId="%AID%_O-%T%000006" Name="Zähler 1 Zählerstand" Text="Output {{0:Virtueller Zähler 1}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-12-1" TextParameterRefId="%AID%_P-%T%000069_R-%T%00006901" />
+              <ComObjectRef Id="%AID%_O-%T%000006_R-%T%00000602" RefId="%AID%_O-%T%000006" Name="Zähler 1 Zählerstand" Text="Output {{0:Virtueller Zähler 1}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-13-13" TextParameterRefId="%AID%_P-%T%000069_R-%T%00006901" />
+              <ComObjectRef Id="%AID%_O-%T%000006_R-%T%00000603" RefId="%AID%_O-%T%000006" Name="Zähler 1 Zählerstand" Text="Output {{0:Virtueller Zähler 1}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPT-14" TextParameterRefId="%AID%_P-%T%000069_R-%T%00006901" />
+              <ComObjectRef Id="%AID%_O-%T%000007_R-%T%00000701" RefId="%AID%_O-%T%000007" Name="Zähler 2 Zählerstand" Text="Output {{0:Virtueller Zähler 2}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-12-1" TextParameterRefId="%AID%_P-%T%000070_R-%T%00007001" />
+              <ComObjectRef Id="%AID%_O-%T%000007_R-%T%00000702" RefId="%AID%_O-%T%000007" Name="Zähler 2 Zählerstand" Text="Output {{0:Virtueller Zähler 2}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-13-13" TextParameterRefId="%AID%_P-%T%000070_R-%T%00007001" />
+              <ComObjectRef Id="%AID%_O-%T%000007_R-%T%00000703" RefId="%AID%_O-%T%000007" Name="Zähler 2 Zählerstand" Text="Output {{0:Virtueller Zähler 2}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPT-14" TextParameterRefId="%AID%_P-%T%000070_R-%T%00007001" />
+              <ComObjectRef Id="%AID%_O-%T%000008_R-%T%00000801" RefId="%AID%_O-%T%000008" Name="Zähler 3 Zählerstand" Text="Output {{0:Virtueller Zähler 3}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-12-1" TextParameterRefId="%AID%_P-%T%000071_R-%T%00007101" />
+              <ComObjectRef Id="%AID%_O-%T%000008_R-%T%00000802" RefId="%AID%_O-%T%000008" Name="Zähler 3 Zählerstand" Text="Output {{0:Virtueller Zähler 3}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-13-13" TextParameterRefId="%AID%_P-%T%000071_R-%T%00007101" />
+              <ComObjectRef Id="%AID%_O-%T%000008_R-%T%00000803" RefId="%AID%_O-%T%000008" Name="Zähler 3 Zählerstand" Text="Output {{0:Virtueller Zähler 3}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPT-14" TextParameterRefId="%AID%_P-%T%000071_R-%T%00007101" />
+              <ComObjectRef Id="%AID%_O-%T%000009_R-%T%00000901" RefId="%AID%_O-%T%000009" Name="Zähler 4 Zählerstand" Text="Output {{0:Virtueller Zähler 4}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-12-1" TextParameterRefId="%AID%_P-%T%000072_R-%T%00007201" />
+              <ComObjectRef Id="%AID%_O-%T%000009_R-%T%00000902" RefId="%AID%_O-%T%000009" Name="Zähler 4 Zählerstand" Text="Output {{0:Virtueller Zähler 4}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPST-13-13" TextParameterRefId="%AID%_P-%T%000072_R-%T%00007201" />
+              <ComObjectRef Id="%AID%_O-%T%000009_R-%T%00000903" RefId="%AID%_O-%T%000009" Name="Zähler 4 Zählerstand" Text="Output {{0:Virtueller Zähler 4}}:" FunctionText="Zählerstand (KWH)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" DatapointType="DPT-14" TextParameterRefId="%AID%_P-%T%000072_R-%T%00007201" />
+              <ComObjectRef Id="%AID%_O-%T%000010_R-%T%00001001" RefId="%AID%_O-%T%000010" Name="Power1" Text="Output {{0:Virtueller Zähler 1}}:" FunctionText="Leistung (W)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-14-56" TextParameterRefId="%AID%_P-%T%000069_R-%T%00006901" />
+              <ComObjectRef Id="%AID%_O-%T%000011_R-%T%00001101" RefId="%AID%_O-%T%000011" Name="Power2" Text="Output {{0:Virtueller Zähler 2}}:" FunctionText="Leistung (W)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-14-56" TextParameterRefId="%AID%_P-%T%000070_R-%T%00007001" />
+              <ComObjectRef Id="%AID%_O-%T%000012_R-%T%00001201" RefId="%AID%_O-%T%000012" Name="Power3" Text="Output {{0:Virtueller Zähler 3}}:" FunctionText="Leistung (W)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-14-56" TextParameterRefId="%AID%_P-%T%000071_R-%T%00007101" />
+              <ComObjectRef Id="%AID%_O-%T%000013_R-%T%00001301" RefId="%AID%_O-%T%000013" Name="Power4" Text="Output {{0:Virtueller Zähler 4}}:" FunctionText="Leistung (W)" Priority="Low" ObjectSize="4 Bytes" ReadFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-14-56" TextParameterRefId="%AID%_P-%T%000072_R-%T%00007201" /> -->
+            </ComObjectRefs>
+          </Static>
+          <Dynamic>
+            <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Main" Text="modbus" Icon="shape" HelpContext="MOD-Doc">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Basic" Text="Allgemein" Icon="cog-outline" HelpContext="MOD-Doc">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Modbus RTU" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Modbus" UIHint="Headline" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000010_R-%T%00001001" HelpContext="MOD-Baud" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000011_R-%T%00001101" HelpContext="MOD-Baud" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000001_R-%T%00000101" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ComObjectRefRef RefId="%AID%_O-%T%000002_R-%T%00000201" />
+                <!--</ParameterBlock>
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Modbus-Einstellungen" Icon="cog-outline" HelpContext="MOD-Doc" ShowInComObjectTree="true"> -->
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Abfrage-Einstellungen" UIHint="Headline" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000012_R-%T%00001201" HelpContext="MOD-Abfrage-Einst" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000013_R-%T%00001301" HelpContext="MOD-Abfrage-Einst" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <!-- Slave Settings -->
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="IDs   (0=deaktiviert)" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die ETS erkennt keine Doppelbelegungen von Slave-IDs -> sollten zwei Slaves die gleiche ID haben, dann ist das kein Problem, solange die Register Position/Start identisch sind." />
+                <ParameterRefRef RefId="%AID%_UP-%T%000014_R-%T%00001401" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000102_R-%T%00010201" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000014_R-%T%00001401">
+                  <when test="&gt;0">
+                    <ParameterRefRef RefId="%AID%_UP-%T%000016_R-%T%00001601" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000017_R-%T%00001701" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000103_R-%T%00010301" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000017_R-%T%00001701">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000081_R-%T%00008101" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000091_R-%T%00009101" HelpContext="Empty" />-->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000019_R-%T%00001901" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000020_R-%T%00002001" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000104_R-%T%00010401" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000020_R-%T%00002001">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000082_R-%T%00008201" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000092_R-%T%00009201" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000022_R-%T%00002201" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000023_R-%T%00002301" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000105_R-%T%00010501" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000023_R-%T%00002301">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000083_R-%T%00008301" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000093_R-%T%00009301" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000025_R-%T%00002501" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000026_R-%T%00002601" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000106_R-%T%00010601" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000026_R-%T%00002601">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000084_R-%T%00008401" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000094_R-%T%00009401" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000028_R-%T%00002801" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000029_R-%T%00002901" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000107_R-%T%00010701" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000029_R-%T%00002901">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000085_R-%T%00008501" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000095_R-%T%00009501" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000031_R-%T%00003101" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000032_R-%T%00003201" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000108_R-%T%00010801" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000032_R-%T%00003201">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000086_R-%T%00008601" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000096_R-%T%00009601" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000034_R-%T%00003401" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000035_R-%T%00003501" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000109_R-%T%00010901" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000035_R-%T%00003501">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000087_R-%T%00008701" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000097_R-%T%00009701" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000037_R-%T%00003701" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000038_R-%T%00003801" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000110_R-%T%00011001" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000038_R-%T%00003801">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000088_R-%T%00008801" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000098_R-%T%00009801" HelpContext="Empty" />-->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000040_R-%T%00004001" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000041_R-%T%00004101" HelpContext="MOD-Slave-Einst" />
+                <ParameterRefRef RefId="%AID%_P-%T%000111_R-%T%00011101" HelpContext="MOD-Slave-Einst" />
+                <choose ParamRefId="%AID%_UP-%T%000041_R-%T%00004101">
+                  <when test="&gt;0">
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000089_R-%T%00008901" HelpContext="Empty" /> -->
+                    <!-- <ParameterRefRef RefId="%AID%_UP-%T%000099_R-%T%00009901" HelpContext="Empty" /> -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%000043_R-%T%00004301" HelpContext="MOD-Slave-Einst" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+              </ParameterBlock>
+              <op:include href="ModbusModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*"
+                type="template" prefix="MOD" IsInner="true" />
+
+              <!-- followed by all channels -->
+              <choose ParamRefId="%AID%_UP-%T%000001_R-%T%00000101">
+                <when test="&lt;%N%">
+                  <ParameterBlock Id="%AID%_PB-nnn" Text="(mehr)" Icon="dots-horizontal" HelpContext="Empty">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%000001_R-%T%00000101" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                  </ParameterBlock>
+                </when>
+              </choose>
+            </Channel>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+      <Baggages>
+        <Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+        <Baggage TargetPath="" Name="Icons.zip" Id="%FILE-ICONS%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+      </Baggages>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

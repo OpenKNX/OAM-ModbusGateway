@@ -4,7 +4,8 @@
 .vscode/launch.json
 .vscode/ipch
 **/*.knxprod
-**/*.debug.xml
 release/*
-platformio-old.ini
-firmware_post.py
+src/*.baggages
+release-package/*
+release-collection/*
+platformio.ini.full.txt
