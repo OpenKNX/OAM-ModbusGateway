@@ -10,3 +10,5 @@ release-package/*
 release-collection/*
 platformio.ini.full.txt
 src/ModbusGateway.debug.xml
+src/ModbusGateway.appl.debug.xml
+src/ModbusGateway.debug.xml
