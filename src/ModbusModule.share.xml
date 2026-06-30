@@ -191,8 +191,8 @@
               <!-- DPT1 Typ -->
               <ParameterType Id="%AID%_PT-InputTypDpt1" Name="InputTypDpt1">
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="16Bit Register" Value="0" Id="%ENID%" />
-                  <Enumeration Text="32Bit Register" Value="1" Id="%ENID%" />
+                  <Enumeration Text="1Bit Register" Value="0" Id="%ENID%" />
+                  <Enumeration Text="16Bit Register" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputTypInvDpt1" Name="InputTypInvDpt1">
