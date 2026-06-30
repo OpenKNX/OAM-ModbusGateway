@@ -10,3 +10,5 @@ release-package/*
 release-collection/*
 platformio.ini.full.txt
 src/ModbusGateway.debug.xml
+include/knxprod.h
+src/ModbusGateway.debug.xml
