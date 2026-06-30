@@ -275,7 +275,7 @@ void ModbusModule::loop(bool configured)
                                 _error[_channel] = true;
                             }
                             // Diagnose Objekt schicken
-                            diag_register = ((uint16_t)result << 8) | _channel; // Setzt aktuellen CH auf LSB & Error Code auf MSB
+                            diag_register = ((uint16_t)result << 8) | (_channel + 1); // Setzt aktuellen CH auf LSB & Error Code auf MSB
                             KoMOD_DebugModbus.value(diag_register, DPT_Value_2_Ucount);
                             result_old[_channel] = result;
                         }

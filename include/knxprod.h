@@ -16,7 +16,7 @@
 #define MAIN_FirmwareName "Modbus-RTU-Gateway"
 #define MAIN_OpenKnxId 0xA2
 #define MAIN_ApplicationNumber 48
-#define MAIN_ApplicationVersion 21
+#define MAIN_ApplicationVersion 22
 #define MAIN_ApplicationEncoding iso-8859-15
 #define MAIN_ParameterSize 10433
 #define MAIN_MaxKoNumber 369
