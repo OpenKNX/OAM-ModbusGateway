@@ -246,297 +246,297 @@
                   <ParameterBlock Id="%AID%_PB-nnn" Name="Channel%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" HelpContext="Empty" ShowInComObjectTree="true">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Beispiel Channel" UIHint="Headline" />
                     <!-- Name -->
-                    <ParameterRefRef RefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" HelpContext="BASE-ChannelName" />
-                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" />
+                    <ParameterRefRef RefId="%AID%_P-%T%%CCC%004_R-%T%%CCC%00401" HelpContext="BASE-ChannelName" /><!-- Kanal-Beschreibung (Text, 40 Zeichen) -->
+                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" /><!-- Slave-Auswahl: Inaktiv / Slave 1..10 -->
                     <choose ParamRefId="%AID%_UP-%T%%CCC%000_R-%T%%CCC%00001">
                       <when test="&gt;0">
-                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101" />
+                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101" /><!-- DPT-Auswahl: DPT1/5/7/8/9/12/13/14/29 -->
                         <choose ParamRefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101">
                           <when test="&gt;0">
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" /><!-- Richtung: KNX→Modbus (0) oder Modbus→KNX (1) -->
                             <ParameterSeparator Id="%AID%_PS-7" Text="" UIHint="HorizontalRuler" />
                             <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                              <when test="1">
+                              <when test="1"><!-- nur bei Richtung Modbus→KNX -->
                                 <ParameterSeparator Id="%AID%_PS-8" Text="KNX" UIHint="Headline" />
-                                <ParameterRefRef RefId="%AID%_UP-%T%%CCC%005_R-%T%%CCC%00501" />
-                                <!-- Choose DPT -->
+                                <ParameterRefRef RefId="%AID%_UP-%T%%CCC%005_R-%T%%CCC%00501" /><!-- Zyklisch senden (0=deaktiviert, Einheit: Sekunden) -->
+                                <!-- Abweichungs-Schwellwert je nach DPT unterschiedlich dargestellt -->
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101">
                                   <when test="1">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00603" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00603" /><!-- Senden bei Wertänderung (DPT1: ">0 send. Änderung") -->
                                   </when>
                                   <when test="4 5 6 7 8 12 13">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00602" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00602" /><!-- Senden bei Wertänderung (Ganzzahl-Schwellwert) -->
                                   </when>
                                   <when test="9 14">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00601" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%006_R-%T%%CCC%00601" /><!-- Senden bei Wertänderung (Gleitkomma, Einheit: *0.1) -->
                                   </when>
                                 </choose>
                                 <ParameterSeparator Id="%AID%_PS-9" Text="MODBUS" UIHint="Headline" />
-                                <ParameterRefRef RefId="%AID%_UP-%T%%CCC%007_R-%T%%CCC%00701" />
+                                <ParameterRefRef RefId="%AID%_UP-%T%%CCC%007_R-%T%%CCC%00701" /><!-- Abfrage-Zyklus: jeden / jeden 2. / 4. / 6. / 8. / 10. Zyklus -->
                                 <ParameterSeparator Id="%AID%_PS-10" Text="" UIHint="HorizontalRuler" />
                               </when>
                             </choose>
-                            <!-- ModbusRegister -->
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%003_R-%T%%CCC%00301" />
+                            <!-- Modbus Register-Adresse (gilt für alle DPTs und Richtungen) -->
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%003_R-%T%%CCC%00301" /><!-- Modbus Register-Adresse (Dezimal, 0..65535) -->
                             <ParameterSeparator Id="%AID%_PS-11" Text="" UIHint="HorizontalRuler" />
-                            <!-- Choose DPT -->
+                            <!-- DPT-spezifische Parameter -->
                             <choose ParamRefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101">
-                              <!-- DPT1 -->
+                              <!-- DPT1 - 1 Bit Boolean -->
                               <when test="1">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" /><!-- Eingabe-Typ: Coil-Register (0) oder Bit in Word-Register (1) -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801">
-                                      <!-- BIT Register -->
+                                      <!-- Coil-Register: Funktion 0x05 -->
                                       <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" /><!-- Invertiert (Ja/Nein) -->
                                         <ParameterSeparator Id="%AID%_PS-12" Text="Funktion                                                            0x05 Schreibe Single Coil" />
                                       </when>
-                                      <!-- BIT Pos Register -->
+                                      <!-- Bit in Word-Register: Bit-Position wählbar -->
                                       <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" /><!-- Bit-Position im Word-Register (Bit 0..15) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" /><!-- Invertiert (Ja/Nein) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
                                       </when>
                                     </choose>
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00111" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" /><!-- Eingabe-Typ: Coil-Register (0) oder Bit in Word-Register (1) -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801">
-                                      <!-- BIT Register -->
+                                      <!-- Coil-Register: Funktion 0x01 oder 0x02 -->
                                       <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%048_R-%T%%CCC%04801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" /><!-- Invertiert (Ja/Nein) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%048_R-%T%%CCC%04801" /><!-- Lese-Funktion: 0x01 Lese Coils / 0x02 Lese Discrete Inputs -->
                                       </when>
-                                      <!-- BIT Pos Register -->
+                                      <!-- Bit in Word-Register: Funktion 0x03 oder 0x04 -->
                                       <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" /><!-- Bit-Position im Word-Register (Bit 0..15) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%018_R-%T%%CCC%01801" /><!-- Invertiert (Ja/Nein) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
                                       </when>
                                     </choose>
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00110" />
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT5 -->
+                              <!-- DPT5 - Prozent (U8, 0..100%) -->
                               <when test="4">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00113" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00112" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT5 -->
+                              <!-- DPT5 - Unsigned Byte (U8, 0..255) -->
                               <when test="5">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001" /><!-- Register Position: High Byte / Low Byte / frei wählbar -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001">
-                                      <when test="3">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%020_R-%T%%CCC%02001" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%030_R-%T%%CCC%03001" />
+                                      <when test="3"><!-- frei wählbar: Bit-Maske und Shift konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%020_R-%T%%CCC%02001" /><!-- Anzahl Bits (Bit-Maske als Bitmuster, 1..8 Bit) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%030_R-%T%%CCC%03001" /><!-- Offset von rechts (Bit-Shift nach rechts) -->
                                       </when>
                                     </choose>
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00117" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00116" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001" /><!-- Register Position: High Byte / Low Byte / frei wählbar -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%010_R-%T%%CCC%01001">
-                                      <when test="3">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%020_R-%T%%CCC%02001" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%030_R-%T%%CCC%03001" />
+                                      <when test="3"><!-- frei wählbar: Bit-Maske und Shift konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%020_R-%T%%CCC%02001" /><!-- Anzahl Bits (Bit-Maske als Bitmuster, 1..8 Bit) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%030_R-%T%%CCC%03001" /><!-- Offset von rechts (Bit-Shift nach rechts) -->
                                       </when>
                                     </choose>
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
                                     <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                   </when>
                                 </choose>
 
                               </when>
-                              <!-- DPT7 -->
+                              <!-- DPT7 - Unsigned 16 Bit (U16) -->
                               <when test="7">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201" /><!-- Register Position: High/Low Byte (vollständig) oder frei wählbar -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201">
-                                      <when test="2">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%022_R-%T%%CCC%02201" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%032_R-%T%%CCC%03201" />
+                                      <when test="2"><!-- frei wählbar: Bit-Anzahl und Shift konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%022_R-%T%%CCC%02201" /><!-- Anzahl Bits (1..16 Bit) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%032_R-%T%%CCC%03201" /><!-- Offset von rechts (Bit-Shift nach rechts) -->
                                       </when>
                                     </choose>
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00123" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00122" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201" /><!-- Register Position: High/Low Byte (vollständig) oder frei wählbar -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%012_R-%T%%CCC%01201">
-                                      <when test="2">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%022_R-%T%%CCC%02201" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%032_R-%T%%CCC%03201" />
+                                      <when test="2"><!-- frei wählbar: Bit-Anzahl und Shift konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%022_R-%T%%CCC%02201" /><!-- Anzahl Bits (1..16 Bit) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%032_R-%T%%CCC%03201" /><!-- Offset von rechts (Bit-Shift nach rechts) -->
                                       </when>
                                     </choose>
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
                                     <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                   </when>
                                 </choose>
 
                               </when>
-                              <!-- DPT8 -->
+                              <!-- DPT8 - Signed 16 Bit (V16) -->
                               <when test="8">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00125" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00124" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
                                     <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                   </when>
                                 </choose>
 
                               </when>
-                              <!-- DPT9 -->
+                              <!-- DPT9 - Float 2 Byte (F16) -->
                               <when test="9">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%014_R-%T%%CCC%01401" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" /><!-- Schreib-Funktion: 0x06 Single Register / 0x10 Multi Register -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%014_R-%T%%CCC%01401" /><!-- Register Position: Low/High Byte unsigned/signed oder High+Low Byte -->
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00127" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00126" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%014_R-%T%%CCC%01401" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%014_R-%T%%CCC%01401" /><!-- Register Position: Low/High Byte unsigned/signed oder High+Low Byte -->
                                     <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT12 -->
+                              <!-- DPT12 - Unsigned 32 Bit (U32) -->
                               <when test="12">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00129" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Funktion                                                            0x10 Schreibe Multi Register" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00128" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%035_R-%T%%CCC%03501" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%035_R-%T%%CCC%03501" /><!-- Register Typ: 16Bit (2 Byte) oder 32Bit (4 Byte) Register -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%035_R-%T%%CCC%03501">
-                                      <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%015_R-%T%%CCC%01501" />
+                                      <when test="0"><!-- 16Bit Register: Byte-Position konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%015_R-%T%%CCC%01501" /><!-- Register Position: Low/High/High+Low Byte unsigned -->
                                         <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                      <when test="1"><!-- 32Bit Register: Wert-Typ und Byte-Reihenfolge konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" /><!-- Registerwert-Typ: unsigned / signed / float -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                         <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
                                     </choose>
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT13 -->
+                              <!-- DPT13 - Signed 32 Bit (V32) -->
                               <when test="13">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00131" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Funktion                                                            0x10 Schreibe Multi Register" />
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00130" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%036_R-%T%%CCC%03601" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%036_R-%T%%CCC%03601" /><!-- Register Typ: 16Bit (2 Byte) oder 32Bit (4 Byte) Register -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%036_R-%T%%CCC%03601">
-                                      <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%016_R-%T%%CCC%01601" />
+                                      <when test="0"><!-- 16Bit Register: Byte-Position konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%016_R-%T%%CCC%01601" /><!-- Register Position: Low/High/High+Low Byte signed -->
                                         <ParameterSeparator Id="%AID%_PS-14" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                      <when test="1"><!-- 32Bit Register: Wert-Typ und Byte-Reihenfolge konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" /><!-- Registerwert-Typ: unsigned / signed / float -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                         <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
                                     </choose>
-                                    
+
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT14 -->
+                              <!-- DPT14 - Float 4 Byte (F32) -->
                               <when test="14">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00133" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Funktion                                                            0x10 Schreibe Multi Register" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Register Typ                                                       32Bit Register" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Registerwert-Typ                                                float" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00132" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%037_R-%T%%CCC%03701" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%037_R-%T%%CCC%03701" /><!-- Register Typ: 16Bit (2 Byte) oder 32Bit (4 Byte) Register -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%037_R-%T%%CCC%03701">
-                                      <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%017_R-%T%%CCC%01701" />
+                                      <when test="0"><!-- 16Bit Register: Byte-Position konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%017_R-%T%%CCC%01701" /><!-- Register Position: Low/High Byte unsigned/signed oder High+Low Byte -->
                                         <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                      <when test="1"><!-- 32Bit Register: Wert-Typ und Byte-Reihenfolge konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" /><!-- Registerwert-Typ: unsigned / signed / float -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                         <choose ParamRefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701">
                                           <!-- 1 unsigned; 2 Signed; 3 float -->
                                           <when test="1 2 3">
                                             <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                           </when>
                                         </choose>
                                       </when>
@@ -544,38 +544,38 @@
                                   </when>
                                 </choose>
                               </when>
-                              <!-- DPT29 -->
+                              <!-- DPT29 - Signed 64 Bit (V64) -->
                               <when test="29">
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
-                                  <!-- KNX - ModBus -->
+                                  <!-- KNX → Modbus -->
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00135" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Funktion                                                            0x10 Schreibe Multi Register" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Register Typ                                                       64Bit Register" />
                                     <ParameterSeparator Id="%AID%_PS-12" Text="Registerwert-Typ                                                signed" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                   </when>
-                                  <!-- Modbus - KNX -->
+                                  <!-- Modbus → KNX -->
                                   <when test="1">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%001_R-%T%%CCC%00134" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%081_R-%T%%CCC%08101" />
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%049_R-%T%%CCC%04901" /><!-- Lese-Funktion: 0x03 Holding Registers / 0x04 Input Registers -->
+                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%081_R-%T%%CCC%08101" /><!-- Register Typ: 16Bit / 32Bit / 64Bit Register -->
                                     <choose ParamRefId="%AID%_UP-%T%%CCC%081_R-%T%%CCC%08101">
-                                      <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%017_R-%T%%CCC%01701" />
+                                      <when test="0"><!-- 16Bit Register: Byte-Position konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%017_R-%T%%CCC%01701" /><!-- Register Position: Low/High Byte unsigned/signed oder High+Low Byte -->
                                         <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                       </when>
-                                      <when test="1 2">
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" />
-                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" />
+                                      <when test="1 2"><!-- 32Bit/64Bit Register: Wert-Typ und Byte-Reihenfolge konfigurierbar -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" /><!-- Registerwert-Typ: unsigned / signed / float -->
+                                        <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" /><!-- Byte-Reihenfolge: MSB/LSB (Big Endian) oder LSB/MSB (Little Endian) -->
                                         <choose ParamRefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701">
                                           <!-- 1 unsigned; 2 Signed; 3 float -->
                                           <when test="1 2 3">
                                             <ParameterSeparator Id="%AID%_PS-15" Text="" UIHint="HorizontalRuler" />
-                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" />
-                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" />
+                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%053_R-%T%%CCC%05301" /><!-- Skalierung: x = ModbusWert / Var1 -->
+                                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%058_R-%T%%CCC%05801" /><!-- Offset: KNX-Ausgabe = x + Var2 -->
                                           </when>
                                         </choose>
                                       </when>
