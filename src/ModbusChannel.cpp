@@ -500,25 +500,27 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
 
             if (result == ku8MBSuccess)
             {
+                uint8_t v_u8;
+
                 switch (ParamMOD_CHModBusRegisterPosDPT5)
                 {
                 case 1: // High Byte
-                    v = (getResponseBuffer(0) >> 8);
+                    v_u8 = (getResponseBuffer(0) >> 8);
                     break;
                 case 2: // Low Byte
-                    v = getResponseBuffer(0);
+                    v_u8 = getResponseBuffer(0);
                     break;
                 case 3: // frei Wählbar
-                    v = (getResponseBuffer(0) >> (ParamMOD_CHModBusOffsetRight5));
-                    v = v & (ParamMOD_CHModbusCountBitsDPT56);
-                    logDebugP("%u", v, BIN);
+                    v_u8 = (getResponseBuffer(0) >> (ParamMOD_CHModBusOffsetRight5));
+                    v_u8 = v_u8 & (ParamMOD_CHModbusCountBitsDPT56);
+                    logDebugP("%u", v_u8, BIN);
                     break;
                 default:
                     return result;
                 } // Ende Register Pos
 
                 //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v_u8 / (float)ParamMOD_CHModBuscalculationValueDiff;
                 v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
 
                 // senden bei Wertänderung
@@ -581,21 +583,24 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
 
             if (result == ku8MBSuccess)
             {
+
+                uint16_t v_u16;
+
                 switch (ParamMOD_CHModBusRegisterPosDPT7)
                 {
                 case 1: // High/LOW Byte
-                    v = getResponseBuffer(0);
+                    v_u16 = getResponseBuffer(0);
                     break;
                 case 2: // frei Wählbar
-                    v = (getResponseBuffer(0) >> (ParamMOD_CHModBusOffsetRight7));
-                    v = v & ((1 << ParamMOD_CHModbusCountBitsDPT7) - 1);
+                    v_u16 = (getResponseBuffer(0) >> (ParamMOD_CHModBusOffsetRight7));
+                    v_u16 = v_u16 & ((1 << ParamMOD_CHModbusCountBitsDPT7) - 1);
                     break;
                 default:
                     return result;
                 } // Ende Register Pos
 
                 //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v_u16 / (float)ParamMOD_CHModBuscalculationValueDiff;
                 v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
 
                 // senden bei Wertänderung
@@ -662,10 +667,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
             if (result == ku8MBSuccess)
             {
 
-                v = (int16_t)getResponseBuffer(0);
+                int16_t v_16 = (int16_t)getResponseBuffer(0);
 
                 //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v_16 / (float)ParamMOD_CHModBuscalculationValueDiff;
                 v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
 
                 // senden bei Wertänderung
@@ -837,6 +842,7 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
             clearResponseBuffer();
 
             uint64_t v;
+            uint64_t uraw;
 
             // Bestimmt ob Register-Typ: 16Bit, 32Bit oder 64Bit
             switch (ParamMOD_CHModBusWordTyp12)
@@ -872,13 +878,13 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     switch (ParamMOD_CHModBusRegisterPosDPT12)
                     {
                     case 1:                                         // Low Byte signed
-                        v = (uint8_t)(getResponseBuffer(0) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        uraw = (uint8_t)(getResponseBuffer(0) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         break;
                     case 2:                                                // High Byte signed
-                        v = (uint8_t)((getResponseBuffer(0) >> 8) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        uraw = (uint8_t)((getResponseBuffer(0) >> 8) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         break;
                     case 3:                                 // High/Low Byte signed
-                        v = (uint16_t)getResponseBuffer(0); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        uraw = (uint16_t)getResponseBuffer(0); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         break;
                     default:
                         return result;
@@ -928,10 +934,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     {
                         //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                     case 0: // HI Word / LO Word
-                        v = (uint32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
+                        uraw = (uint32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
                         break;
                     case 1: // LO Word / HI Word
-                        v = (uint32_t)(getResponseBuffer(0) | getResponseBuffer(1) << 16);
+                        uraw = (uint32_t)(getResponseBuffer(0) | getResponseBuffer(1) << 16);
                         //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                         break;
                     default:
@@ -978,13 +984,13 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     {
                         //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
                     case 0: // HI Word / LO Word
-                        v = ((uint64_t)getResponseBuffer(0) << 48) |
+                        uraw = ((uint64_t)getResponseBuffer(0) << 48) |
                             ((uint64_t)getResponseBuffer(1) << 32) |
                             ((uint64_t)getResponseBuffer(2) << 16) |
                             ((uint64_t)getResponseBuffer(3));
                         break;
                     case 1: // LO Word / HI Word
-                        v = ((uint64_t)getResponseBuffer(0)) |
+                        uraw = ((uint64_t)getResponseBuffer(0)) |
                             ((uint64_t)getResponseBuffer(1) << 16) |
                             ((uint64_t)getResponseBuffer(2) << 32) |
                             ((uint64_t)getResponseBuffer(3) << 48);
@@ -1053,7 +1059,6 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
             clearResponseBuffer();
 
             int32_t v;
-            int64_t v_64;
 
             // Bestimmt ob Register-Typ: Word oder Double Word
             switch (ParamMOD_CHModBusWordTyp13) // Choose Word Register OR Double Word Register
@@ -1166,67 +1171,7 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     return result;
                 }
                 break; // Ende Case 2 32Bit Register
-            case 3:    // *****************************************   64Bit Register  *************************************************
-#ifdef Serial_Debug_Modbus
-                logDebugP("| 64Bit ");
-#endif
-                // Choose Modbus Funktion (0x03 readHoldingRegisters ODER 0x04 readInputRegisters)
-                switch (ParamMOD_CHModBusReadWordFunktion)
-                {
-                case 3: // 0x03 Lese holding registers
-#ifdef Serial_Debug_Modbus
-                    logDebugP(" 0x03 ");
-#endif
-                    result = readHoldingRegisters(_registerAddr, 4);
-                    break;
-
-                case 4:
-#ifdef Serial_Debug_Modbus
-                    logDebugP(" 0x04 ");
-#endif
-                    result = readInputRegisters(_registerAddr, 4);
-                    break;
-                default:
-                    return result;
-                }
-
-                if (result == ku8MBSuccess)
-                {
-                    int64_t vraw_64;
-                    // check HI / LO   OR   LO / Hi  order
-                    switch (ParamMOD_CHModBusWordPosDpt12)
-                    {
-                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    case 0: // HI Word / LO Word
-                        vraw_64 = ((int64_t)getResponseBuffer(0) << 48) |
-                                  ((int64_t)getResponseBuffer(1) << 32) |
-                                  ((int64_t)getResponseBuffer(2) << 16) |
-                                  ((int64_t)getResponseBuffer(3));
-                        break;
-                    case 1: // LO Word / HI Word
-                        vraw_64 = ((int64_t)getResponseBuffer(0)) |
-                                  ((int64_t)getResponseBuffer(1) << 16) |
-                                  ((int64_t)getResponseBuffer(2) << 32) |
-                                  ((int64_t)getResponseBuffer(3) << 48);
-
-                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        break;
-                    default:
-                        return result;
-                    } // Ende // HI / LO Word
-                    v_64 = vraw_64 / (float)ParamMOD_CHModBuscalculationValueDiff;
-                    v_64 = v_64 + ParamMOD_CHModBuscalculationValueAdd;
-                      
-                }
-                else // Fehler
-                {
-#ifdef Serial_Debug_Modbus_Min
-                    logInfoP("ERROR: %I", result, HEX);
-#endif
-
-                    return result;
-                }
-                break; // ********************************* Ende Case 3 64 Bit Register *************************************************
+           
             default:
                 return result;
             } // ENDE ENDE Word / Double Word Register
@@ -1447,92 +1392,6 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                 }
                 break; // Ende Case 2 32Bit Register
 
-            case 3: // *********************************** 64Bit Register ******************************************************
-
-                switch (ParamMOD_CHModBusReadWordFunktion) // Choose Modbus Funktion (0x03 readHoldingRegisters ODER 0x04 readInputRegisters)
-                {
-                case 3: // 0x03 Lese holding registers
-#ifdef Serial_Debug_Modbus
-                    logDebugP("DPT14| 64Bit| 0x03 ");
-#endif
-                    result = readHoldingRegisters(_registerAddr, 4);
-                    break;
-
-                case 4:
-#ifdef Serial_Debug_Modbus
-                    logDebugP("DPT14| 64Bit | 0x04 ");
-#endif
-                    result = readInputRegisters(_registerAddr, 4);
-                    break;
-                default:
-                    return result;
-                }
-
-                if (result == ku8MBSuccess)
-                {
-                    uint64_t raw;
-
-                    // check HI / LO   OR   LO / Hi  order
-                    switch (ParamMOD_CHModBusWordPosDpt14)
-                    {
-                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    case 0: // HI Word / LO Word
-                        raw = ((uint64_t)getResponseBuffer(0) << 48) |
-                              ((uint64_t)getResponseBuffer(1) << 32) |
-                              ((uint64_t)getResponseBuffer(2) << 16) |
-                              ((uint64_t)getResponseBuffer(3));
-                        break;
-                    case 1: // LO Word / HI Word
-                        raw = ((uint64_t)getResponseBuffer(0)) |
-                              ((uint64_t)getResponseBuffer(1) << 16) |
-                              ((uint64_t)getResponseBuffer(2) << 32) |
-                              ((uint64_t)getResponseBuffer(3) << 48);
-                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        break;
-                    default:
-                        return result;
-                    } // Ende // HI / LO Word
-                    // check receive input datatype ( signed / unsgined / Float)
-                    switch (ParamMOD_CHModBusRegisterValueTypDpt14)
-                    {
-                    case 1: // unsigned
-                    {
-                        uint64_t lValueu64bit = raw;
-                        //                                                         ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        v = lValueu64bit / (float)ParamMOD_CHModBuscalculationValueDiff;
-                        v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
-                        break;
-                    }
-                    case 2: // signed
-                    {
-                        int64_t lValuei64bit = (int64_t)raw;
-                        //                                                         ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        v = lValuei64bit / (float)ParamMOD_CHModBuscalculationValueDiff;
-                        v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
-                        break;
-                    }
-                    case 3: // float
-                    {
-                        // going via union allows the compiler to be sure about alignment
-                        union intfloat
-                        {
-                            uint64_t intVal;
-                            float floatVal;
-                        };
-                        // float lValueFloat = ((intfloat *)&raw)->floatVal;
-                        float lValueFloat = (float)raw;
-                        //                                                         ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        v = lValueFloat / (float)ParamMOD_CHModBuscalculationValueDiff;
-                        v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
-                        break; // ************************************************** Ende Case 3 64Bit *************************************************************
-                    }
-                    default:
-                        return result;
-                    } // ENDE ENDE Word / Double Word Register
-
-                } // ENDE
-                break; // Ende PDT14
-
             default: // all other dpts
                 logInfoP("Falscher DPT: %i", dpt);
                 break;
@@ -1561,6 +1420,226 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
             }
         }
         break;
+
+    //*****************************************************************************************************************************************
+    //*****************************************  DPT 29 ***************************************************************************************
+    //*****************************************************************************************************************************************
+    case 29:
+               if (readRequest)
+        {
+#ifdef Serial_Debug_Modbus
+            logDebugP("DPT13 ");
+#endif
+
+            // clear Responsebuffer before revicing a new message
+            clearResponseBuffer();
+
+            int32_t v;
+            int64_t v_64;
+
+            // Bestimmt ob Register-Typ: Word oder Double Word
+            switch (ParamMOD_CHModBusWordTyp13) // Choose Word Register OR Double Word Register
+            {
+            case 0: // Word Register
+#ifdef Serial_Debug_Modbus
+                logDebugP("| 16Bit ");
+#endif
+                // Choose Modbus Funktion (0x03 readHoldingRegisters ODER 0x04 readInputRegisters)
+                switch (ParamMOD_CHModBusReadWordFunktion)
+                {
+                case 3: // 0x03 Lese holding registers
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x03 ");
+#endif
+                    result = readHoldingRegisters(_registerAddr, 1);
+                    break;
+
+                case 4:
+
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x04 ");
+#endif
+                    result = readInputRegisters(_registerAddr, 1);
+                    break;
+                default:
+                    return result;
+                }
+
+                if (result == ku8MBSuccess)
+                {
+                    // adapt input value (Low Byte / High Byte / High&Low Byte / .... )
+                    switch (ParamMOD_CHModBusRegisterPosDPT13)
+                    {
+                    case 1:                                        // Low Byte signed
+                        v = (int8_t)(getResponseBuffer(0) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        break;
+                    case 2:                                               // High Byte signed
+                        v = (int8_t)((getResponseBuffer(0) >> 8) & 0xff); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        break;
+                    case 3:                                // High/Low Byte signed
+                        v = (int16_t)getResponseBuffer(0); // muss noch bearbeitet werden !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        break;
+                    default:
+                        return result;
+                    }
+                }
+                else
+                {
+#ifdef Serial_Debug_Modbus_Min
+                    logInfoP("ERROR: %i", result, HEX);
+#endif
+
+                    return result;
+                }
+
+                break;
+            case 1: // Double Word Register
+#ifdef Serial_Debug_Modbus
+                logDebugP("| 32Bit ");
+#endif
+                // Choose Modbus Funktion (0x03 readHoldingRegisters ODER 0x04 readInputRegisters)
+                switch (ParamMOD_CHModBusReadWordFunktion)
+                {
+                case 3: // 0x03 Lese holding registers
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x03 ");
+#endif
+                    result = readHoldingRegisters(_registerAddr, 2);
+                    break;
+
+                case 4:
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x04 ");
+#endif
+                    result = readInputRegisters(_registerAddr, 2);
+                    break;
+                default:
+                    return result;
+                }
+
+                if (result == ku8MBSuccess)
+                {
+                    uint32_t uraw;
+                    // check HI / LO   OR   LO / Hi  order
+                    switch (ParamMOD_CHModBusWordPosDpt13)
+                    {
+                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    case 0: // HI Word / LO Word
+                        uraw = (int32_t)(getResponseBuffer(0) << 16 | getResponseBuffer(1));
+                        break;
+                    case 1: // LO Word / HI Word
+                        uraw = (int32_t)(getResponseBuffer(0) | getResponseBuffer(1) << 16);
+                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        break;
+                    default:
+                        return result;
+                    } // Ende // HI / LO Word
+
+                    //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                    v = v + ParamMOD_CHModBuscalculationValueAdd;
+                }
+                else
+                {
+#ifdef Serial_Debug_Modbus_Min
+                    logInfoP("ERROR: %i", result, HEX);
+#endif
+
+                    return result;
+                }
+                break; // Ende Case 2 32Bit Register
+            case 3:    // *****************************************   64Bit Register  *************************************************
+#ifdef Serial_Debug_Modbus
+                logDebugP("| 64Bit ");
+#endif
+                // Choose Modbus Funktion (0x03 readHoldingRegisters ODER 0x04 readInputRegisters)
+                switch (ParamMOD_CHModBusReadWordFunktion)
+                {
+                case 3: // 0x03 Lese holding registers
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x03 ");
+#endif
+                    result = readHoldingRegisters(_registerAddr, 4);
+                    break;
+
+                case 4:
+#ifdef Serial_Debug_Modbus
+                    logDebugP(" 0x04 ");
+#endif
+                    result = readInputRegisters(_registerAddr, 4);
+                    break;
+                default:
+                    return result;
+                }
+
+                if (result == ku8MBSuccess)
+                {
+                    int64_t vraw_64;
+                    // check HI / LO   OR   LO / Hi  order
+                    switch (ParamMOD_CHModBusWordPosDpt12)
+                    {
+                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    case 0: // HI Word / LO Word
+                        vraw_64 = ((int64_t)getResponseBuffer(0) << 48) |
+                                  ((int64_t)getResponseBuffer(1) << 32) |
+                                  ((int64_t)getResponseBuffer(2) << 16) |
+                                  ((int64_t)getResponseBuffer(3));
+                        break;
+                    case 1: // LO Word / HI Word
+                        vraw_64 = ((int64_t)getResponseBuffer(0)) |
+                                  ((int64_t)getResponseBuffer(1) << 16) |
+                                  ((int64_t)getResponseBuffer(2) << 32) |
+                                  ((int64_t)getResponseBuffer(3) << 48);
+
+                        //  ************************************************************************** MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        break;
+                    default:
+                        return result;
+                    } // Ende // HI / LO Word
+                    v_64 = vraw_64 / (float)ParamMOD_CHModBuscalculationValueDiff;
+                    v_64 = v_64 + ParamMOD_CHModBuscalculationValueAdd;
+                      
+                }
+                else // Fehler
+                {
+#ifdef Serial_Debug_Modbus_Min
+                    logInfoP("ERROR: %I", result, HEX);
+#endif
+
+                    return result;
+                }
+                break; // ********************************* Ende Case 3 64 Bit Register *************************************************
+            default:
+                return result;
+            } // ENDE ENDE Word / Double Word Register
+
+            if (result == ku8MBSuccess)
+            {
+                // senden bei Wertänderung
+                uint32_t lAbsolute = ParamMOD_CHModBusValueChange;
+                uint32_t lDiff = abs(v_64 - lastSentValue.lValueInt32_t);
+                if (lAbsolute > 0 && lDiff >= lAbsolute)
+                    lSend = true;
+
+                // we always store the new value in KO, even it it is not sent (to satisfy potential read request)
+                KoMOD_GO_BASE_.valueNoSend(v_64, DPT_Value_4_Count);
+                if (lSend)
+                {
+                    lastSentValue.lValueInt32_t = v_64;
+                }
+
+#ifdef Serial_Debug_Modbus_Min
+                logDebugP("%i", v);
+#endif
+
+                // Löscht Fehlerspeicher
+                errorState[0] = false;
+                errorState[1] = false;
+            }
+
+        } // ENDE
+        break;
+
     } // wählt den passenden DPT
 
     if (lSend && !errorState[0] && !errorState[1])
