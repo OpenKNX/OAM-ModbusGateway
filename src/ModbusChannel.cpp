@@ -517,6 +517,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     return result;
                 } // Ende Register Pos
 
+                //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
+
                 // senden bei Wertänderung
                 uint16_t lAbsolute = ParamMOD_CHModBusValueChange;
                 uint8_t lDiff = abs(v - lastSentValue.lValueUint8_t);
@@ -590,6 +594,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
                     return result;
                 } // Ende Register Pos
 
+                //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
+
                 // senden bei Wertänderung
                 uint16_t lAbsolute = ParamMOD_CHModBusValueChange;
                 uint16_t lDiff = abs(v - lastSentValue.lValueUint16_t);
@@ -655,6 +663,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
             {
 
                 v = (int16_t)getResponseBuffer(0);
+
+                //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
 
                 // senden bei Wertänderung
                 uint16_t lAbsolute = ParamMOD_CHModBusValueChange;
@@ -998,6 +1010,10 @@ uint8_t ModbusChannel::modbusToKnx(uint8_t dpt, bool readRequest)
 
             if (result == ku8MBSuccess)
             {
+                //  ************************ MUSS NOCH GEPRÜFT WERDEN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                v = uraw / (float)ParamMOD_CHModBuscalculationValueDiff;
+                v = v + (int16_t)ParamMOD_CHModBuscalculationValueAdd;
+
                 // senden bei Wertänderung
                 uint32_t lAbsolute = ParamMOD_CHModBusValueChange;
                 int absVAlue = (v - lastSentValue.lValueUint32_t);
