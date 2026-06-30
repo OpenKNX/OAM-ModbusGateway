@@ -4,8 +4,6 @@
 #include "LED_Statusanzeige.h"
 #include "Device.h"
 
-// #define DEVICE_SMARTMF_MODBUS_RTU_3BE
-#define SMARTMF_MODBUS_SERIAL Serial2
 
 // uint32_t timer_time_between_Reg_Reads;
 // uint32_t timer_time_between_Cycle_Reads;
@@ -51,10 +49,10 @@ void ModbusModule::setup(bool configured)
     initHW(get_HW_ID());
 #endif
     pinMode(SMARTMF_MODBUS_DIR_PIN, OUTPUT);
-    SMARTMF_MODBUS_SERIAL.setRX(SMARTMF_MODBUS_RX_PIN);
-    SMARTMF_MODBUS_SERIAL.setTX(SMARTMF_MODBUS_TX_PIN);
+    RS485_SERIAL.setRX(SMARTMF_MODBUS_RX_PIN);
+    RS485_SERIAL.setTX(SMARTMF_MODBUS_TX_PIN);
 
-    modbusInitSerial(SMARTMF_MODBUS_SERIAL);
+    modbusInitSerial(RS485_SERIAL);
 
     if (configured)
     {
@@ -75,7 +73,7 @@ void ModbusModule::setupChannels()
 
     for (uint8_t i = 0; i < ParamMOD_VisibleChannels; i++)
     {
-        _channels[i] = new ModbusChannel(i, 3, 3, SMARTMF_MODBUS_SERIAL);
+        _channels[i] = new ModbusChannel(i, 3, 3, RS485_SERIAL);
         _channels[i]->setup();
         _channels[i]->idle(idleCallback);
         _channels[i]->preTransmission(preTransmission);

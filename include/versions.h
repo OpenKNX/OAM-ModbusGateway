@@ -1,22 +1,22 @@
 #pragma once
 
-#define MAIN_Version "723305a"
+#define MAIN_Version "3e13be1"
 #define KNX_Version "2.3.1+7124a64"
-#define MODULE_HardwareConfig_Version "1.0.0+709d04c"
+#define MODULE_HardwareConfig_Version "1.0.0+a9e034d"
 #define MODULE_HardwareConfig_Version_Major 1
 #define MODULE_HardwareConfig_Version_Minor 0
 #define MODULE_HardwareConfig_Version_Revision 0
 #define MODULE_HardwareConfig_ETS 16
-#define MODULE_Common_Version "1.7.2+86dc82b"
+#define MODULE_Common_Version "1.8.1+f6dbb3c"
 #define MODULE_Common_Version_Major 1
-#define MODULE_Common_Version_Minor 7
-#define MODULE_Common_Version_Revision 2
-#define MODULE_Common_ETS 23
-#define MODULE_LogicModule_Version "4.0.1+2bc2557"
+#define MODULE_Common_Version_Minor 8
+#define MODULE_Common_Version_Revision 1
+#define MODULE_Common_ETS 24
+#define MODULE_LogicModule_Version "4.3.0+8c0d835"
 #define MODULE_LogicModule_Version_Major 4
-#define MODULE_LogicModule_Version_Minor 0
-#define MODULE_LogicModule_Version_Revision 1
-#define MODULE_LogicModule_ETS 64
+#define MODULE_LogicModule_Version_Minor 3
+#define MODULE_LogicModule_Version_Revision 0
+#define MODULE_LogicModule_ETS 67
 #define MODULE_FileTransferModule_Version "0.1.5+178f186"
 #define MODULE_FileTransferModule_Version_Major 0
 #define MODULE_FileTransferModule_Version_Minor 1

@@ -4,6 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Clean-Baggages",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "scripts/Clean-Baggages.ps1"
+            ],
+            "problemMatcher": [],
+            "presentation": { "reveal": "silent" }
+        },
+        {
             "label": "OpenKNXproducer",
             "type": "shell",
             "command": "~/bin/OpenKNXproducer.exe",
@@ -13,6 +24,7 @@
                 "--HeaderFileName=include/knxprod.h",
                 "src/ModbusGateway"
             ],
+            "dependsOn": "Clean-Baggages",
             "problemMatcher": [],
             "group": "test"
         },

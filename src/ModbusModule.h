@@ -7,16 +7,6 @@
 #endif
 #endif
 
-// #define DEVICE_ID "SMARTMF-Modbus-RTU-3BE"
-// #define DEVICE_NAME "Smart-MF Modbus-RTU Gateway"
-
-// #define SMARTMF_HARDWARE_REVISION_ID1_PIN 2
-// #define SMARTMF_HARDWARE_REVISION_ID2_PIN 3
-// #define SMARTMF_HARDWARE_REVISION_ID3_PIN 15
-
-// #define SMARTMF_MODBUS_RX_PIN 5
-// #define SMARTMF_MODBUS_TX_PIN 4
-// #define SMARTMF_MODBUS_DIR_PIN 24
 
 class ModbusModule : public OpenKNX::Module, public ModbusMaster
 {

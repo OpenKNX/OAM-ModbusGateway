@@ -4,6 +4,8 @@
 #include "LED_Statusanzeige.h"
 #include "HardwareConfig.h"
 
+
+/*
 uint8_t get_PROG_LED_PIN(uint8_t hwID)
 {
 #ifdef ARDUINO_ARCH_RP2040
@@ -59,6 +61,7 @@ uint8_t get_SAVE_INTERRUPT_PIN(uint8_t hwID)
     }
 #endif
 }
+*/
 
 uint8_t get_HW_ID()
 {
